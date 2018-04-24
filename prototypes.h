@@ -15,7 +15,19 @@
 /** General Functions */
 void connect();
 void simulate(char *);
-void execute(long);
+
+/** Pipeline Operations */
+void instructionFetchStage1();
+void instructionDecodeStage1();
+void executeStage1();
+void memoryAccessStage1();
+void writeBackStage1();
+
+void instructionFetchStage2();
+void instructionDecodeStage2();
+void executeStage2();
+void memoryAccessStage2();
+void writeBackStage2();
 
 /** Utility Operations */
 // void dumpRegisters();

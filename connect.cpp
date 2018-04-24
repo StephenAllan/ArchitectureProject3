@@ -18,15 +18,35 @@ void connect()
 {
     for (int i = 0; i < connectionObjects.size(); ++i)
     {
-        // connectionObjects[i]->connectsTo(abus.IN());
-        // connectionObjects[i]->connectsTo(abus.OUT());
-        // connectionObjects[i]->connectsTo(alu.OP1());
-        // connectionObjects[i]->connectsTo(alu.OP2());
-        // connectionObjects[i]->connectsTo(alu.OUT());
+        connectionObjects[i]->connectsTo(op1.IN());
+        connectionObjects[i]->connectsTo(op1.OUT());
+        connectionObjects[i]->connectsTo(op2.IN());
+        connectionObjects[i]->connectsTo(op2.OUT());
+        connectionObjects[i]->connectsTo(out.IN());
+        connectionObjects[i]->connectsTo(out.OUT());
+
+        connectionObjects[i]->connectsTo(alu1.OP1());
+        connectionObjects[i]->connectsTo(alu1.OP2());
+        connectionObjects[i]->connectsTo(alu1.OUT());
+        connectionObjects[i]->connectsTo(alu2.OP1());
+        connectionObjects[i]->connectsTo(alu2.OP2());
+        connectionObjects[i]->connectsTo(alu2.OUT());
+        connectionObjects[i]->connectsTo(alu3.OP1());
+        connectionObjects[i]->connectsTo(alu3.OP2());
+        connectionObjects[i]->connectsTo(alu3.OUT());
+        connectionObjects[i]->connectsTo(alu4.OP1());
+        connectionObjects[i]->connectsTo(alu4.OP2());
+        connectionObjects[i]->connectsTo(alu4.OUT());
         // connectionObjects[i]->connectsTo(alu.CARRY());
-        // connectionObjects[i]->connectsTo(memory.READ());
-        // connectionObjects[i]->connectsTo(memory.WRITE());
+
+        connectionObjects[i]->connectsTo(im.READ());
+        connectionObjects[i]->connectsTo(im.WRITE());
+        connectionObjects[i]->connectsTo(dm.READ());
+        connectionObjects[i]->connectsTo(dm.WRITE());
     }
 
-    // memory.MAR().connectsTo(abus.OUT());
+    pc.connectsTo(instructionBus.IN());
+    pc.connectsTo(instructionBus.OUT());
+    
+    im.MAR().connectsTo(instructionBus.OUT());
 }

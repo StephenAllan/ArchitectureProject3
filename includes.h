@@ -34,7 +34,7 @@
 /** Variable Definition Includes */
 #include "globals.h"
 #include "prototypes.h"
-#include "packet.h"
+#include "pipelineRegisters.h"
 
 /** Namespace */
 using namespace std;

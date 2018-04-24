@@ -24,6 +24,8 @@ extern Bus op1;
 extern Bus op2;
 extern Bus out;
 
+extern Bus instructionBus;
+
 extern StorageObject r0;
 extern StorageObject r1;
 extern StorageObject r2;
@@ -57,7 +59,7 @@ extern StorageObject r29;
 extern StorageObject r30;
 extern StorageObject r31;
 
-extern StorageObject pc;
+extern Counter pc;
 extern StorageObject ir;
 extern StorageObject mar;
 extern StorageObject mdr;

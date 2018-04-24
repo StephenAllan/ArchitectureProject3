@@ -24,6 +24,8 @@ Bus op1("Op1Bus", ADDRESS_SIZE_BITS);
 Bus op2("Op2Bus", ADDRESS_SIZE_BITS);
 Bus out("OutBus", ADDRESS_SIZE_BITS);
 
+Bus instructionBus("InstructionBus", ADDRESS_SIZE_BITS);
+
 /** Registers */
 StorageObject r0("R0", ADDRESS_SIZE_BITS);
 StorageObject r1("R1", ADDRESS_SIZE_BITS);
@@ -58,7 +60,7 @@ StorageObject r29("R29", ADDRESS_SIZE_BITS);
 StorageObject r30("R30", ADDRESS_SIZE_BITS);
 StorageObject r31("R31", ADDRESS_SIZE_BITS);
 
-StorageObject pc("PC", ADDRESS_SIZE_BITS);
+Counter pc("PC", ADDRESS_SIZE_BITS);
 StorageObject ir("IR", ADDRESS_SIZE_BITS);
 StorageObject mar("MAR", ADDRESS_SIZE_BITS);
 StorageObject mdr("MDR", ADDRESS_SIZE_BITS);

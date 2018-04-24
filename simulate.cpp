@@ -23,52 +23,64 @@ void simulate(char* objectFile)
     dm.load(objectFile);
 
 
-    // Testing Packet
-    Packet packet1;
-    cout << packet1.ir;
+    // Testing pipeline register
+    // IfIdRegister ifidRegister;
+    // cout << ifidRegister.ir;
 
 
     // Set the entry point
-    // r7.latchFrom(memory.READ());
-    // Clock::tick();
+    pc.latchFrom(im.READ());
+    Clock::tick();
+
+    int iteration = 0;
 
     // Continue fetching, decoding, and executing instructions until we stop the simulation
-    // while (!done)
-    // {
-    //     // Fetch instruction into the mdr
-    //     fetch(r7, mdr, abus);
-    //     long currentPC = r7.value();
+    while (!done)
+    {
+        // TODO: These switches may not be needed... Should the pipeline be able to handle itself being empty at start?
+        switch (iteration)
+        {
+            default:
+                writeBackStage1();
+            case 3:
+                memoryAccessStage1();
+            case 2:
+                executeStage1();
+            case 1:
+                instructionDecodeStage1();
+            case 0:
+                instructionFetchStage1();
+        }
+        Clock::tick();
 
-    //     // Increment program counter for next instruction
-    //     r7.perform(Counter::incr2);
-    //     Clock::tick();
+        switch (iteration)
+        {
+            default:
+                writeBackStage2();
+            case 3:
+                memoryAccessStage2();
+            case 2:
+                executeStage2();
+            case 1:
+                instructionDecodeStage2();
+            case 0:
+                instructionFetchStage2();
+        }
+        Clock::tick();
 
-    //     // Decode and execute
-    //     execute(opCodeFunctions, currentPC);
+        iteration = iteration + 1;
 
-    //     if (unalignedMemoryError) { displayUnalignedMemoryError(); }
-    // }
-}
 
-/**
-    Decode and execute the instruction in the instruction register.
-    
-    @param opCodeFunction Functions handling varying opcode lengths
-    @param currentPC The count of the currently executing instruction
- */
-void execute(long currentPC)
-{
-    // TODO: Giant switch
 
-    
-    // for (int i = 0; i < 6; ++i)
-    // {
-    //     if (opCodeFunctions[i](currentPC)) { return; }
-    // }
+        // Just stop if 0 for testing
+        if (ir.value() == 0)
+        {
+            done = true;
+        }
 
-    // // Unknown Operation Code
-    // displayRecord(currentPC, mdr.value(), "????");
-    
-    // cout << endl << "Machine Halted - opcode error" << endl;
-    // done = true;
+        // Debug printing
+        cout << pc << endl;
+        cout << ir << endl;
+        cout << endl;
+    }
 }
