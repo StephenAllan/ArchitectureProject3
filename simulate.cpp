@@ -22,55 +22,36 @@ void simulate(char* objectFile)
     im.load(objectFile);
     dm.load(objectFile);
 
-
     // Testing pipeline register
     // IfIdRegister ifidRegister;
     // cout << ifidRegister.ir;
-
 
     // Set the entry point
     pc.latchFrom(im.READ());
     Clock::tick();
 
-    int iteration = 0;
-
     // Continue fetching, decoding, and executing instructions until we stop the simulation
     while (!done)
     {
-        // TODO: These switches may not be needed... Should the pipeline be able to handle itself being empty at start?
-        switch (iteration)
-        {
-            default:
-                writeBackStage1();
-            case 3:
-                memoryAccessStage1();
-            case 2:
-                executeStage1();
-            case 1:
-                instructionDecodeStage1();
-            case 0:
-                instructionFetchStage1();
-        }
+        // These switches may not be needed... Should the pipeline be able to handle itself being empty at start?
+        // The writeup discusses using a valid bit field in all of the pipeline registers to
+        // indicate if there is valid data. The first thing each stage should do is check if the
+        // valid bit is set or not. If not, then the stage does nothing.
+        instructionFetchStage1();
+        instructionDecodeStage1();
+        executeStage1();
+        memoryAccessStage1();
+        writeBackStage1();
+
         Clock::tick();
 
-        switch (iteration)
-        {
-            default:
-                writeBackStage2();
-            case 3:
-                memoryAccessStage2();
-            case 2:
-                executeStage2();
-            case 1:
-                instructionDecodeStage2();
-            case 0:
-                instructionFetchStage2();
-        }
+        instructionFetchStage2();
+        instructionDecodeStage2();
+        executeStage2();
+        memoryAccessStage2();
+        writeBackStage2();
+        
         Clock::tick();
-
-        iteration = iteration + 1;
-
-
 
         // Just stop if 0 for testing
         if (ir.value() == 0)

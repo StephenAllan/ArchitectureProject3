@@ -22,7 +22,7 @@ class IfIdRegister
        StorageObject ir;
 };
 
-class IdExRegister
+class IdExRegister : public IfIdRegister
 {
     public:
        IdExRegister();
@@ -32,7 +32,7 @@ class IdExRegister
        StorageObject imm;
 };
 
-class ExMemRegister
+class ExMemRegister : public IdExRegister
 {
     public:
        ExMemRegister();
@@ -40,7 +40,7 @@ class ExMemRegister
        StorageObject a;
 };
 
-class MemWbRegister
+class MemWbRegister : public ExMemRegister
 {
     public:
        MemWbRegister();
