@@ -32,9 +32,9 @@
 #include <StorageObject.h>
 
 /** Variable Definition Includes */
+#include "pipelineRegisters.h"
 #include "globals.h"
 #include "prototypes.h"
-#include "pipelineRegisters.h"
 
 /** Namespace */
 using namespace std;

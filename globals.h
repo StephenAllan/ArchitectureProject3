@@ -78,6 +78,11 @@ extern BusALU alu2;
 extern BusALU alu3;
 extern BusALU alu4;
 
+extern IfIdRegister ifidRegister;
+extern IdExRegister idexRegister;
+extern ExMemRegister exmemRegister;
+extern MemWbRegister memwbRegister;
+
 extern bool done;   // is the simulation over?
 
 #endif

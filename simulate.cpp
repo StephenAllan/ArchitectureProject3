@@ -22,10 +22,6 @@ void simulate(char* objectFile)
     im.load(objectFile);
     dm.load(objectFile);
 
-    // Testing pipeline register
-    // IfIdRegister ifidRegister;
-    // cout << ifidRegister.ir;
-
     // Set the entry point
     pc.latchFrom(im.READ());
     Clock::tick();
@@ -33,7 +29,6 @@ void simulate(char* objectFile)
     // Continue fetching, decoding, and executing instructions until we stop the simulation
     while (!done)
     {
-        // These switches may not be needed... Should the pipeline be able to handle itself being empty at start?
         // The writeup discusses using a valid bit field in all of the pipeline registers to
         // indicate if there is valid data. The first thing each stage should do is check if the
         // valid bit is set or not. If not, then the stage does nothing.

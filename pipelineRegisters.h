@@ -20,6 +20,7 @@ class IfIdRegister
        StorageObject pc;
        StorageObject npc;
        StorageObject ir;
+       long fetchAddress;
 };
 
 class IdExRegister : public IfIdRegister
@@ -27,9 +28,11 @@ class IdExRegister : public IfIdRegister
     public:
        IdExRegister();
 
+       Clearable v;
        StorageObject a;
        StorageObject b;
        StorageObject imm;
+       long fetchAddress;
 };
 
 class ExMemRegister : public IdExRegister
@@ -37,7 +40,9 @@ class ExMemRegister : public IdExRegister
     public:
        ExMemRegister();
 
+       Clearable v;
        StorageObject a;
+       long fetchAddress;
 };
 
 class MemWbRegister : public ExMemRegister
@@ -45,5 +50,7 @@ class MemWbRegister : public ExMemRegister
     public:
        MemWbRegister();
 
+       Clearable v;
        StorageObject a;
+       long fetchAddress;
 };

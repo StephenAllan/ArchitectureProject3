@@ -80,5 +80,11 @@ BusALU alu2("ALU2", ADDRESS_SIZE_BITS);
 BusALU alu3("ALU3", ADDRESS_SIZE_BITS);
 BusALU alu4("ALU4", ADDRESS_SIZE_BITS);
 
+/** Pipeline Registers */
+IfIdRegister ifidRegister;
+IdExRegister idexRegister;
+ExMemRegister exmemRegister;
+MemWbRegister memwbRegister;
+
 /** Control Variables */
 bool done(false);   // is the simulation over?

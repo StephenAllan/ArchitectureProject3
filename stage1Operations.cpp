@@ -26,6 +26,8 @@ void instructionFetchStage1()
  */
 void instructionDecodeStage1()
 {
+    if (ifidRegister.v.value() == 0) { return; }
+
     // TODO: Implement Unknown Operation Code
     // displayRecord(currentPC, mdr.value(), "????");
     // cout << endl << "Machine Halted - opcode error" << endl;
@@ -37,7 +39,7 @@ void instructionDecodeStage1()
  */
 void executeStage1()
 {
-
+    if (idexRegister.v.value() == 0) { return; }
 }
 
 /**
@@ -45,7 +47,7 @@ void executeStage1()
  */
 void memoryAccessStage1()
 {
-
+    if (exmemRegister.v.value() == 0) { return; }
 }
 
 /**
@@ -53,5 +55,5 @@ void memoryAccessStage1()
  */
 void writeBackStage1()
 {
-
+    if (memwbRegister.v.value() == 0) { return; }
 }

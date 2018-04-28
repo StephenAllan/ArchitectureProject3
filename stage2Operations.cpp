@@ -20,8 +20,8 @@ void instructionFetchStage2()
     im.read();
     ir.latchFrom(im.READ());
 
-    // Create IF/ID object here?
-    // Need to add fetch address field to each object to propagate it through to the write-back stage for displaying
+    ifidRegister.fetchAddress = pc.value();
+    ifidRegister.v.set();
 
     // Increment program counter for next instruction
     pc.perform(Counter::incr4);
@@ -32,7 +32,9 @@ void instructionFetchStage2()
  */
 void instructionDecodeStage2()
 {
-    
+    if (ifidRegister.v.value() == 0) { return; }
+    idexRegister.fetchAddress = ifidRegister.fetchAddress;
+    // idexRegister.v.set();
 }
 
 /**
@@ -40,7 +42,9 @@ void instructionDecodeStage2()
  */
 void executeStage2()
 {
-
+    if (idexRegister.v.value() == 0) { return; }
+    exmemRegister.fetchAddress = idexRegister.fetchAddress;
+    // exmemRegister.v.set();
 }
 
 /**
@@ -48,7 +52,9 @@ void executeStage2()
  */
 void memoryAccessStage2()
 {
-
+    if (exmemRegister.v.value() == 0) { return; }
+    memwbRegister.fetchAddress = exmemRegister.fetchAddress;
+    // memwbRegister.v.set();
 }
 
 /**
@@ -56,5 +62,5 @@ void memoryAccessStage2()
  */
 void writeBackStage2()
 {
-
+    if (memwbRegister.v.value() == 0) { return; }
 }
