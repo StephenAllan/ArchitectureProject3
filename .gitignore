@@ -1,5 +1,11 @@
 pdp11/
 Makefile
+RUN
+README
 z88
-*-eval.txt
+*.asm
+*.diffs
+*.out
 *.obj
+*.myout
+*-eval.txt
