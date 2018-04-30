@@ -40,6 +40,8 @@ void simulate(char* objectFile)
 
         Clock::tick();
 
+        // dumpAllRegisters();
+
         instructionFetchStage2();
         instructionDecodeStage2();
         executeStage2();
@@ -48,15 +50,53 @@ void simulate(char* objectFile)
         
         Clock::tick();
 
+        // dumpAllRegisters();
+        // cout << endl << endl;
+
         // Just stop if 0 for testing
-        if (ir.value() == 0)
-        {
-            done = true;
-        }
+        // if (ir.value() == 0)
+        // {
+        //     done = true;
+        // }
 
         // Debug printing
-        cout << pc << endl;
-        cout << ir << endl;
-        cout << endl;
+        // cout << pc << endl;
+        // cout << ir << endl;
+        // cout << endl;
     }
+}
+
+/**
+    TODO: Documentation
+ */
+void dumpAllRegisters()
+{
+    for (int i = 0; i < connectionObjects.size(); ++i)
+    {
+        cout << "  " << (*connectionObjects[i]);
+
+        if ((i + 1) % 4 == 0) { cout << endl; }
+    }
+    cout << endl;
+}
+
+/**
+    TODO: Documentation
+ */
+void dumpGeneralRegisters()
+{
+    int displayCount = 0;
+
+    for (int i = 0; i < generalRegisters.size(); ++i)
+    {
+        if (generalRegisters[i]->value() != 0)
+        {
+            cout << "  " << (*generalRegisters[i]);
+            displayCount = displayCount + 1;
+        }
+
+        if (displayCount > 0 && displayCount % 4 == 0) { cout << endl; }
+    }
+
+    if (displayCount > 0 && displayCount % 4 != 0) { cout << endl; }
 }

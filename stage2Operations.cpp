@@ -36,7 +36,7 @@ void instructionDecodeStage2()
 {
     if (ifidRegister.v.value() == 0) { return; }
     idexRegister.fetchAddress = ifidRegister.fetchAddress;
-    // idexRegister.v.set();
+    idexRegister.v.set();
 }
 
 /**
@@ -45,8 +45,9 @@ void instructionDecodeStage2()
 void executeStage2()
 {
     if (idexRegister.v.value() == 0) { return; }
+    exmemRegister.instruction = idexRegister.instruction;
     exmemRegister.fetchAddress = idexRegister.fetchAddress;
-    // exmemRegister.v.set();
+    exmemRegister.v.set();
 }
 
 /**
@@ -55,8 +56,9 @@ void executeStage2()
 void memoryAccessStage2()
 {
     if (exmemRegister.v.value() == 0) { return; }
+    memwbRegister.instruction = exmemRegister.instruction;
     memwbRegister.fetchAddress = exmemRegister.fetchAddress;
-    // memwbRegister.v.set();
+    memwbRegister.v.set();
 }
 
 /**
@@ -65,4 +67,6 @@ void memoryAccessStage2()
 void writeBackStage2()
 {
     if (memwbRegister.v.value() == 0) { return; }
+
+    done = true;
 }

@@ -15,7 +15,8 @@ IdExRegister::IdExRegister():
     // subconstructors must be used to initialize the data members
     a("IdEx_A", 32),
     b("IdEx_B", 32),
-    imm("IdEx_Imm", 32)
+    imm("IdEx_Imm", 32),
+    instruction("")
 {
 
 }

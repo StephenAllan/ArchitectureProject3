@@ -20,7 +20,6 @@ class IfIdRegister
        StorageObject pc;    // Program counter
        StorageObject npc;   // New program counter
        StorageObject ir;    // Instruction register
-       long fetchAddress;
 };
 
 class IdExRegister : public IfIdRegister
@@ -31,6 +30,7 @@ class IdExRegister : public IfIdRegister
        StorageObject a;     // Operand A
        StorageObject b;     // Operand B
        StorageObject imm;   // Sign-extended immediate
+       string instruction;
 };
 
 class ExMemRegister : public IdExRegister
@@ -47,5 +47,4 @@ class MemWbRegister : public ExMemRegister
        MemWbRegister();
 
        StorageObject lmd;   // LMD
-
 };
