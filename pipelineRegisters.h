@@ -33,6 +33,7 @@ class IdExRegister : public IfIdRegister
        StorageObject b;
        StorageObject imm;
        long fetchAddress;
+       string instruction;
 };
 
 class ExMemRegister : public IdExRegister
@@ -43,6 +44,7 @@ class ExMemRegister : public IdExRegister
        Clearable v;
        StorageObject a;
        long fetchAddress;
+       string instruction;
 };
 
 class MemWbRegister : public ExMemRegister
@@ -53,4 +55,5 @@ class MemWbRegister : public ExMemRegister
        Clearable v;
        StorageObject a;
        long fetchAddress;
+       string instruction;
 };

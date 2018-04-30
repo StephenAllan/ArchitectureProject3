@@ -17,7 +17,8 @@ IdExRegister::IdExRegister():
     a("IdEx_A", 32),
     b("IdEx_B", 32),
     imm("IdEx_Imm", 32),
-    fetchAddress(0)
+    fetchAddress(0),
+    instruction("")
 {
 
 }

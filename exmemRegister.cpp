@@ -16,7 +16,8 @@ ExMemRegister::ExMemRegister():
     // TODO: Add correct fields
     v("ExMem_V", 1),
     a("ExMem_A", 32),
-    fetchAddress(0)
+    fetchAddress(0),
+    instruction("")
 {
 
 }

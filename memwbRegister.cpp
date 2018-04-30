@@ -16,7 +16,8 @@ MemWbRegister::MemWbRegister():
     // TODO: Add correct fields
     v("MemWb_V", 1),
     a("MemWb_A", 32),
-    fetchAddress(0)
+    fetchAddress(0),
+    instruction("")
 {
 
 }

@@ -30,7 +30,8 @@ void memoryAccessStage2();
 void writeBackStage2();
 
 /** Utility Operations */
-// void dumpRegisters();
+void dumpAllRegisters();
+void dumpGeneralRegisters();
 // void displayRecord(long, long, string, string = "");
 // void displayRecord(long , vector<long>, string, string = "");
 // void displayModeError();
