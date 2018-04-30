@@ -20,11 +20,13 @@ void instructionFetchStage2()
     im.read();
     ir.latchFrom(im.READ());
 
-    ifidRegister.fetchAddress = pc.value();
-    ifidRegister.v.set();
+    //ifidRegister.fetchAddress = pc.value();
+    // Transfer data using buses
 
-    // Increment program counter for next instruction
-    pc.perform(Counter::incr4);
+    // PC is now incremented, is the value of the new PC
+    pcBus.IN().pullFrom(pc);
+    ifidRegister.npc.latchFrom(pcBus.OUT());
+    //ifidRegister.v.set();
 }
 
 /**

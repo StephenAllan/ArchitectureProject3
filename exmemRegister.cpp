@@ -14,9 +14,7 @@
 ExMemRegister::ExMemRegister():
     // subconstructors must be used to initialize the data members
     // TODO: Add correct fields
-    v("ExMem_V", 1),
-    a("ExMem_A", 32),
-    fetchAddress(0)
+    c("ExMem_C", ADDRESS_SIZE_BITS)
 {
 
 }

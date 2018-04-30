@@ -19,6 +19,10 @@ void instructionFetchStage1()
     // Move address into MAR
     instructionBus.IN().pullFrom(pc);
     im.MAR().latchFrom(instructionBus.OUT());
+
+    pcBus.IN().pullFrom(pc);
+    ifidRegister.pc.latchFrom(pcBus.OUT());
+    pc.perform(Counter::incr4);
 }
 
 /**

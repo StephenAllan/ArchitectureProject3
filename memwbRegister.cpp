@@ -14,9 +14,7 @@
 MemWbRegister::MemWbRegister():
     // subconstructors must be used to initialize the data members
     // TODO: Add correct fields
-    v("MemWb_V", 1),
-    a("MemWb_A", 32),
-    fetchAddress(0)
+    lmd("MemWb_LMD", ADDRESS_SIZE_BITS)
 {
 
 }

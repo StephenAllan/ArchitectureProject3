@@ -25,6 +25,8 @@ Bus op2("Op2Bus", ADDRESS_SIZE_BITS);
 Bus out("OutBus", ADDRESS_SIZE_BITS);
 
 Bus instructionBus("InstructionBus", ADDRESS_SIZE_BITS);
+Bus pcBus("PcBus", ADDRESS_SIZE_BITS);
+Bus irBus("IrBus", ADDRESS_SIZE_BITS);
 
 /** Registers */
 StorageObject r0("R0", ADDRESS_SIZE_BITS);

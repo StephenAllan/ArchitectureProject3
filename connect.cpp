@@ -16,6 +16,8 @@
  */
 void connect()
 {
+    // we can definitely do something like this for the registers, but should we be doing this for
+    // basically all the objects in the system?
     for (int i = 0; i < connectionObjects.size(); ++i)
     {
         connectionObjects[i]->connectsTo(op1.IN());
@@ -47,6 +49,9 @@ void connect()
 
     pc.connectsTo(instructionBus.IN());
     pc.connectsTo(instructionBus.OUT());
+
+    pc.connectsTo(pcBus.IN());
+    ifidRegister.pc.connectsTo(pcBus.OUT());
     
     im.MAR().connectsTo(instructionBus.OUT());
 }

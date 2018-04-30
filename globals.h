@@ -25,6 +25,8 @@ extern Bus op2;
 extern Bus out;
 
 extern Bus instructionBus;
+extern Bus pcBus;
+extern Bus irBus;
 
 extern StorageObject r0;
 extern StorageObject r1;

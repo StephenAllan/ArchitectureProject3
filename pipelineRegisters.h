@@ -16,10 +16,10 @@ class IfIdRegister
     public:
        IfIdRegister();
 
-       Clearable v;
-       StorageObject pc;
-       StorageObject npc;
-       StorageObject ir;
+       Clearable v;         // Valid bit
+       StorageObject pc;    // Program counter
+       StorageObject npc;   // New program counter
+       StorageObject ir;    // Instruction register
        long fetchAddress;
 };
 
@@ -28,11 +28,9 @@ class IdExRegister : public IfIdRegister
     public:
        IdExRegister();
 
-       Clearable v;
-       StorageObject a;
-       StorageObject b;
-       StorageObject imm;
-       long fetchAddress;
+       StorageObject a;     // Operand A
+       StorageObject b;     // Operand B
+       StorageObject imm;   // Sign-extended immediate
 };
 
 class ExMemRegister : public IdExRegister
@@ -40,9 +38,7 @@ class ExMemRegister : public IdExRegister
     public:
        ExMemRegister();
 
-       Clearable v;
-       StorageObject a;
-       long fetchAddress;
+       StorageObject c;     // Execution result
 };
 
 class MemWbRegister : public ExMemRegister
@@ -50,7 +46,6 @@ class MemWbRegister : public ExMemRegister
     public:
        MemWbRegister();
 
-       Clearable v;
-       StorageObject a;
-       long fetchAddress;
+       StorageObject lmd;   // LMD
+
 };
