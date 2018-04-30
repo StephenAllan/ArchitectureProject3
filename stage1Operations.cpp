@@ -20,9 +20,17 @@ void instructionFetchStage1()
     instructionBus.IN().pullFrom(pc);
     im.MAR().latchFrom(instructionBus.OUT());
 
+    // Increment PC by 4 for next instruction
+    pcAlu.OP1().pullFrom(pc);
+    pcAlu.OP2().pullFrom(pcIncr);
+    pcAlu.perform(BusALU::op_add);
+    pc.latchFrom(pcAlu.OUT());
+    ifidRegister.npc.latchFrom(pcAlu.OUT()); // also send incremented PC to pipeline register
+
+    // Move PC to pipeline register
     pcBus.IN().pullFrom(pc);
     ifidRegister.pc.latchFrom(pcBus.OUT());
-    pc.perform(Counter::incr4);
+    
 }
 
 /**

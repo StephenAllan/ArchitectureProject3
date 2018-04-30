@@ -28,6 +28,11 @@ extern Bus instructionBus;
 extern Bus pcBus;
 extern Bus irBus;
 
+extern Bus idVBus;
+extern Bus idPcBus;
+extern Bus idNpcBus;
+extern Bus idIrBus;
+
 extern StorageObject r0;
 extern StorageObject r1;
 extern StorageObject r2;
@@ -61,7 +66,7 @@ extern StorageObject r29;
 extern StorageObject r30;
 extern StorageObject r31;
 
-extern Counter pc;
+extern StorageObject pc;
 extern StorageObject ir;
 extern StorageObject mar;
 extern StorageObject mdr;
@@ -75,7 +80,7 @@ extern StorageObject rc;
 extern Memory im;
 extern Memory dm;
 
-extern BusALU alu1;
+extern BusALU pcAlu;
 extern BusALU alu2;
 extern BusALU alu3;
 extern BusALU alu4;
@@ -84,6 +89,8 @@ extern IfIdRegister ifidRegister;
 extern IdExRegister idexRegister;
 extern ExMemRegister exmemRegister;
 extern MemWbRegister memwbRegister;
+
+extern StorageObject pcIncr;
 
 extern bool done;   // is the simulation over?
 

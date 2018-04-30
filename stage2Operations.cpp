@@ -22,11 +22,6 @@ void instructionFetchStage2()
 
     //ifidRegister.fetchAddress = pc.value();
     // Transfer data using buses
-
-    // PC is now incremented, is the value of the new PC
-    pcBus.IN().pullFrom(pc);
-    ifidRegister.npc.latchFrom(pcBus.OUT());
-    //ifidRegister.v.set();
 }
 
 /**
@@ -35,8 +30,15 @@ void instructionFetchStage2()
 void instructionDecodeStage2()
 {
     if (ifidRegister.v.value() == 0) { return; }
-    idexRegister.fetchAddress = ifidRegister.fetchAddress;
-    idexRegister.v.set();
+
+    idVBus.IN().pullFrom(ifidRegister.v);
+    idexRegister.v.latchFrom(idVBus.OUT());
+    idPcBus.IN().pullFrom(ifidRegister.pc);
+    idexRegister.pc.latchFrom(idPcBus.OUT());
+    idNpcBus.IN().pullFrom(ifidRegister.npc);
+    idexRegister.npc.latchFrom(idNpcBus.OUT());
+    idIrBus.IN().pullFrom(ifidRegister.ir);
+    idexRegister.ir.latchFrom(idIrBus.OUT());
 }
 
 /**
@@ -46,7 +48,6 @@ void executeStage2()
 {
     if (idexRegister.v.value() == 0) { return; }
     exmemRegister.instruction = idexRegister.instruction;
-    exmemRegister.fetchAddress = idexRegister.fetchAddress;
     exmemRegister.v.set();
 }
 
@@ -57,7 +58,6 @@ void memoryAccessStage2()
 {
     if (exmemRegister.v.value() == 0) { return; }
     memwbRegister.instruction = exmemRegister.instruction;
-    memwbRegister.fetchAddress = exmemRegister.fetchAddress;
     memwbRegister.v.set();
 }
 

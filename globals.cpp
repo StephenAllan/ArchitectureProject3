@@ -28,6 +28,11 @@ Bus instructionBus("InstructionBus", ADDRESS_SIZE_BITS);
 Bus pcBus("PcBus", ADDRESS_SIZE_BITS);
 Bus irBus("IrBus", ADDRESS_SIZE_BITS);
 
+Bus idVBus("Id_vBus", ADDRESS_SIZE_BITS);
+Bus idPcBus("Id_pcBus", ADDRESS_SIZE_BITS);
+Bus idNpcBus("Id_npcBus", ADDRESS_SIZE_BITS);
+Bus idIrBus("Id_irBus", ADDRESS_SIZE_BITS);
+
 /** Registers */
 StorageObject r0("R0", ADDRESS_SIZE_BITS);
 StorageObject r1("R1", ADDRESS_SIZE_BITS);
@@ -62,7 +67,7 @@ StorageObject r29("R29", ADDRESS_SIZE_BITS);
 StorageObject r30("R30", ADDRESS_SIZE_BITS);
 StorageObject r31("R31", ADDRESS_SIZE_BITS);
 
-Counter pc("PC", ADDRESS_SIZE_BITS);
+StorageObject pc("PC", ADDRESS_SIZE_BITS);
 StorageObject ir("IR", ADDRESS_SIZE_BITS);
 StorageObject mar("MAR", ADDRESS_SIZE_BITS);
 StorageObject mdr("MDR", ADDRESS_SIZE_BITS);
@@ -77,7 +82,7 @@ StorageObject rc("RC", ADDRESS_SIZE_BITS);
 Memory im("InstructionMemory", ADDRESS_SIZE_BITS, BYTE_SIZE_BITS, 0xffff, 4);
 Memory dm("DataMemory", ADDRESS_SIZE_BITS, BYTE_SIZE_BITS, 0xffff, 4);
 
-BusALU alu1("ALU1", ADDRESS_SIZE_BITS);
+BusALU pcAlu("PC ALU", ADDRESS_SIZE_BITS);
 BusALU alu2("ALU2", ADDRESS_SIZE_BITS);
 BusALU alu3("ALU3", ADDRESS_SIZE_BITS);
 BusALU alu4("ALU4", ADDRESS_SIZE_BITS);
@@ -87,6 +92,9 @@ IfIdRegister ifidRegister;
 IdExRegister idexRegister;
 ExMemRegister exmemRegister;
 MemWbRegister memwbRegister;
+
+/** Constants */
+StorageObject pcIncr("pcIncr", ADDRESS_SIZE_BITS, 4);
 
 /** Control Variables */
 bool done(false);   // is the simulation over?

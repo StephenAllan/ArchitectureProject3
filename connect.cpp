@@ -27,9 +27,9 @@ void connect()
         connectionObjects[i]->connectsTo(out.IN());
         connectionObjects[i]->connectsTo(out.OUT());
 
-        connectionObjects[i]->connectsTo(alu1.OP1());
-        connectionObjects[i]->connectsTo(alu1.OP2());
-        connectionObjects[i]->connectsTo(alu1.OUT());
+        connectionObjects[i]->connectsTo(pcAlu.OP1());
+        connectionObjects[i]->connectsTo(pcAlu.OP2());
+        connectionObjects[i]->connectsTo(pcAlu.OUT());
         connectionObjects[i]->connectsTo(alu2.OP1());
         connectionObjects[i]->connectsTo(alu2.OP2());
         connectionObjects[i]->connectsTo(alu2.OUT());
@@ -46,12 +46,17 @@ void connect()
         connectionObjects[i]->connectsTo(dm.READ());
         connectionObjects[i]->connectsTo(dm.WRITE());
     }
-
+    
+    /** Instruction Fetch Connections */
+    pc.connectsTo(pcAlu.OP1());
+    pc.connectsTo(pcAlu.OUT());
+    pcIncr.connectsTo(pcAlu.OP2());
     pc.connectsTo(instructionBus.IN());
     pc.connectsTo(instructionBus.OUT());
 
     pc.connectsTo(pcBus.IN());
     ifidRegister.pc.connectsTo(pcBus.OUT());
+    ifidRegister.npc.connectsTo(pcAlu.OUT());
     
     im.MAR().connectsTo(instructionBus.OUT());
 }
