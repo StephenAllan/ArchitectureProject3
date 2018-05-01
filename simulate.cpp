@@ -45,6 +45,7 @@ void simulate(char* objectFile)
         
         Clock::tick();
 
+        // Debug
         dumpGeneralRegisters();
     }
 }

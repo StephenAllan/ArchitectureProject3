@@ -59,7 +59,7 @@ void executeStage1()
     long rd = idexRegister.ir(15, 11);
     long funct = idexRegister.ir(5, 0);
 
-    // TODO: implement load/store instructions
+    // TODO: implement store instruction
     // TODO: implement branch instructions
 
     if (opcode == 0)
@@ -75,7 +75,7 @@ void executeStage1()
     exFuncAlu.perform(BusALU::op_zero); // Ignore the no operation error
 
     exmemRegister.c.latchFrom(exFuncAlu.OUT());         // Pass result down pipeline
-    (*generalRegisters[rd]).latchFrom(exFuncAlu.OUT()); // FIXME: Should only be done for R type instructions
+    generalRegisters[rd]->latchFrom(exFuncAlu.OUT());   // FIXME: Should only be done for R type instructions
 
     switch (opcode)
     {
