@@ -16,6 +16,8 @@ class IfIdRegister
     public:
        IfIdRegister();
 
+       bool incrPc;
+
        Clearable v;         // Valid bit
        StorageObject pc;    // Program counter
        StorageObject npc;   // New program counter

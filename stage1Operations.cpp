@@ -52,7 +52,11 @@ void instructionDecodeStage1()
     idexRegister.b.latchFrom(idBBus.OUT());
 
     extensionAlu.OP1().pullFrom(ir);
-    extensionAlu.OP2().pullFrom(bitMask_16);
+    if (idexRegister.instrType == J_TYPE) {
+        extensionAlu.OP2().pullFrom(bitMask_26);
+    } else { // R_TYPE and I_TYPE
+        extensionAlu.OP2().pullFrom(bitMask_16);
+    }
     extensionAlu.perform(BusALU::op_extendSign);
     idexRegister.imm.latchFrom(extensionAlu.OUT());
 }
