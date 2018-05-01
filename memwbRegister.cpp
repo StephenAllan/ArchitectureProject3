@@ -13,6 +13,7 @@
 
 MemWbRegister::MemWbRegister():
     // subconstructors must be used to initialize the data members
+    instrType(0),
     v("MemWb_V", 1),
     pc("MemWb_PC", ADDRESS_SIZE_BITS),
     npc("MemWb_NPC", ADDRESS_SIZE_BITS),
