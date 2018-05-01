@@ -17,6 +17,7 @@ class IfIdRegister
        IfIdRegister();
 
        bool incrPc;
+       unsigned short instrType;
 
        Clearable v;         // Valid bit
        StorageObject pc;    // Program counter

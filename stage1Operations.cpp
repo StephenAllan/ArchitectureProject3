@@ -32,14 +32,34 @@ void instructionDecodeStage1()
     idIrBus.IN().pullFrom(ir);
     ifidRegister.ir.latchFrom(idIrBus.OUT());
 
+    long opcode = ir(31, 26);
     long rs = ir(25, 21);
     long rt = ir(20, 16);
+    long imm = ir(15, 0);
 
     idABus.IN().pullFrom((*generalRegisters[rs]));
     idexRegister.a.latchFrom(idABus.OUT());
 
     idBBus.IN().pullFrom((*generalRegisters[rt]));
     idexRegister.b.latchFrom(idBBus.OUT());
+
+    if (opcode == 0 || opcode == 1) {
+        ifidRegister.instrType = R_TYPE;
+    } else if (opcode == 2 || opcode == 3) {
+        ifidRegister.instrType = J_TYPE;
+    } else {
+        ifidRegister.instrType = I_TYPE;
+    }
+
+    if (ifidRegister.instrType == J_TYPE) {
+        extensionAlu.OP2().pullFrom(bitMask_26);
+    } else { // R_TYPE and I_TYPE
+        extensionAlu.OP2().pullFrom(bitMask_16);
+    }
+
+    extensionAlu.OP1().pullFrom(ir);
+    extensionAlu.perform(BusALU::op_extendSign);
+    idexRegister.imm.latchFrom(extensionAlu.OUT());
 }
 
 /**
