@@ -107,7 +107,7 @@ extern Memory dm;
 
 extern BusALU pcAlu;
 extern BusALU exFuncAlu;
-extern BusALU alu3;
+extern BusALU extensionAlu;
 extern BusALU alu4;
 
 extern IfIdRegister ifidRegister;
@@ -116,6 +116,7 @@ extern ExMemRegister exmemRegister;
 extern MemWbRegister memwbRegister;
 
 extern StorageObject pcIncr;
+extern StorageObject bitMask_16;
 
 extern bool done;   // is the simulation over?
 

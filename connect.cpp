@@ -40,6 +40,10 @@ void connect()
 
     ir.connectsTo(idIrBus.IN());
     ifidRegister.ir.connectsTo(idIrBus.OUT());
+
+    ir.connectsTo(extensionAlu.OP1());
+    bitMask_16.connectsTo(extensionAlu.OP2());
+    idexRegister.imm.connectsTo(extensionAlu.OUT());
     
     /** Instruction Decode Connections */
     ifidRegister.v.connectsTo(idVBus.IN());

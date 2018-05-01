@@ -105,7 +105,7 @@ Memory dm("DMemory", ADDRESS_SIZE_BITS, BYTE_SIZE_BITS, 0xffff, 4);
 
 BusALU pcAlu("PC_ALU", ADDRESS_SIZE_BITS);
 BusALU exFuncAlu("EX_FUNC_ALU", ADDRESS_SIZE_BITS);
-BusALU alu3("ALU3", ADDRESS_SIZE_BITS);
+BusALU extensionAlu("Extension_ALU", ADDRESS_SIZE_BITS);
 BusALU alu4("ALU4", ADDRESS_SIZE_BITS);
 
 /** Pipeline Registers */
@@ -115,7 +115,8 @@ ExMemRegister exmemRegister;
 MemWbRegister memwbRegister;
 
 /** Constants */
-StorageObject pcIncr("pcIncr", ADDRESS_SIZE_BITS, 4);
+StorageObject pcIncr("PcIncr", ADDRESS_SIZE_BITS, 4);
+StorageObject bitMask_16("BitMask_16", ADDRESS_SIZE_BITS, 32768);   // 1000 0000 0000 0000
 
 /** Control Variables */
 bool done(false);   // is the simulation over?

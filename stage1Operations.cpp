@@ -34,13 +34,18 @@ void instructionDecodeStage1()
 
     long rs = ir(25, 21);
     long rt = ir(20, 16);
-    long imm = ir(15, 0); // TODO: sign extend this value and move to idexRegister.imm
+    long imm = ir(15, 0);
 
     idABus.IN().pullFrom((*generalRegisters[rs]));
     idexRegister.a.latchFrom(idABus.OUT());
 
     idBBus.IN().pullFrom((*generalRegisters[rt]));
     idexRegister.b.latchFrom(idBBus.OUT());
+
+    extensionAlu.OP1().pullFrom(ir);
+    extensionAlu.OP2().pullFrom(bitMask_16);
+    extensionAlu.perform(BusALU::op_extendSign);
+    idexRegister.imm.latchFrom(extensionAlu.OUT());
 }
 
 /**
@@ -53,7 +58,6 @@ void executeStage1()
     long opcode = idexRegister.ir(31, 26);
     long funct = idexRegister.ir(5, 0);
 
-    // TODO: implement immediate ALU instructions
     // TODO: implement load/store instructions
     // TODO: implement branch instructions
 
@@ -63,8 +67,7 @@ void executeStage1()
     }
     else
     {
-        // Use sign extended immediate as op2
-        // exFuncAlu.OP2().pullFrom(idexRegister.imm);
+        exFuncAlu.OP2().pullFrom(idexRegister.imm);
     }
 
     exFuncAlu.OP1().pullFrom(idexRegister.a);
