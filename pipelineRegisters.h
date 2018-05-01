@@ -27,6 +27,8 @@ class IdExRegister
     public:
        IdExRegister();
 
+       unsigned char instrType;
+
        Clearable v;
        StorageObject pc;
        StorageObject npc;
@@ -40,6 +42,8 @@ class ExMemRegister
 {
     public:
        ExMemRegister();
+
+       unsigned char instrType;
 
        Clearable v;
        StorageObject pc;
@@ -55,6 +59,8 @@ class MemWbRegister
 {
     public:
        MemWbRegister();
+
+       unsigned char instrType;
 
        Clearable v;
        StorageObject pc;
