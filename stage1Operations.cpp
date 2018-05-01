@@ -164,32 +164,23 @@ void writeBackStage1()
 {
     if (memwbRegister.v.value() == 0) { return; }
 
-    // Debug
-    // cout << endl;
-    // cout << memwbRegister.v << endl;
-    // cout << memwbRegister.pc << endl;
-    // cout << memwbRegister.npc << endl;
-    // cout << memwbRegister.ir << endl;
-    // cout << memwbRegister.c << endl;
-    // cout << memwbRegister.lmd << endl;
-    // cout << endl;
-
     /** Instruction Format
-    opCode = ir(31, 26)
-    rs = ir(25, 21)
-    rt = ir(20, 16)
+      opCode = ir(31, 26)
+      rs = ir(25, 21)
+      rt = ir(20, 16)
 
-    imm = ir(15, 0)
+      imm = ir(15, 0)
 
-    rd = ir(15, 11)
-    sh = ir(10, 6)
-    funct = ir(5, 0)
+      rd = ir(15, 11)
+      sh = ir(10, 6)
+      funct = ir(5, 0)
 
-    target = ir(25, 0)
+      target = ir(25, 0)
     **/
 
     long opcode = memwbRegister.ir(31, 26);
     long funct = memwbRegister.ir(5, 0);
+    
     switch (opcode)
     {
         case 0: // Special
@@ -202,6 +193,16 @@ void writeBackStage1()
                     done = true;
                     break;
 
+                case 2: // JR
+                    displayRecord("JR", true); break;
+                case 3: // JALR
+                    displayRecord("JALR", true); break;
+
+                case 7: // BREAK
+                    displayRecord("BREAK", true);
+                    dumpGeneralRegisters();
+                    break;
+
                 case 16: // ADD
                     displayRecord("ADD", true); break;
                 case 18: // SUB
@@ -212,6 +213,24 @@ void writeBackStage1()
                     displayRecord("OR", true); break;
                 case 22: // XOR
                     displayRecord("XOR", true); break;
+
+                case 24: // SLT
+                    displayRecord("SLT", true); break;
+                case 25: // SLTU
+                    displayRecord("SLTU", true); break;
+
+                case 37: // SLL
+                    displayRecord("SLL", true); break;
+                case 38: // SRL
+                    displayRecord("SRL", true); break;
+                case 39: // SRA
+                    displayRecord("SRA", true); break;
+                case 45: // SLLV
+                    displayRecord("SLLV", true); break;
+                case 46: // SRLV
+                    displayRecord("SRLV", true); break;
+                case 47: // SRAV
+                    displayRecord("SRAV", true); break;
 
                 case 6:  // Unimplemented
                 case 17:
@@ -230,42 +249,36 @@ void writeBackStage1()
             displayRecord("NOP");
             break;
 
-        case 2: // J
-            break;
-
+        case 2: // JR
+            displayRecord("J"); break;
         case 3: // JAL
-            break;
+            displayRecord("JAL"); break;
 
         case 16: // ADDI
-            break;
-
+            displayRecord("ADDI"); break;
         case 20: // ANDI
-            break;
-
+            displayRecord("ANDI"); break;
         case 21: // ORI
-            break;
-
+            displayRecord("ORI"); break;
         case 22: // XORI
-            break;
+            displayRecord("XORI"); break;
 
         case 24: // SLTI
-            break;
+            displayRecord("SLTI"); break;
 
         case 35: // LW
-            displayRecord("LW");
-            break;
+            displayRecord("LW"); break;
 
         case 39: // LUI
-            break;
+            displayRecord("LUI"); break;
 
         case 43: // SW
-            break;
+            displayRecord("SW"); break;
 
         case 60: // BEQ
-            break;
-
+            displayRecord("BEQ"); break;
         case 61: // BNE
-            break;
+            displayRecord("BNE"); break;
 
         case 17:  // Unimplemented
         case 25:
