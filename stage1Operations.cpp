@@ -39,6 +39,68 @@ void instructionDecodeStage1()
 void executeStage1()
 {
     if (idexRegister.v.value() == 0) { return; }
+
+    long opcode = memwbRegister.ir(31, 26);
+    long funct = memwbRegister.ir(5, 0);
+    switch (opcode)
+    {
+        case 0: // Special
+        {
+            switch (funct)
+            {
+                case 0: // HALT
+                    cout << "Machine halted - HALT instruction executed" << endl;
+                    done = true;
+                    break;
+
+                default:
+                    break;
+            }
+            break;
+        }
+
+        case 1: // NOP
+            break;
+
+        case 2: // J
+            break;
+
+        case 3: // JAL
+            break;
+
+        case 16: // ADDI
+            break;
+
+        case 20: // ANDI
+            break;
+
+        case 21: // ORI
+            break;
+
+        case 22: // XORI
+            break;
+
+        case 24: // SLTI
+            break;
+
+        case 35: // LW
+            break;
+
+        case 39: // LUI
+            break;
+
+        case 43: // SW
+            break;
+
+        case 60: // BEQ
+            break;
+
+        case 61: // BNE
+            break;
+
+        default: // In the case of unrecognized/unimplemented opcode, just don't do anything
+            break; // Data needs to be passed to WB phase, where it will be printed and halt
+    }
 }
 
 /**
