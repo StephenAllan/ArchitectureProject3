@@ -117,6 +117,7 @@ extern MemWbRegister memwbRegister;
 
 extern StorageObject pcIncr;
 extern StorageObject bitMask_16;
+extern StorageObject bitMask_26;
 
 extern bool done;   // is the simulation over?
 

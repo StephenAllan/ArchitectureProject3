@@ -46,6 +46,8 @@ void connect()
     idexRegister.imm.connectsTo(extensionAlu.OUT());
     
     /** Instruction Decode Connections */
+    bitMask_26.connectsTo(extensionAlu.OP2());
+
     ifidRegister.v.connectsTo(idVBus.IN());
     ifidRegister.pc.connectsTo(idPcBus.IN());
     ifidRegister.npc.connectsTo(idNpcBus.IN());
