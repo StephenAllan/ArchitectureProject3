@@ -60,8 +60,8 @@ void executeStage1()
     // exFuncAlu.perform(BusALU::op_add);
     // exmemRegister.c.latchFrom(exFuncAlu.OUT());
 
-    long opcode = memwbRegister.ir(31, 26);
-    long funct = memwbRegister.ir(5, 0);
+    long opcode = idexRegister.ir(31, 26);
+    long funct = idexRegister.ir(5, 0);
     switch (opcode)
     {
         case 0: // Special
