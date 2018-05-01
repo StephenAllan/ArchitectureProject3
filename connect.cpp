@@ -5,6 +5,7 @@
     Connect all CPU components for the z88 architecture.
 
     @author Stephen Allan <swa9846>
+    @author Thomas Andaloro <tra5374>
  */
 
 
@@ -53,10 +54,35 @@ void connect()
     pcIncr.connectsTo(pcAlu.OP2());
     pc.connectsTo(instructionBus.IN());
     pc.connectsTo(instructionBus.OUT());
-
     pc.connectsTo(pcBus.IN());
     ifidRegister.pc.connectsTo(pcBus.OUT());
     ifidRegister.npc.connectsTo(pcAlu.OUT());
     
+    /** Instruction Decode Connections */
+    ifidRegister.v.connectsTo(idVBus.IN());
+    ifidRegister.pc.connectsTo(idPcBus.IN());
+    ifidRegister.npc.connectsTo(idNpcBus.IN());
+    ifidRegister.ir.connectsTo(idIrBus.IN());
+    idexRegister.v.connectsTo(idVBus.OUT());
+    idexRegister.pc.connectsTo(idPcBus.OUT());
+    idexRegister.npc.connectsTo(idNpcBus.OUT());
+    idexRegister.ir.connectsTo(idIrBus.OUT());
+
+    /** Execution Stage Connections */
+    idexRegister.v.connectsTo(exVBus.IN());
+    idexRegister.pc.connectsTo(exPcBus.IN());
+    idexRegister.ir.connectsTo(exIrBus.IN());
+    exmemRegister.v.connectsTo(exVBus.OUT());
+    exmemRegister.pc.connectsTo(exPcBus.OUT());
+    exmemRegister.ir.connectsTo(exIrBus.OUT());
+
+    /** Memory Stage Connections */
+    exmemRegister.v.connectsTo(memVBus.IN());
+    exmemRegister.pc.connectsTo(memPcBus.IN());
+    exmemRegister.ir.connectsTo(memIrBus.IN());
+    memwbRegister.v.connectsTo(memVBus.OUT());
+    memwbRegister.pc.connectsTo(memPcBus.OUT());
+    memwbRegister.ir.connectsTo(memIrBus.OUT());
+
     im.MAR().connectsTo(instructionBus.OUT());
 }

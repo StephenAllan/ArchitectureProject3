@@ -5,6 +5,7 @@
     Operations for the second clock tick of the z88 architecture.
 
     @author Stephen Allan <swa9846>
+    @author Thomas Andaloro <tra5374>
  */
 
 
@@ -22,6 +23,7 @@ void instructionFetchStage2()
 
     //ifidRegister.fetchAddress = pc.value();
     // Transfer data using buses
+    ifidRegister.v.set();
 }
 
 /**
@@ -31,6 +33,9 @@ void instructionDecodeStage2()
 {
     if (ifidRegister.v.value() == 0) { return; }
 
+    // Probably need to do some modification to PC and ID/EX.NPC here if a branch was decoded
+
+    // Send all of the previous pipeline register data to the next stage
     idVBus.IN().pullFrom(ifidRegister.v);
     idexRegister.v.latchFrom(idVBus.OUT());
     idPcBus.IN().pullFrom(ifidRegister.pc);
@@ -47,8 +52,14 @@ void instructionDecodeStage2()
 void executeStage2()
 {
     if (idexRegister.v.value() == 0) { return; }
-    exmemRegister.instruction = idexRegister.instruction;
-    exmemRegister.v.set();
+
+    // Advance data in pipeline registers
+    exVBus.IN().pullFrom(idexRegister.v);
+    exPcBus.IN().pullFrom(idexRegister.pc);
+    exIrBus.IN().pullFrom(idexRegister.ir);
+    exmemRegister.v.latchFrom(exVBus.OUT());
+    exmemRegister.pc.latchFrom(exPcBus.OUT());
+    exmemRegister.ir.latchFrom(exIrBus.OUT());
 }
 
 /**
@@ -57,8 +68,14 @@ void executeStage2()
 void memoryAccessStage2()
 {
     if (exmemRegister.v.value() == 0) { return; }
-    memwbRegister.instruction = exmemRegister.instruction;
-    memwbRegister.v.set();
+
+    // Advance data in pipeline registers
+    memVBus.IN().pullFrom(exmemRegister.v);
+    memPcBus.IN().pullFrom(exmemRegister.pc);
+    memIrBus.IN().pullFrom(exmemRegister.ir);
+    memwbRegister.v.latchFrom(memVBus.OUT());
+    memwbRegister.pc.latchFrom(memPcBus.OUT());
+    memwbRegister.ir.latchFrom(memIrBus.OUT());
 }
 
 /**
@@ -68,5 +85,10 @@ void writeBackStage2()
 {
     if (memwbRegister.v.value() == 0) { return; }
 
-    done = true;
+    // Print to console
+    cout << memwbRegister.pc.value() << ":  " << memwbRegister.ir.value() << endl;
+    if (memwbRegister.ir.value() == 0) {
+        cout << "Machine Halted - HALT instruction executed";
+        done = true;
+    }
 }

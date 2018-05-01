@@ -5,6 +5,7 @@
     External declarations of global variables for the z88 architecture.
 
     @author Stephen Allan <swa9846>
+    @author Thomas Andaloro <tra5374>
  */
 
 
@@ -28,10 +29,21 @@ extern Bus instructionBus;
 extern Bus pcBus;
 extern Bus irBus;
 
+// Buses to bring IF/ID data to ID/EX registers
 extern Bus idVBus;
 extern Bus idPcBus;
 extern Bus idNpcBus;
 extern Bus idIrBus;
+
+// Buses to bring ID/EX data to EX/MEM registers
+extern Bus exVBus;
+extern Bus exPcBus;
+extern Bus exIrBus;
+
+// Buses to bring EX/MEM data to MEM/WB registers
+extern Bus memVBus;
+extern Bus memPcBus;
+extern Bus memIrBus;
 
 extern StorageObject r0;
 extern StorageObject r1;

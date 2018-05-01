@@ -5,6 +5,7 @@
     Setup operations for the first clock tick of the z88 architecture.
 
     @author Stephen Allan <swa9846>
+    @author Thomas Andaloro <tra5374>
  */
 
 
@@ -39,17 +40,6 @@ void instructionFetchStage1()
 void instructionDecodeStage1()
 {
     if (ifidRegister.v.value() == 0) { return; }
-
-    stringstream ss;
-    string instruction;
-
-    for (int i = 31; i >= 0; --i)
-    {
-        ss << ir(i);
-    }
-
-    ss >> instruction;
-    idexRegister.instruction = instruction;
 }
 
 /**
@@ -75,6 +65,8 @@ void writeBackStage1()
 {
     if (memwbRegister.v.value() == 0) { return; }
 
+// All this needs to be done using the pipelined IR value
+/*
     string standardOpCode = idexRegister.instruction.substr(0, 5);
 
     if (standardOpCode == "000000")
@@ -112,4 +104,5 @@ void writeBackStage1()
         cout << "Machine halted - undefined instruction" << endl;
         done = true;
     }
+*/
 }

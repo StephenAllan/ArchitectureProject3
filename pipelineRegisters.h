@@ -22,29 +22,47 @@ class IfIdRegister
        StorageObject ir;    // Instruction register
 };
 
-class IdExRegister : public IfIdRegister
+class IdExRegister
 {
     public:
        IdExRegister();
 
+       Clearable v;
+       StorageObject pc;
+       StorageObject npc;
+       StorageObject ir;
        StorageObject a;     // Operand A
        StorageObject b;     // Operand B
        StorageObject imm;   // Sign-extended immediate
-       string instruction;
 };
 
-class ExMemRegister : public IdExRegister
+class ExMemRegister
 {
     public:
        ExMemRegister();
 
+       Clearable v;
+       StorageObject pc;
+       StorageObject npc;
+       StorageObject ir;
+       StorageObject a;
+       StorageObject b;
+       StorageObject imm;
        StorageObject c;     // Execution result
 };
 
-class MemWbRegister : public ExMemRegister
+class MemWbRegister
 {
     public:
        MemWbRegister();
 
+       Clearable v;
+       StorageObject pc;
+       StorageObject npc;
+       StorageObject ir;
+       StorageObject a;
+       StorageObject b;
+       StorageObject imm;
+       StorageObject c;
        StorageObject lmd;   // LMD
 };

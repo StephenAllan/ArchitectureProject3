@@ -13,10 +13,13 @@
 
 IdExRegister::IdExRegister():
     // subconstructors must be used to initialize the data members
+    v("IdEx_V", 1),
+    pc("IdEx_PC", 32),
+    npc("IdEx_NPC", 32),
+    ir("IdEx_IR", 32),
     a("IdEx_A", 32),
     b("IdEx_B", 32),
-    imm("IdEx_Imm", 32),
-    instruction("")
+    imm("IdEx_Imm", 32)
 {
 
 }

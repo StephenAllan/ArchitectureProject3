@@ -5,6 +5,7 @@
     Global variables for the z88 architecture.
 
     @author Stephen Allan <swa9846>
+    @author Thomas Andaloro <tra5374>
  */
 
 
@@ -28,10 +29,18 @@ Bus instructionBus("InstructionBus", ADDRESS_SIZE_BITS);
 Bus pcBus("PcBus", ADDRESS_SIZE_BITS);
 Bus irBus("IrBus", ADDRESS_SIZE_BITS);
 
-Bus idVBus("Id_vBus", ADDRESS_SIZE_BITS);
+Bus idVBus("Id_vBus", 1);
 Bus idPcBus("Id_pcBus", ADDRESS_SIZE_BITS);
 Bus idNpcBus("Id_npcBus", ADDRESS_SIZE_BITS);
 Bus idIrBus("Id_irBus", ADDRESS_SIZE_BITS);
+
+Bus exVBus("Ex_vBus", 1);
+Bus exPcBus("Ex_pcBus", ADDRESS_SIZE_BITS);
+Bus exIrBus("Ex_irBus", ADDRESS_SIZE_BITS);
+
+Bus memVBus("Mem_vBus", 1);
+Bus memPcBus("Mem_pcBus", ADDRESS_SIZE_BITS);
+Bus memIrBus("Mem_irBus", ADDRESS_SIZE_BITS);
 
 /** Registers */
 StorageObject r0("R0", ADDRESS_SIZE_BITS);
