@@ -49,12 +49,12 @@ void instructionDecodeStage2()
 
     // Send all of the previous pipeline register data to the next stage
     idVBus.IN().pullFrom(ifidRegister.v);
-    idexRegister.v.latchFrom(idVBus.OUT());
     idPcBus.IN().pullFrom(ifidRegister.pc);
-    idexRegister.pc.latchFrom(idPcBus.OUT());
     idNpcBus.IN().pullFrom(ifidRegister.npc);
-    idexRegister.npc.latchFrom(idNpcBus.OUT());
     idIrBus.IN().pullFrom(ifidRegister.ir);
+    idexRegister.v.latchFrom(idVBus.OUT());
+    idexRegister.pc.latchFrom(idPcBus.OUT());
+    idexRegister.npc.latchFrom(idNpcBus.OUT());
     idexRegister.ir.latchFrom(idIrBus.OUT());
 }
 
@@ -63,14 +63,16 @@ void instructionDecodeStage2()
  */
 void executeStage2()
 {
-    if (idexRegister.v.value() == 0) { return; }
+    // if (idexRegister.v.value() == 0) { return; }
 
     // Advance data in pipeline registers
     exVBus.IN().pullFrom(idexRegister.v);
     exPcBus.IN().pullFrom(idexRegister.pc);
+    exNpcBus.IN().pullFrom(idexRegister.npc);
     exIrBus.IN().pullFrom(idexRegister.ir);
     exmemRegister.v.latchFrom(exVBus.OUT());
     exmemRegister.pc.latchFrom(exPcBus.OUT());
+    exmemRegister.npc.latchFrom(exNpcBus.OUT());
     exmemRegister.ir.latchFrom(exIrBus.OUT());
 }
 
@@ -79,17 +81,17 @@ void executeStage2()
  */
 void memoryAccessStage2()
 {
-    if (exmemRegister.v.value() == 0) { return; }
+    // if (exmemRegister.v.value() == 0) { return; }
     
     memVBus.IN().pullFrom(exmemRegister.v);
-    memwbRegister.v.latchFrom(memVBus.OUT());
     memPcBus.IN().pullFrom(exmemRegister.pc);
-    memwbRegister.pc.latchFrom(memPcBus.OUT());
     memNpcBus.IN().pullFrom(exmemRegister.npc);
-    memwbRegister.npc.latchFrom(memNpcBus.OUT());
     memIrBus.IN().pullFrom(exmemRegister.ir);
-    memwbRegister.ir.latchFrom(memIrBus.OUT());
     memCBus.IN().pullFrom(exmemRegister.c);
+    memwbRegister.v.latchFrom(memVBus.OUT());
+    memwbRegister.pc.latchFrom(memPcBus.OUT());
+    memwbRegister.npc.latchFrom(memNpcBus.OUT());
+    memwbRegister.ir.latchFrom(memIrBus.OUT());
     memwbRegister.c.latchFrom(memCBus.OUT());
 }
 
@@ -98,12 +100,12 @@ void memoryAccessStage2()
  */
 void writeBackStage2()
 {
-    if (memwbRegister.v.value() == 0) { return; }
+    // if (memwbRegister.v.value() == 0) { return; }
 
     // Print to console
-    cout << memwbRegister.pc.value() << ":  " << memwbRegister.ir.value() << endl;
-    if (memwbRegister.ir.value() == 0) {
-        cout << "Machine Halted - HALT instruction executed";
-        done = true;
-    }
+    // cout << memwbRegister.pc.value() << ":  " << memwbRegister.ir.value() << endl;
+    // if (memwbRegister.ir.value() == 0) {
+    //     cout << "Machine Halted - HALT instruction executed";
+    //     done = true;
+    // }
 }

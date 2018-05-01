@@ -59,35 +59,6 @@ void connect()
 
     ir.connectsTo(idIrBus.IN());
     ifidRegister.ir.connectsTo(idIrBus.OUT());
-
-    ifidRegister.v.connectsTo(idVBus.IN());
-    idexRegister.v.connectsTo(idVBus.OUT());
-    ifidRegister.pc.connectsTo(idPcBus.IN());
-    idexRegister.pc.connectsTo(idPcBus.OUT());
-    ifidRegister.npc.connectsTo(idNpcBus.IN());
-    idexRegister.npc.connectsTo(idNpcBus.OUT());
-    ifidRegister.ir.connectsTo(idIrBus.IN());
-    idexRegister.ir.connectsTo(idIrBus.OUT());
-
-    idexRegister.v.connectsTo(exVBus.IN());
-    exmemRegister.v.connectsTo(exVBus.OUT());
-    idexRegister.pc.connectsTo(exPcBus.IN());
-    exmemRegister.pc.connectsTo(exPcBus.OUT());
-    idexRegister.npc.connectsTo(exNpcBus.IN());
-    exmemRegister.npc.connectsTo(exNpcBus.OUT());
-    idexRegister.ir.connectsTo(exIrBus.IN());
-    exmemRegister.ir.connectsTo(exIrBus.OUT());
-
-    exmemRegister.v.connectsTo(memVBus.IN());
-    memwbRegister.v.connectsTo(memVBus.OUT());
-    exmemRegister.pc.connectsTo(memPcBus.IN());
-    memwbRegister.pc.connectsTo(memPcBus.OUT());
-    exmemRegister.npc.connectsTo(memNpcBus.IN());
-    memwbRegister.npc.connectsTo(memNpcBus.OUT());
-    exmemRegister.ir.connectsTo(memIrBus.IN());
-    memwbRegister.ir.connectsTo(memIrBus.OUT());
-    exmemRegister.c.connectsTo(memCBus.IN());
-    memwbRegister.c.connectsTo(memCBus.OUT());
     
     /** Instruction Decode Connections */
     ifidRegister.v.connectsTo(idVBus.IN());
@@ -102,18 +73,24 @@ void connect()
     /** Execution Stage Connections */
     idexRegister.v.connectsTo(exVBus.IN());
     idexRegister.pc.connectsTo(exPcBus.IN());
+    idexRegister.npc.connectsTo(exNpcBus.IN());
     idexRegister.ir.connectsTo(exIrBus.IN());
     exmemRegister.v.connectsTo(exVBus.OUT());
     exmemRegister.pc.connectsTo(exPcBus.OUT());
+    exmemRegister.npc.connectsTo(exNpcBus.OUT());
     exmemRegister.ir.connectsTo(exIrBus.OUT());
 
     /** Memory Stage Connections */
     exmemRegister.v.connectsTo(memVBus.IN());
     exmemRegister.pc.connectsTo(memPcBus.IN());
+    exmemRegister.npc.connectsTo(memNpcBus.IN());
     exmemRegister.ir.connectsTo(memIrBus.IN());
+    exmemRegister.c.connectsTo(memCBus.IN());
     memwbRegister.v.connectsTo(memVBus.OUT());
     memwbRegister.pc.connectsTo(memPcBus.OUT());
+    memwbRegister.npc.connectsTo(memNpcBus.OUT());
     memwbRegister.ir.connectsTo(memIrBus.OUT());
+    memwbRegister.c.connectsTo(memCBus.OUT());
 
     im.MAR().connectsTo(instructionBus.OUT());
 }

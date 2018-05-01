@@ -14,13 +14,13 @@
 ExMemRegister::ExMemRegister():
     // subconstructors must be used to initialize the data members
     v("ExMem_V", 1),
-    pc("ExMem_PC", 32),
-    npc("ExMem_NPC", 32),
-    ir("ExMem_IR", 32),
-    a("ExMem_A", 32),
-    b("ExMem_B", 32),
-    imm("ExMem_IMM", 32),
-    c("ExMem_C", 32)
+    pc("ExMem_PC", ADDRESS_SIZE_BITS),
+    npc("ExMem_NPC", ADDRESS_SIZE_BITS),
+    ir("ExMem_IR", ADDRESS_SIZE_BITS),
+    a("ExMem_A", ADDRESS_SIZE_BITS),
+    b("ExMem_B", ADDRESS_SIZE_BITS),
+    imm("ExMem_IMM", ADDRESS_SIZE_BITS),
+    c("ExMem_C", ADDRESS_SIZE_BITS)
 {
 
 }

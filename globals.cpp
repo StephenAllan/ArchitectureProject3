@@ -34,12 +34,12 @@ Bus idPcBus("Id_pcBus", ADDRESS_SIZE_BITS);
 Bus idNpcBus("Id_npcBus", ADDRESS_SIZE_BITS);
 Bus idIrBus("Id_irBus", ADDRESS_SIZE_BITS);
 
-Bus exVBus("Ex_vBus", ADDRESS_SIZE_BITS);
+Bus exVBus("Ex_vBus", 1);
 Bus exPcBus("Ex_pcBus", ADDRESS_SIZE_BITS);
 Bus exNpcBus("Ex_npcBus", ADDRESS_SIZE_BITS);
 Bus exIrBus("Ex_irBus", ADDRESS_SIZE_BITS);
 
-Bus memVBus("Mem_vBus", ADDRESS_SIZE_BITS);
+Bus memVBus("Mem_vBus", 1);
 Bus memPcBus("Mem_pcBus", ADDRESS_SIZE_BITS);
 Bus memNpcBus("Mem_npcBus", ADDRESS_SIZE_BITS);
 Bus memIrBus("Mem_irBus", ADDRESS_SIZE_BITS);
