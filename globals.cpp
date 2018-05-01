@@ -117,6 +117,7 @@ MemWbRegister memwbRegister;
 
 /** Constants */
 StorageObject pcIncr("PcIncr", ADDRESS_SIZE_BITS, 4);
+StorageObject luiShiftAmount("LuiShiftAmount", ADDRESS_SIZE_BITS, 16);
 StorageObject bitMask_16("BitMask_16", ADDRESS_SIZE_BITS, 0x8000);      // 1000 0000 0000 0000
 StorageObject bitMask_26("BitMask_26", ADDRESS_SIZE_BITS, 0x2000000);
 

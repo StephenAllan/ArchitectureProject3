@@ -55,32 +55,37 @@ void executeStage1()
 {
     if (idexRegister.v.value() == 0) { return; }
 
+    /** Instruction Format
+      opCode = ir(31, 26)
+      rs = ir(25, 21)
+      rt = ir(20, 16)
+
+      imm = ir(15, 0)
+
+      rd = ir(15, 11)
+      sh = ir(10, 6)
+      funct = ir(5, 0)
+
+      target = ir(25, 0)
+    **/
+
     long opcode = idexRegister.ir(31, 26);
+    long rt = idexRegister.ir(20, 16);
     long rd = idexRegister.ir(15, 11);
     long funct = idexRegister.ir(5, 0);
 
-    // TODO: implement store instruction
-    // TODO: implement branch instructions
-
-    if (opcode == 0)
-    {
-        exFuncAlu.OP2().pullFrom(idexRegister.b);
-    }
-    else
-    {
-        exFuncAlu.OP2().pullFrom(idexRegister.imm);
-    }
-
-    exFuncAlu.OP1().pullFrom(idexRegister.a);
-    exFuncAlu.perform(BusALU::op_zero); // Ignore the no operation error
-
-    exmemRegister.c.latchFrom(exFuncAlu.OUT());         // Pass result down pipeline
-    generalRegisters[rd]->latchFrom(exFuncAlu.OUT());   // FIXME: Should only be done for R type instructions
-
+    // Handel I-, R-, and J-type instructions in separate cases
     switch (opcode)
     {
         case 0: // Special
         {
+            exFuncAlu.OP1().pullFrom(idexRegister.a);
+            exFuncAlu.OP2().pullFrom(idexRegister.b);
+            exFuncAlu.perform(BusALU::op_zero); // Ignore the no operation error
+
+            exmemRegister.c.latchFrom(exFuncAlu.OUT());     // Pass result down pipeline
+            generalRegisters[rd]->latchFrom(exFuncAlu.OUT());
+
             switch (funct)
             {
                 case 0: // HALT
@@ -108,44 +113,57 @@ void executeStage1()
 
         case 2: // J
             break;
-
         case 3: // JAL
             break;
 
-        case 16: // ADDI
-            break;
+        default:
+        {
+            exFuncAlu.OP1().pullFrom(idexRegister.imm);
+            exFuncAlu.OP2().pullFrom(luiShiftAmount);
+            exFuncAlu.perform(BusALU::op_zero); // Ignore the no operation error
 
-        case 20: // ANDI
-            break;
+            exmemRegister.c.latchFrom(exFuncAlu.OUT());     // Pass result down pipeline
+            generalRegisters[rt]->latchFrom(exFuncAlu.OUT());
 
-        case 21: // ORI
-            break;
+            switch (opcode)
+            {
+                case 16: // ADDI
+                    break;
 
-        case 22: // XORI
-            break;
+                case 20: // ANDI
+                    break;
 
-        case 24: // SLTI
-            break;
+                case 21: // ORI
+                    break;
 
-        case 35: // LW
-            loadBus.IN().pullFrom(idexRegister.imm);
-            dm.MAR().latchFrom(loadBus.OUT());
-            break;
+                case 22: // XORI
+                    break;
 
-        case 39: // LUI
-            break;
+                case 24: // SLTI
+                    break;
 
-        case 43: // SW
-            break;
+                case 35: // LW
+                    loadBus.IN().pullFrom(idexRegister.imm);
+                    dm.MAR().latchFrom(loadBus.OUT());
+                    break;
 
-        case 60: // BEQ
-            break;
+                case 39: // LUI
+                    exFuncAlu.perform(BusALU::op_lshift);
+                    break;
 
-        case 61: // BNE
-            break;
+                case 43: // SW
+                    break;
 
-        default: // In the case of unrecognized/unimplemented opcode, just don't do anything
-            break; // Data needs to be passed to WB phase, where it will be printed and halt
+                case 60: // BEQ
+                    break;
+
+                case 61: // BNE
+                    break;
+
+                default: // In the case of unrecognized/unimplemented opcode, just don't do anything
+                    break; // Data needs to be passed to WB phase, where it will be printed and halt
+            }
+        }
     }
 }
 
@@ -163,20 +181,6 @@ void memoryAccessStage1()
 void writeBackStage1()
 {
     if (memwbRegister.v.value() == 0) { return; }
-
-    /** Instruction Format
-      opCode = ir(31, 26)
-      rs = ir(25, 21)
-      rt = ir(20, 16)
-
-      imm = ir(15, 0)
-
-      rd = ir(15, 11)
-      sh = ir(10, 6)
-      funct = ir(5, 0)
-
-      target = ir(25, 0)
-    **/
 
     long opcode = memwbRegister.ir(31, 26);
     long funct = memwbRegister.ir(5, 0);
