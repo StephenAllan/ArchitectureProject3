@@ -50,18 +50,27 @@ void executeStage1()
 {
     if (idexRegister.v.value() == 0) { return; }
 
+    long opcode = idexRegister.ir(31, 26);
+    long funct = idexRegister.ir(5, 0);
+
     // TODO: implement immediate ALU instructions
     // TODO: implement load/store instructions
     // TODO: implement branch instructions
 
-    // exFuncAlu.OP1().pullFrom(idexRegister.a);
-    // exFuncAlu.OP2().pullFrom(idexRegister.b);
+    if (opcode == 0)
+    {
+        exFuncAlu.OP2().pullFrom(idexRegister.b);
+    }
+    else
+    {
+        // Use sign extended immediate as op2
+        // exFuncAlu.OP2().pullFrom(idexRegister.imm);
+    }
 
-    // exFuncAlu.perform(BusALU::op_add);
-    // exmemRegister.c.latchFrom(exFuncAlu.OUT());
+    exFuncAlu.OP1().pullFrom(idexRegister.a);
+    exFuncAlu.perform(BusALU::op_zero); // Ignore the no operation error
+    exmemRegister.c.latchFrom(exFuncAlu.OUT());
 
-    long opcode = idexRegister.ir(31, 26);
-    long funct = idexRegister.ir(5, 0);
     switch (opcode)
     {
         case 0: // Special
@@ -72,6 +81,17 @@ void executeStage1()
                     cout << "Machine halted - HALT instruction executed" << endl;
                     done = true;
                     break;
+
+                case 16: // ADD
+                    exFuncAlu.perform(BusALU::op_add); break;
+                case 18: // SUB
+                    exFuncAlu.perform(BusALU::op_sub); break;
+                case 20: // AND
+                    exFuncAlu.perform(BusALU::op_and); break;
+                case 21: // OR
+                    exFuncAlu.perform(BusALU::op_or); break;
+                case 22: // XOR
+                    exFuncAlu.perform(BusALU::op_xor); break;
 
                 default:
                     break;
