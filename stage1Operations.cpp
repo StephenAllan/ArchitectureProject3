@@ -84,94 +84,92 @@ void executeStage1()
     long funct = idexRegister.ir(5, 0);
 
     // Handel I-, R-, and J-type instructions in separate cases
-    switch (opcode)
+    if (idexRegister.instrType == R_TYPE)
     {
-        case 0: // Special
+        exFuncAlu.OP1().pullFrom(idexRegister.a);
+        exFuncAlu.OP2().pullFrom(idexRegister.b);
+        exFuncAlu.perform(BusALU::op_zero); // Ignore the no operation error
+
+        exmemRegister.c.latchFrom(exFuncAlu.OUT());     // Pass result down pipeline
+        generalRegisters[rd]->latchFrom(exFuncAlu.OUT());
+
+        switch (funct)
         {
-            exFuncAlu.OP1().pullFrom(idexRegister.a);
-            exFuncAlu.OP2().pullFrom(idexRegister.b);
-            exFuncAlu.perform(BusALU::op_zero); // Ignore the no operation error
+            case 0: // HALT
+                break;
 
-            exmemRegister.c.latchFrom(exFuncAlu.OUT());     // Pass result down pipeline
-            generalRegisters[rd]->latchFrom(exFuncAlu.OUT());
+            case 16: // ADD
+                exFuncAlu.perform(BusALU::op_add); break;
+            case 18: // SUB
+                exFuncAlu.perform(BusALU::op_sub); break;
+            case 20: // AND
+                exFuncAlu.perform(BusALU::op_and); break;
+            case 21: // OR
+                exFuncAlu.perform(BusALU::op_or); break;
+            case 22: // XOR
+                exFuncAlu.perform(BusALU::op_xor); break;
 
-            switch (funct)
-            {
-                case 0: // HALT
-                    break;
-
-                case 16: // ADD
-                    exFuncAlu.perform(BusALU::op_add); break;
-                case 18: // SUB
-                    exFuncAlu.perform(BusALU::op_sub); break;
-                case 20: // AND
-                    exFuncAlu.perform(BusALU::op_and); break;
-                case 21: // OR
-                    exFuncAlu.perform(BusALU::op_or); break;
-                case 22: // XOR
-                    exFuncAlu.perform(BusALU::op_xor); break;
-
-                default:
-                    break;
-            }
-            break;
+            default:
+                break;
         }
-
-        case 1: // NOP
-            break;
-
-        case 2: // J
-            break;
-        case 3: // JAL
-            break;
-
-        default:
+        break;
+    }
+    else if (idexRegister.instrType == J_TYPE)
+    {
+        switch (opcode)
         {
-            exFuncAlu.OP1().pullFrom(idexRegister.imm);
-            exFuncAlu.OP2().pullFrom(luiShiftAmount);
-            exFuncAlu.perform(BusALU::op_zero); // Ignore the no operation error
+            case 2: // J
+                break;
+            case 3: // JAL
+                break;
+        }
+    }
+    else
+    {
+        exFuncAlu.OP1().pullFrom(idexRegister.imm);
+        exFuncAlu.OP2().pullFrom(luiShiftAmount);
+        exFuncAlu.perform(BusALU::op_zero); // Ignore the no operation error
 
-            exmemRegister.c.latchFrom(exFuncAlu.OUT());     // Pass result down pipeline
-            generalRegisters[rt]->latchFrom(exFuncAlu.OUT());
+        exmemRegister.c.latchFrom(exFuncAlu.OUT());     // Pass result down pipeline
+        generalRegisters[rt]->latchFrom(exFuncAlu.OUT());
 
-            switch (opcode)
-            {
-                case 16: // ADDI
-                    break;
+        switch (opcode)
+        {
+            case 16: // ADDI
+                break;
 
-                case 20: // ANDI
-                    break;
+            case 20: // ANDI
+                break;
 
-                case 21: // ORI
-                    break;
+            case 21: // ORI
+                break;
 
-                case 22: // XORI
-                    break;
+            case 22: // XORI
+                break;
 
-                case 24: // SLTI
-                    break;
+            case 24: // SLTI
+                break;
 
-                case 35: // LW
-                    loadBus.IN().pullFrom(idexRegister.imm);
-                    dm.MAR().latchFrom(loadBus.OUT());
-                    break;
+            case 35: // LW
+                loadBus.IN().pullFrom(idexRegister.imm);
+                dm.MAR().latchFrom(loadBus.OUT());
+                break;
 
-                case 39: // LUI
-                    exFuncAlu.perform(BusALU::op_lshift);
-                    break;
+            case 39: // LUI
+                exFuncAlu.perform(BusALU::op_lshift);
+                break;
 
-                case 43: // SW
-                    break;
+            case 43: // SW
+                break;
 
-                case 60: // BEQ
-                    break;
+            case 60: // BEQ
+                break;
 
-                case 61: // BNE
-                    break;
+            case 61: // BNE
+                break;
 
-                default: // In the case of unrecognized/unimplemented opcode, just don't do anything
-                    break; // Data needs to be passed to WB phase, where it will be printed and halt
-            }
+            default: // In the case of unrecognized/unimplemented opcode, just don't do anything
+                break; // Data needs to be passed to WB phase, where it will be printed and halt
         }
     }
 }
