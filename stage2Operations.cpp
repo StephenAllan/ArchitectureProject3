@@ -21,9 +21,11 @@ void instructionFetchStage2()
     im.read();
     ir.latchFrom(im.READ());
 
+    long opcode = ir(31, 26);
+    long imm = ir(15, 0);
+
     // If we are moving values into pipeline registers that are not within ArchLib,
     // they have to be moved during the second clock tick or the new value will be over written too soon.
-    long opcode = ir(31, 26);
     if (opcode == 0 || opcode == 1) {
         idexRegister.instrType = R_TYPE;
     } else if (opcode == 2 || opcode == 3) {
@@ -31,6 +33,15 @@ void instructionFetchStage2()
     } else {
         idexRegister.instrType = I_TYPE;
     }
+
+    if (idexRegister.instrType == J_TYPE) {
+        extensionAlu.OP2().pullFrom(bitMask_26);
+    } else { // R_TYPE and I_TYPE
+        extensionAlu.OP2().pullFrom(bitMask_16);
+    }
+    extensionAlu.OP1().pullFrom(ir);
+    extensionAlu.perform(BusALU::op_extendSign);
+    idexRegister.imm.latchFrom(extensionAlu.OUT());
 
     ifidRegister.v.set();
 
