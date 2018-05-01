@@ -13,6 +13,7 @@
 
 IfIdRegister::IfIdRegister():
     // subconstructors must be used to initialize the data members
+    incrPc(true),
     v("IfId_V", 1),
     pc("IfId_PC", ADDRESS_SIZE_BITS),
     npc("IfId_NPC", ADDRESS_SIZE_BITS),

@@ -45,8 +45,13 @@ void instructionFetchStage2()
     pcAlu.OP2().pullFrom(pcIncr);
     pcAlu.perform(BusALU::op_add);
 
-    pc.latchFrom(pcAlu.OUT());
-    ifidRegister.npc.latchFrom(pcAlu.OUT()); // also send incremented PC to pipeline register
+    if (ifidRegister.incrPc) {
+        pc.latchFrom(pcAlu.OUT());
+        ifidRegister.npc.latchFrom(pcAlu.OUT()); // also send incremented PC to pipeline register
+    } else {
+
+        ifidRegister.incrPc = true;
+    }
 }
 
 /**
