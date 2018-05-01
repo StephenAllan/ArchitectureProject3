@@ -34,16 +34,25 @@ extern Bus idVBus;
 extern Bus idPcBus;
 extern Bus idNpcBus;
 extern Bus idIrBus;
+extern Bus idABus;
+extern Bus idBBus;
+extern Bus idImmBus;
 
 extern Bus exVBus;
 extern Bus exPcBus;
 extern Bus exNpcBus;
 extern Bus exIrBus;
+extern Bus exABus;
+extern Bus exBBus;
+extern Bus exImmBus;
 
 extern Bus memVBus;
 extern Bus memPcBus;
 extern Bus memNpcBus;
 extern Bus memIrBus;
+extern Bus memABus;
+extern Bus memBBus;
+extern Bus memImmBus;
 extern Bus memCBus;
 
 extern StorageObject r0;
@@ -94,7 +103,7 @@ extern Memory im;
 extern Memory dm;
 
 extern BusALU pcAlu;
-extern BusALU alu2;
+extern BusALU exFuncAlu;
 extern BusALU alu3;
 extern BusALU alu4;
 

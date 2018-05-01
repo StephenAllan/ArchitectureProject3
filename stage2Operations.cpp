@@ -70,10 +70,16 @@ void executeStage2()
     exPcBus.IN().pullFrom(idexRegister.pc);
     exNpcBus.IN().pullFrom(idexRegister.npc);
     exIrBus.IN().pullFrom(idexRegister.ir);
+    exABus.IN().pullFrom(idexRegister.a);
+    exBBus.IN().pullFrom(idexRegister.b);
+    exImmBus.IN().pullFrom(idexRegister.imm);
     exmemRegister.v.latchFrom(exVBus.OUT());
     exmemRegister.pc.latchFrom(exPcBus.OUT());
     exmemRegister.npc.latchFrom(exNpcBus.OUT());
     exmemRegister.ir.latchFrom(exIrBus.OUT());
+    exmemRegister.a.latchFrom(exABus.OUT());
+    exmemRegister.b.latchFrom(exBBus.OUT());
+    exmemRegister.imm.latchFrom(exImmBus.OUT());
 }
 
 /**
@@ -87,11 +93,17 @@ void memoryAccessStage2()
     memPcBus.IN().pullFrom(exmemRegister.pc);
     memNpcBus.IN().pullFrom(exmemRegister.npc);
     memIrBus.IN().pullFrom(exmemRegister.ir);
+    memABus.IN().pullFrom(exmemRegister.a);
+    memBBus.IN().pullFrom(exmemRegister.b);
+    memImmBus.IN().pullFrom(exmemRegister.imm);
     memCBus.IN().pullFrom(exmemRegister.c);
     memwbRegister.v.latchFrom(memVBus.OUT());
     memwbRegister.pc.latchFrom(memPcBus.OUT());
     memwbRegister.npc.latchFrom(memNpcBus.OUT());
     memwbRegister.ir.latchFrom(memIrBus.OUT());
+    memwbRegister.a.latchFrom(memABus.OUT());
+    memwbRegister.b.latchFrom(memBBus.OUT());
+    memwbRegister.imm.latchFrom(memImmBus.OUT());
     memwbRegister.c.latchFrom(memCBus.OUT());
 }
 
@@ -101,11 +113,4 @@ void memoryAccessStage2()
 void writeBackStage2()
 {
     // if (memwbRegister.v.value() == 0) { return; }
-
-    // Print to console
-    // cout << memwbRegister.pc.value() << ":  " << memwbRegister.ir.value() << endl;
-    // if (memwbRegister.ir.value() == 0) {
-    //     cout << "Machine Halted - HALT instruction executed";
-    //     done = true;
-    // }
 }

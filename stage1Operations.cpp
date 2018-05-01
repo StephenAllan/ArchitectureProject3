@@ -31,6 +31,16 @@ void instructionDecodeStage1()
 
     idIrBus.IN().pullFrom(ir);
     ifidRegister.ir.latchFrom(idIrBus.OUT());
+
+    long rs = ir(25, 21);
+    long rt = ir(20, 16);
+    long imm = ir(15, 0); // TODO: sign extend this value and move to idexRegister.imm
+
+    idABus.IN().pullFrom((*generalRegisters[rs]));
+    idexRegister.a.latchFrom(idABus.OUT());
+
+    idBBus.IN().pullFrom((*generalRegisters[rt]));
+    idexRegister.b.latchFrom(idBBus.OUT());
 }
 
 /**
@@ -39,6 +49,16 @@ void instructionDecodeStage1()
 void executeStage1()
 {
     if (idexRegister.v.value() == 0) { return; }
+
+    // TODO: implement immediate ALU instructions
+    // TODO: implement load/store instructions
+    // TODO: implement branch instructions
+
+    exFuncAlu.OP1().pullFrom(idexRegister.a);
+    exFuncAlu.OP2().pullFrom(idexRegister.b);
+
+    exFuncAlu.perform(BusALU::op_add);
+    exmemRegister.c.latchFrom(exFuncAlu.OUT());
 }
 
 /**
@@ -92,6 +112,17 @@ void writeBackStage1()
                     cout << "Machine halted - HALT instruction executed" << endl;
                     done = true;
                     break;
+
+                case 16: // ADD
+                    displayRecord("ADD", true); break;
+                case 18: // SUB
+                    displayRecord("SUB", true); break;
+                case 20: // AND
+                    displayRecord("AND", true); break;
+                case 21: // OR
+                    displayRecord("OR", true); break;
+                case 22: // XOR
+                    displayRecord("XOR", true); break;
 
                 case 6:  // Unimplemented
                 case 17:
