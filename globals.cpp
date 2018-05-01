@@ -28,6 +28,7 @@ Bus out("OutBus", ADDRESS_SIZE_BITS);
 Bus instructionBus("InstructionBus", ADDRESS_SIZE_BITS);
 Bus pcBus("PcBus", ADDRESS_SIZE_BITS);
 Bus irBus("IrBus", ADDRESS_SIZE_BITS);
+Bus loadBus("LoadBus", ADDRESS_SIZE_BITS);
 
 Bus idVBus("Id_vBus", 1);
 Bus idPcBus("Id_pcBus", ADDRESS_SIZE_BITS);

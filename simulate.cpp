@@ -44,5 +44,8 @@ void simulate(char* objectFile)
         writeBackStage2();
         
         Clock::tick();
+
+        // Debug
+        dumpGeneralRegisters();
     }
 }

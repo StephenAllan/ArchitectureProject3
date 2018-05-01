@@ -65,6 +65,17 @@ void executeStage2()
 {
     // if (idexRegister.v.value() == 0) { return; }
 
+    long opcode = idexRegister.ir(31, 26);
+    long rt = idexRegister.ir(20, 16);
+
+    switch (opcode)
+    {
+        case 35: // LW
+            dm.read();
+            generalRegisters[rt]->latchFrom(dm.READ());
+            break;
+    }
+
     // Advance data in pipeline registers
     exVBus.IN().pullFrom(idexRegister.v);
     exPcBus.IN().pullFrom(idexRegister.pc);

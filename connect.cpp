@@ -22,12 +22,17 @@ void connect()
         generalRegisters[i]->connectsTo(idABus.IN());
         generalRegisters[i]->connectsTo(idBBus.IN());
         generalRegisters[i]->connectsTo(idImmBus.IN());
+        generalRegisters[i]->connectsTo(exFuncAlu.OUT());
+        generalRegisters[i]->connectsTo(dm.READ());
     }
+
+    /** Memory Components */
+    im.MAR().connectsTo(instructionBus.OUT());
+    dm.MAR().connectsTo(loadBus.OUT());
     
     /** Instruction Fetch Connections */
     pc.connectsTo(im.READ());
     pc.connectsTo(instructionBus.IN());
-    im.MAR().connectsTo(instructionBus.OUT());
     ir.connectsTo(im.READ());
 
     pc.connectsTo(pcBus.IN());
@@ -37,13 +42,6 @@ void connect()
     pcIncr.connectsTo(pcAlu.OP2());
     pc.connectsTo(pcAlu.OUT());
     ifidRegister.npc.connectsTo(pcAlu.OUT());
-
-    ir.connectsTo(idIrBus.IN());
-    ifidRegister.ir.connectsTo(idIrBus.OUT());
-
-    ir.connectsTo(extensionAlu.OP1());
-    bitMask_16.connectsTo(extensionAlu.OP2());
-    idexRegister.imm.connectsTo(extensionAlu.OUT());
     
     /** Instruction Decode Connections */
     bitMask_26.connectsTo(extensionAlu.OP2());
@@ -59,6 +57,13 @@ void connect()
     idexRegister.a.connectsTo(idABus.OUT());
     idexRegister.b.connectsTo(idBBus.OUT());
     idexRegister.imm.connectsTo(idImmBus.OUT());
+
+    ir.connectsTo(idIrBus.IN());
+    ifidRegister.ir.connectsTo(idIrBus.OUT());
+
+    ir.connectsTo(extensionAlu.OP1());
+    bitMask_16.connectsTo(extensionAlu.OP2());
+    idexRegister.imm.connectsTo(extensionAlu.OUT());
 
     /** Execution Stage Connections */
     idexRegister.v.connectsTo(exVBus.IN());
@@ -80,6 +85,8 @@ void connect()
     idexRegister.b.connectsTo(exFuncAlu.OP2());
     idexRegister.imm.connectsTo(exFuncAlu.OP2());
     exmemRegister.c.connectsTo(exFuncAlu.OUT());
+
+    idexRegister.imm.connectsTo(loadBus.IN());
 
     /** Memory Stage Connections */
     exmemRegister.v.connectsTo(memVBus.IN());
