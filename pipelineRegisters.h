@@ -27,7 +27,7 @@ class IdExRegister
     public:
        IdExRegister();
 
-       unsigned char instrType;
+       unsigned short instrType;
 
        Clearable v;
        StorageObject pc;
@@ -43,7 +43,7 @@ class ExMemRegister
     public:
        ExMemRegister();
 
-       unsigned char instrType;
+       unsigned short instrType;
 
        Clearable v;
        StorageObject pc;
@@ -60,7 +60,7 @@ class MemWbRegister
     public:
        MemWbRegister();
 
-       unsigned char instrType;
+       unsigned short instrType;
 
        Clearable v;
        StorageObject pc;

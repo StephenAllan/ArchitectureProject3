@@ -35,15 +35,6 @@ void instructionDecodeStage1()
     long rs = ir(25, 21);
     long rt = ir(20, 16);
     long imm = ir(15, 0);
-    long opcode = ir(31, 26);
-
-    if (opcode == 0 || opcode == 1) {
-        idexRegister.instrType = R_TYPE;
-    } else if (opcode == 2 || opcode == 3) {
-        idexRegister.instrType = J_TYPE;
-    } else {
-        idexRegister.instrType = I_TYPE;
-    }
 
     idABus.IN().pullFrom((*generalRegisters[rs]));
     idexRegister.a.latchFrom(idABus.OUT());
@@ -112,7 +103,6 @@ void executeStage1()
             default:
                 break;
         }
-        break;
     }
     else if (idexRegister.instrType == J_TYPE)
     {
