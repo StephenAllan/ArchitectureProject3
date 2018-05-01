@@ -33,6 +33,17 @@ extern Bus idPcBus;
 extern Bus idNpcBus;
 extern Bus idIrBus;
 
+extern Bus exVBus;
+extern Bus exPcBus;
+extern Bus exNpcBus;
+extern Bus exIrBus;
+
+extern Bus memVBus;
+extern Bus memPcBus;
+extern Bus memNpcBus;
+extern Bus memIrBus;
+extern Bus memCBus;
+
 extern StorageObject r0;
 extern StorageObject r1;
 extern StorageObject r2;

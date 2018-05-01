@@ -19,7 +19,7 @@ class IfIdRegister
        Clearable v;         // Valid bit
        StorageObject pc;    // Program counter
        StorageObject npc;   // New program counter
-       StorageObject ir;    // Instruction register
+       StorageObject ir;    // Instruction Register
 };
 
 class IdExRegister : public IfIdRegister
@@ -30,7 +30,6 @@ class IdExRegister : public IfIdRegister
        StorageObject a;     // Operand A
        StorageObject b;     // Operand B
        StorageObject imm;   // Sign-extended immediate
-       string instruction;
 };
 
 class ExMemRegister : public IdExRegister
