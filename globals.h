@@ -14,6 +14,9 @@
 
 #include "includes.h"
 
+#define R_TYPE (1)
+#define I_TYPE (2)
+#define J_TYPE (3)
 
 extern const unsigned int ADDRESS_SIZE_BITS;
 extern const unsigned int BYTE_SIZE_BITS;
