@@ -31,6 +31,7 @@ extern Bus out;
 extern Bus instructionBus;
 extern Bus pcBus;
 extern Bus irBus;
+extern Bus loadBus;
 
 // Buses to bring IF/ID data to ID/EX registers
 extern Bus idVBus;

@@ -56,6 +56,7 @@ void executeStage1()
     if (idexRegister.v.value() == 0) { return; }
 
     long opcode = idexRegister.ir(31, 26);
+    long rd = idexRegister.ir(15, 11);
     long funct = idexRegister.ir(5, 0);
 
     // TODO: implement load/store instructions
@@ -72,7 +73,9 @@ void executeStage1()
 
     exFuncAlu.OP1().pullFrom(idexRegister.a);
     exFuncAlu.perform(BusALU::op_zero); // Ignore the no operation error
-    exmemRegister.c.latchFrom(exFuncAlu.OUT());
+
+    exmemRegister.c.latchFrom(exFuncAlu.OUT());         // Pass result down pipeline
+    (*generalRegisters[rd]).latchFrom(exFuncAlu.OUT()); // FIXME: Should only be done for R type instructions
 
     switch (opcode)
     {
@@ -81,8 +84,6 @@ void executeStage1()
             switch (funct)
             {
                 case 0: // HALT
-                    cout << "Machine halted - HALT instruction executed" << endl;
-                    done = true;
                     break;
 
                 case 16: // ADD
@@ -127,6 +128,8 @@ void executeStage1()
             break;
 
         case 35: // LW
+            loadBus.IN().pullFrom(idexRegister.imm);
+            dm.MAR().latchFrom(loadBus.OUT());
             break;
 
         case 39: // LUI
@@ -194,6 +197,7 @@ void writeBackStage1()
             switch (funct)
             {
                 case 0: // HALT
+                    displayRecord("HALT", true);
                     cout << "Machine halted - HALT instruction executed" << endl;
                     done = true;
                     break;
@@ -223,6 +227,7 @@ void writeBackStage1()
         }
 
         case 1: // NOP
+            displayRecord("NOP");
             break;
 
         case 2: // J
@@ -247,6 +252,7 @@ void writeBackStage1()
             break;
 
         case 35: // LW
+            displayRecord("LW");
             break;
 
         case 39: // LUI

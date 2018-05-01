@@ -37,14 +37,14 @@ void dumpGeneralRegisters()
     {
         if (generalRegisters[i]->value() != 0)
         {
+            if (displayCount > 0 && displayCount % 4 == 0) { cout << endl; }
+
             cout << "  " << (*generalRegisters[i]);
             displayCount = displayCount + 1;
         }
-
-        if (displayCount > 0 && displayCount % 4 == 0) { cout << endl; }
     }
 
-    if (displayCount > 0 && displayCount % 4 != 0) { cout << endl; }
+    if (displayCount > 0) { cout << endl; }
 }
 
 /**
