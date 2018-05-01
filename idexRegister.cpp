@@ -14,12 +14,12 @@
 IdExRegister::IdExRegister():
     // subconstructors must be used to initialize the data members
     v("IdEx_V", 1),
-    pc("IdEx_PC", 32),
-    npc("IdEx_NPC", 32),
-    ir("IdEx_IR", 32),
-    a("IdEx_A", 32),
-    b("IdEx_B", 32),
-    imm("IdEx_Imm", 32)
+    pc("IdEx_PC", ADDRESS_SIZE_BITS),
+    npc("IdEx_NPC", ADDRESS_SIZE_BITS),
+    ir("IdEx_IR", ADDRESS_SIZE_BITS),
+    a("IdEx_A", ADDRESS_SIZE_BITS),
+    b("IdEx_B", ADDRESS_SIZE_BITS),
+    imm("IdEx_Imm", ADDRESS_SIZE_BITS)
 {
 
 }

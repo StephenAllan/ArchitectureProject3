@@ -19,7 +19,7 @@ class IfIdRegister
        Clearable v;         // Valid bit
        StorageObject pc;    // Program counter
        StorageObject npc;   // New program counter
-       StorageObject ir;    // Instruction register
+       StorageObject ir;    // Instruction Register
 };
 
 class IdExRegister

@@ -14,9 +14,9 @@
 IfIdRegister::IfIdRegister():
     // subconstructors must be used to initialize the data members
     v("IfId_V", 1),
-    pc("IfId_PC", 32),
-    npc("IfId_NPC", 32),
-    ir("IfId_IR", 32)
+    pc("IfId_PC", ADDRESS_SIZE_BITS),
+    npc("IfId_NPC", ADDRESS_SIZE_BITS),
+    ir("IfId_IR", ADDRESS_SIZE_BITS)
 {
 
 }

@@ -32,10 +32,9 @@ void writeBackStage2();
 /** Utility Operations */
 void dumpAllRegisters();
 void dumpGeneralRegisters();
-// void displayRecord(long, long, string, string = "");
-// void displayRecord(long , vector<long>, string, string = "");
-// void displayModeError();
-// void displayUnalignedMemoryError();
+void displayRecord(string, bool = false);
+void displayUnimplementedOpCodeError(bool = false);
+void displayUndefinedOpCodeError(bool = false);
 // string numToString(long);
 // void branchPC(bool, bool);
 

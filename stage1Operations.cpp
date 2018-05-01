@@ -20,18 +20,6 @@ void instructionFetchStage1()
     // Move address into MAR
     instructionBus.IN().pullFrom(pc);
     im.MAR().latchFrom(instructionBus.OUT());
-
-    // Increment PC by 4 for next instruction
-    pcAlu.OP1().pullFrom(pc);
-    pcAlu.OP2().pullFrom(pcIncr);
-    pcAlu.perform(BusALU::op_add);
-    pc.latchFrom(pcAlu.OUT());
-    ifidRegister.npc.latchFrom(pcAlu.OUT()); // also send incremented PC to pipeline register
-
-    // Move PC to pipeline register
-    pcBus.IN().pullFrom(pc);
-    ifidRegister.pc.latchFrom(pcBus.OUT());
-    
 }
 
 /**
@@ -40,6 +28,9 @@ void instructionFetchStage1()
 void instructionDecodeStage1()
 {
     if (ifidRegister.v.value() == 0) { return; }
+
+    idIrBus.IN().pullFrom(ir);
+    ifidRegister.ir.latchFrom(idIrBus.OUT());
 }
 
 /**
@@ -65,44 +56,77 @@ void writeBackStage1()
 {
     if (memwbRegister.v.value() == 0) { return; }
 
-// All this needs to be done using the pipelined IR value
-/*
-    string standardOpCode = idexRegister.instruction.substr(0, 5);
+    // Debug
+    // cout << endl;
+    // cout << memwbRegister.v << endl;
+    // cout << memwbRegister.pc << endl;
+    // cout << memwbRegister.npc << endl;
+    // cout << memwbRegister.ir << endl;
+    // cout << memwbRegister.c << endl;
+    // cout << memwbRegister.lmd << endl;
+    // cout << endl;
 
-    if (standardOpCode == "000000")
-    {
-        string specialOpCode = idexRegister.instruction.substr(26, 31);
+    /** Instruction Format
+    opCode = ir(31, 26)
+    rs = ir(25, 21)
+    rt = ir(20, 16)
 
-        if (specialOpCode == "000000")
-        {
-            cout << "Machine halted - HALT instruction executed" << endl;
-            done = true;
-        }
-        else if (specialOpCode == "000110" || specialOpCode == "010001" || specialOpCode == "010011" ||
-            specialOpCode == "010111")
-        {
-            cout << "Machine halted - unimplemented instruction" << endl;
-            done = true;
-        }
-        else
-        {
-            cout << "Machine halted - undefined instruction" << endl;
-            done = true;
-        }
-    }
-    else if (standardOpCode == "010001" || standardOpCode == "011001" || standardOpCode == "100000" ||
-        standardOpCode == "100001" || standardOpCode == "100100" || standardOpCode == "100101" ||
-        standardOpCode == "101000" || standardOpCode == "101001" || standardOpCode == "110010" ||
-        standardOpCode == "110011" || standardOpCode == "111010" || standardOpCode == "111011" ||
-        standardOpCode == "111110" || standardOpCode == "111111")
+    imm = ir(15, 0)
+
+    rd = ir(15, 11)
+    sh = ir(10, 6)
+    funct = ir(5, 0)
+
+    target = ir(25, 0)
+    **/
+
+    long standardOpCode = memwbRegister.ir(31, 26);
+    switch (standardOpCode)
     {
-        cout << "Machine halted - unimplemented instruction" << endl;
-        done = true;
+        case 0: // Special
+        {
+            long specialOpCode = memwbRegister.ir(5, 0);
+            switch (specialOpCode)
+            {
+                case 0: // HALT
+                    cout << "Machine halted - HALT instruction executed" << endl;
+                    done = true;
+                    break;
+
+                case 6:  // Unimplemented
+                case 17:
+                case 19:
+                case 23:
+                    displayUnimplementedOpCodeError(true);
+                    break;
+
+                default: // Unknown
+                    displayUndefinedOpCodeError(true);
+            }
+            break;
+        }
+
+        case 1: // NOP
+            break;
+
+        case 17:  // Unimplemented
+        case 25:
+        case 32:
+        case 33:
+        case 36:
+        case 37:
+        case 40:
+        case 41:
+        case 50:
+        case 51:
+        case 58:
+        case 59:
+        case 62:
+        case 63:
+            displayUnimplementedOpCodeError();
+            break;
+
+        default: // Unknown
+            displayUndefinedOpCodeError();
     }
-    else
-    {
-        cout << "Machine halted - undefined instruction" << endl;
-        done = true;
-    }
-*/
 }

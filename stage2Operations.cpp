@@ -21,9 +21,21 @@ void instructionFetchStage2()
     im.read();
     ir.latchFrom(im.READ());
 
-    //ifidRegister.fetchAddress = pc.value();
-    // Transfer data using buses
     ifidRegister.v.set();
+
+    // Move PC to pipeline register
+    // This has to be done in the second stage so it gets copied to
+    // the next register in the pipeline before getting overwritten
+    pcBus.IN().pullFrom(pc);
+    ifidRegister.pc.latchFrom(pcBus.OUT());
+
+    // Increment PC by 4 for next instruction
+    pcAlu.OP1().pullFrom(pc);
+    pcAlu.OP2().pullFrom(pcIncr);
+    pcAlu.perform(BusALU::op_add);
+
+    pc.latchFrom(pcAlu.OUT());
+    ifidRegister.npc.latchFrom(pcAlu.OUT()); // also send incremented PC to pipeline register
 }
 
 /**
@@ -31,7 +43,7 @@ void instructionFetchStage2()
  */
 void instructionDecodeStage2()
 {
-    if (ifidRegister.v.value() == 0) { return; }
+    // if (ifidRegister.v.value() == 0) { return; }
 
     // Probably need to do some modification to PC and ID/EX.NPC here if a branch was decoded
 
@@ -68,14 +80,17 @@ void executeStage2()
 void memoryAccessStage2()
 {
     if (exmemRegister.v.value() == 0) { return; }
-
-    // Advance data in pipeline registers
+    
     memVBus.IN().pullFrom(exmemRegister.v);
-    memPcBus.IN().pullFrom(exmemRegister.pc);
-    memIrBus.IN().pullFrom(exmemRegister.ir);
     memwbRegister.v.latchFrom(memVBus.OUT());
+    memPcBus.IN().pullFrom(exmemRegister.pc);
     memwbRegister.pc.latchFrom(memPcBus.OUT());
+    memNpcBus.IN().pullFrom(exmemRegister.npc);
+    memwbRegister.npc.latchFrom(memNpcBus.OUT());
+    memIrBus.IN().pullFrom(exmemRegister.ir);
     memwbRegister.ir.latchFrom(memIrBus.OUT());
+    memCBus.IN().pullFrom(exmemRegister.c);
+    memwbRegister.c.latchFrom(memCBus.OUT());
 }
 
 /**

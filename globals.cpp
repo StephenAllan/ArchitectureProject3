@@ -34,13 +34,16 @@ Bus idPcBus("Id_pcBus", ADDRESS_SIZE_BITS);
 Bus idNpcBus("Id_npcBus", ADDRESS_SIZE_BITS);
 Bus idIrBus("Id_irBus", ADDRESS_SIZE_BITS);
 
-Bus exVBus("Ex_vBus", 1);
+Bus exVBus("Ex_vBus", ADDRESS_SIZE_BITS);
 Bus exPcBus("Ex_pcBus", ADDRESS_SIZE_BITS);
+Bus exNpcBus("Ex_npcBus", ADDRESS_SIZE_BITS);
 Bus exIrBus("Ex_irBus", ADDRESS_SIZE_BITS);
 
-Bus memVBus("Mem_vBus", 1);
+Bus memVBus("Mem_vBus", ADDRESS_SIZE_BITS);
 Bus memPcBus("Mem_pcBus", ADDRESS_SIZE_BITS);
+Bus memNpcBus("Mem_npcBus", ADDRESS_SIZE_BITS);
 Bus memIrBus("Mem_irBus", ADDRESS_SIZE_BITS);
+Bus memCBus("Mem_cBus", ADDRESS_SIZE_BITS);
 
 /** Registers */
 StorageObject r0("R0", ADDRESS_SIZE_BITS);
@@ -88,8 +91,8 @@ StorageObject rb("RB", ADDRESS_SIZE_BITS);
 StorageObject rc("RC", ADDRESS_SIZE_BITS);
 
 /** Components */
-Memory im("InstructionMemory", ADDRESS_SIZE_BITS, BYTE_SIZE_BITS, 0xffff, 4);
-Memory dm("DataMemory", ADDRESS_SIZE_BITS, BYTE_SIZE_BITS, 0xffff, 4);
+Memory im("IMemory", ADDRESS_SIZE_BITS, BYTE_SIZE_BITS, 0xffff, 4);
+Memory dm("DMemory", ADDRESS_SIZE_BITS, BYTE_SIZE_BITS, 0xffff, 4);
 
 BusALU pcAlu("PC ALU", ADDRESS_SIZE_BITS);
 BusALU alu2("ALU2", ADDRESS_SIZE_BITS);

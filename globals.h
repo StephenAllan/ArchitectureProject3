@@ -35,15 +35,16 @@ extern Bus idPcBus;
 extern Bus idNpcBus;
 extern Bus idIrBus;
 
-// Buses to bring ID/EX data to EX/MEM registers
 extern Bus exVBus;
 extern Bus exPcBus;
+extern Bus exNpcBus;
 extern Bus exIrBus;
 
-// Buses to bring EX/MEM data to MEM/WB registers
 extern Bus memVBus;
 extern Bus memPcBus;
+extern Bus memNpcBus;
 extern Bus memIrBus;
+extern Bus memCBus;
 
 extern StorageObject r0;
 extern StorageObject r1;
