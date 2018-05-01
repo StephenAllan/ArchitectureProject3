@@ -80,13 +80,13 @@ void writeBackStage1()
     target = ir(25, 0)
     **/
 
-    long standardOpCode = memwbRegister.ir(31, 26);
-    switch (standardOpCode)
+    long opcode = memwbRegister.ir(31, 26);
+    long funct = memwbRegister.ir(5, 0);
+    switch (opcode)
     {
         case 0: // Special
         {
-            long specialOpCode = memwbRegister.ir(5, 0);
-            switch (specialOpCode)
+            switch (funct)
             {
                 case 0: // HALT
                     cout << "Machine halted - HALT instruction executed" << endl;
@@ -107,6 +107,42 @@ void writeBackStage1()
         }
 
         case 1: // NOP
+            break;
+
+        case 2: // J
+            break;
+
+        case 3: // JAL
+            break;
+
+        case 16: // ADDI
+            break;
+
+        case 20: // ANDI
+            break;
+
+        case 21: // ORI
+            break;
+
+        case 22: // XORI
+            break;
+
+        case 24: // SLTI
+            break;
+
+        case 35: // LW
+            break;
+
+        case 39: // LUI
+            break;
+
+        case 43: // SW
+            break;
+
+        case 60: // BEQ
+            break;
+
+        case 61: // BNE
             break;
 
         case 17:  // Unimplemented
