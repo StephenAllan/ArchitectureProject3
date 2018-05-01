@@ -117,6 +117,7 @@ extern ExMemRegister exmemRegister;
 extern MemWbRegister memwbRegister;
 
 extern StorageObject pcIncr;
+extern StorageObject luiShiftAmount;
 extern StorageObject bitMask_16;
 extern StorageObject bitMask_26;
 

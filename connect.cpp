@@ -86,6 +86,9 @@ void connect()
     idexRegister.imm.connectsTo(exFuncAlu.OP2());
     exmemRegister.c.connectsTo(exFuncAlu.OUT());
 
+    idexRegister.imm.connectsTo(exFuncAlu.OP1());
+    luiShiftAmount.connectsTo(exFuncAlu.OP2());
+
     idexRegister.imm.connectsTo(loadBus.IN());
 
     /** Memory Stage Connections */
