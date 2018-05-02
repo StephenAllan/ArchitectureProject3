@@ -14,6 +14,7 @@
 
 /** System Include Files */
 #include <algorithm>
+#include <bitset>
 #include <cmath>
 #include <cstdlib>
 #include <iostream>

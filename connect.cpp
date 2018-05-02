@@ -26,6 +26,11 @@ void connect()
         generalRegisters[i]->connectsTo(dm.READ());
     }
 
+    for (int i = 0; i < shiftConstants.size(); ++i)
+    {
+        shiftConstants[i]->connectsTo(exFuncAlu.OP2());
+    }
+
     /** Memory Components */
     im.MAR().connectsTo(instructionBus.OUT());
     dm.MAR().connectsTo(exFuncAlu.OUT());
@@ -90,6 +95,7 @@ void connect()
     exmemRegister.imm.connectsTo(exImmBus.OUT());
 
     idexRegister.a.connectsTo(exFuncAlu.OP1());
+    idexRegister.b.connectsTo(exFuncAlu.OP1());
     idexRegister.b.connectsTo(exFuncAlu.OP2());
     idexRegister.imm.connectsTo(exFuncAlu.OP2());
     exmemRegister.c.connectsTo(exFuncAlu.OUT());

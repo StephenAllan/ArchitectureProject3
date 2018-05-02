@@ -19,6 +19,7 @@ const unsigned int BYTE_SIZE_BITS(8);
 /** Vectors */
 vector<StorageObject*> connectionObjects;
 vector<StorageObject*> generalRegisters;
+vector<StorageObject*> shiftConstants;
 vector<int> modifiedRegisters;
 
 /** Buses */
@@ -122,8 +123,42 @@ MemWbRegister memwbRegister;
 /** Constants */
 StorageObject pcIncr("PcIncr", ADDRESS_SIZE_BITS, 4);
 StorageObject luiShiftAmount("LuiShiftAmount", ADDRESS_SIZE_BITS, 16);
+
 StorageObject bitMask_16("BitMask_16", ADDRESS_SIZE_BITS, 0x8000);      // 1000 0000 0000 0000
 StorageObject bitMask_26("BitMask_26", ADDRESS_SIZE_BITS, 0x2000000);
+
+StorageObject const_0("Shift_0", ADDRESS_SIZE_BITS, 0);
+StorageObject const_1("Shift_1", ADDRESS_SIZE_BITS, 1);
+StorageObject const_2("Shift_2", ADDRESS_SIZE_BITS, 2);
+StorageObject const_3("Shift_3", ADDRESS_SIZE_BITS, 3);
+StorageObject const_4("Shift_4", ADDRESS_SIZE_BITS, 4);
+StorageObject const_5("Shift_5", ADDRESS_SIZE_BITS, 5);
+StorageObject const_6("Shift_6", ADDRESS_SIZE_BITS, 6);
+StorageObject const_7("Shift_7", ADDRESS_SIZE_BITS, 7);
+StorageObject const_8("Shift_8", ADDRESS_SIZE_BITS, 8);
+StorageObject const_9("Shift_9", ADDRESS_SIZE_BITS, 9);
+StorageObject const_10("Shift_10", ADDRESS_SIZE_BITS, 10);
+StorageObject const_11("Shift_11", ADDRESS_SIZE_BITS, 11);
+StorageObject const_12("Shift_12", ADDRESS_SIZE_BITS, 12);
+StorageObject const_13("Shift_13", ADDRESS_SIZE_BITS, 13);
+StorageObject const_14("Shift_14", ADDRESS_SIZE_BITS, 14);
+StorageObject const_15("Shift_15", ADDRESS_SIZE_BITS, 15);
+StorageObject const_16("Shift_16", ADDRESS_SIZE_BITS, 16);
+StorageObject const_17("Shift_17", ADDRESS_SIZE_BITS, 17);
+StorageObject const_18("Shift_18", ADDRESS_SIZE_BITS, 18);
+StorageObject const_19("Shift_19", ADDRESS_SIZE_BITS, 19);
+StorageObject const_20("Shift_20", ADDRESS_SIZE_BITS, 20);
+StorageObject const_21("Shift_21", ADDRESS_SIZE_BITS, 21);
+StorageObject const_22("Shift_22", ADDRESS_SIZE_BITS, 22);
+StorageObject const_23("Shift_23", ADDRESS_SIZE_BITS, 23);
+StorageObject const_24("Shift_24", ADDRESS_SIZE_BITS, 24);
+StorageObject const_25("Shift_25", ADDRESS_SIZE_BITS, 25);
+StorageObject const_26("Shift_26", ADDRESS_SIZE_BITS, 26);
+StorageObject const_27("Shift_27", ADDRESS_SIZE_BITS, 27);
+StorageObject const_28("Shift_28", ADDRESS_SIZE_BITS, 28);
+StorageObject const_29("Shift_29", ADDRESS_SIZE_BITS, 29);
+StorageObject const_30("Shift_30", ADDRESS_SIZE_BITS, 30);
+StorageObject const_31("Shift_31", ADDRESS_SIZE_BITS, 31);
 
 /** Control Variables */
 bool done(false);   // is the simulation over?

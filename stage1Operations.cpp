@@ -87,10 +87,20 @@ void executeStage1()
       target = ir(25, 0)
     **/
 
+    // for (int i = 0; i < 32; ++i)
+    // {
+    //     cout << idexRegister.ir(i);
+    // }
+    // cout << endl;
+
     long opcode = idexRegister.ir(31, 26);
+    long rs = idexRegister.ir(25, 21);
     long rt = idexRegister.ir(20, 16);
     long rd = idexRegister.ir(15, 11);
+    long sh = idexRegister.ir(10, 6);
     long funct = idexRegister.ir(5, 0);
+
+    // printf("\nOP: %ld, RS: %ld, RT: %ld, RD: %ld, SH: %ld, Funct: %ld\n", opcode, rs, rt, rd, sh, funct);
 
     // Handle I-, R-, and J-type instructions in separate cases
     if (idexRegister.instrType == R_TYPE)
@@ -99,13 +109,39 @@ void executeStage1()
         exFuncAlu.OP2().pullFrom(idexRegister.b);
         exFuncAlu.perform(BusALU::op_zero); // Ignore the no operation error
 
-        if (funct == 16 || funct == 18 || funct == 20 || funct == 21 || funct == 22)
+        if (funct == 16 || funct == 18 || funct == 20 || funct == 21 || funct == 22 || funct == 37 ||
+            funct == 38 || funct == 39 || funct == 45 || funct == 46 || funct == 47)
         {
             exmemRegister.c.latchFrom(exFuncAlu.OUT());     // Pass result down pipeline
             generalRegisters[rd]->latchFrom(exFuncAlu.OUT());
             idexRegister.modifiedRegister = rd;
 
             if (rd <= 0) { return; }
+        }
+
+        if (funct == 37 || funct == 38 || funct == 39)
+        {
+            exFuncAlu.OP1().pullFrom(idexRegister.b);
+            exFuncAlu.OP2().pullFrom((*shiftConstants[sh]));
+        }
+        else if (funct == 45 || funct == 46 || funct == 47)
+        {
+            exFuncAlu.OP1().pullFrom(idexRegister.b);
+
+
+
+            string binary = bitset<5>(rs).to_string();
+            reverse(binary.begin(), binary.end());
+
+            int decimal = 0, pow = 1;
+            for (int i = binary.length() - 1; i >= 0; --i, pow <<= 1)
+            {
+                decimal += (binary[i] - '0') * pow;
+            }
+
+
+
+            exFuncAlu.OP2().pullFrom((*shiftConstants[decimal]));
         }
 
         switch (funct)
@@ -123,6 +159,19 @@ void executeStage1()
                 exFuncAlu.perform(BusALU::op_or); break;
             case 22: // XOR
                 exFuncAlu.perform(BusALU::op_xor); break;
+
+            case 37: // SLL
+                exFuncAlu.perform(BusALU::op_lshift); break;
+            case 38: // SRL
+                exFuncAlu.perform(BusALU::op_rshift); break;
+            case 39: // SRA
+                exFuncAlu.perform(BusALU::op_rashift); break;
+            case 45: // SLLV
+                exFuncAlu.perform(BusALU::op_lshift); break;
+            case 46: // SRLV
+                exFuncAlu.perform(BusALU::op_rshift); break;
+            case 47: // SRAV
+                exFuncAlu.perform(BusALU::op_rashift); break;
 
             default:
                 break;

@@ -23,6 +23,7 @@ extern const unsigned int BYTE_SIZE_BITS;
 
 extern vector<StorageObject*> connectionObjects;
 extern vector<StorageObject*> generalRegisters;
+extern vector<StorageObject*> shiftConstants;
 extern vector<int> modifiedRegisters;
 
 extern Bus op1;
@@ -122,8 +123,42 @@ extern MemWbRegister memwbRegister;
 
 extern StorageObject pcIncr;
 extern StorageObject luiShiftAmount;
+
 extern StorageObject bitMask_16;
 extern StorageObject bitMask_26;
+
+extern StorageObject const_0;
+extern StorageObject const_1;
+extern StorageObject const_2;
+extern StorageObject const_3;
+extern StorageObject const_4;
+extern StorageObject const_5;
+extern StorageObject const_6;
+extern StorageObject const_7;
+extern StorageObject const_8;
+extern StorageObject const_9;
+extern StorageObject const_10;
+extern StorageObject const_11;
+extern StorageObject const_12;
+extern StorageObject const_13;
+extern StorageObject const_14;
+extern StorageObject const_15;
+extern StorageObject const_16;
+extern StorageObject const_17;
+extern StorageObject const_18;
+extern StorageObject const_19;
+extern StorageObject const_20;
+extern StorageObject const_21;
+extern StorageObject const_22;
+extern StorageObject const_23;
+extern StorageObject const_24;
+extern StorageObject const_25;
+extern StorageObject const_26;
+extern StorageObject const_27;
+extern StorageObject const_28;
+extern StorageObject const_29;
+extern StorageObject const_30;
+extern StorageObject const_31;
 
 extern bool done;   // is the simulation over?
 

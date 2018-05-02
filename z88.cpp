@@ -142,6 +142,40 @@ int main(int argc, char** argv)
     generalRegisters.push_back(&r30);
     generalRegisters.push_back(&r31);
 
+    // Build Shift Constants vector
+    shiftConstants.push_back(&const_0);
+    shiftConstants.push_back(&const_1);
+    shiftConstants.push_back(&const_2);
+    shiftConstants.push_back(&const_3);
+    shiftConstants.push_back(&const_4);
+    shiftConstants.push_back(&const_5);
+    shiftConstants.push_back(&const_6);
+    shiftConstants.push_back(&const_7);
+    shiftConstants.push_back(&const_8);
+    shiftConstants.push_back(&const_9);
+    shiftConstants.push_back(&const_10);
+    shiftConstants.push_back(&const_11);
+    shiftConstants.push_back(&const_12);
+    shiftConstants.push_back(&const_13);
+    shiftConstants.push_back(&const_14);
+    shiftConstants.push_back(&const_15);
+    shiftConstants.push_back(&const_16);
+    shiftConstants.push_back(&const_17);
+    shiftConstants.push_back(&const_18);
+    shiftConstants.push_back(&const_19);
+    shiftConstants.push_back(&const_20);
+    shiftConstants.push_back(&const_21);
+    shiftConstants.push_back(&const_22);
+    shiftConstants.push_back(&const_23);
+    shiftConstants.push_back(&const_24);
+    shiftConstants.push_back(&const_25);
+    shiftConstants.push_back(&const_26);
+    shiftConstants.push_back(&const_27);
+    shiftConstants.push_back(&const_28);
+    shiftConstants.push_back(&const_29);
+    shiftConstants.push_back(&const_30);
+    shiftConstants.push_back(&const_31);
+
     // Simulate the z88
     try
     {
