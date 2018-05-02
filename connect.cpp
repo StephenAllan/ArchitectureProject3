@@ -42,6 +42,9 @@ void connect()
     pcIncr.connectsTo(pcAlu.OP2());
     pc.connectsTo(pcAlu.OUT());
     ifidRegister.npc.connectsTo(pcAlu.OUT());
+
+    pc.connectsTo(jumpBus.OUT());
+    ifidRegister.npc.connectsTo(jumpBus.OUT());
     
     /** Instruction Decode Connections */
     bitMask_26.connectsTo(extensionAlu.OP2());
@@ -67,6 +70,8 @@ void connect()
 
     ir.connectsTo(bitBus_16.IN());
     idexRegister.zeroExtImm.connectsTo(bitBus_16.OUT());
+
+    ifidRegister.npc.connectsTo(jumpBus.IN());
 
     /** Execution Stage Connections */
     idexRegister.v.connectsTo(exVBus.IN());

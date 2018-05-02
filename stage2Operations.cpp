@@ -39,6 +39,9 @@ void instructionFetchStage2()
         pc.latchFrom(pcAlu.OUT());
         ifidRegister.npc.latchFrom(pcAlu.OUT()); // also send incremented PC to pipeline register
     } else {
+        jumpBus.IN().pullFrom(idexRegister.imm);
+        pc.latchFrom(jumpBus.OUT());
+        ifidRegister.npc.latchFrom(jumpBus.OUT());
         ifidRegister.incrPc = true;
     }
 }

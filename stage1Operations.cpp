@@ -53,6 +53,7 @@ void instructionDecodeStage1()
 
     if (ifidRegister.instrType == J_TYPE) {
         extensionAlu.OP2().pullFrom(bitMask_26);
+        ifidRegister.incrPc = false;
     } else { // R_TYPE and I_TYPE
         extensionAlu.OP2().pullFrom(bitMask_16);
     }
@@ -91,7 +92,7 @@ void executeStage1()
     long rd = idexRegister.ir(15, 11);
     long funct = idexRegister.ir(5, 0);
 
-    // Handel I-, R-, and J-type instructions in separate cases
+    // Handle I-, R-, and J-type instructions in separate cases
     if (idexRegister.instrType == R_TYPE)
     {
         exFuncAlu.OP1().pullFrom(idexRegister.a);
@@ -130,6 +131,7 @@ void executeStage1()
         switch (opcode)
         {
             case 2: // J
+                
                 break;
             case 3: // JAL
                 break;
