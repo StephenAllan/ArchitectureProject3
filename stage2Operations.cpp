@@ -13,7 +13,9 @@
 
 
 /**
-    TODO: Documentation
+    Perform the second half of the Instruction Fetch stage.
+    - Read the instruction into the IR
+    - Determine the next PC value
  */
 void instructionFetchStage2()
 {
@@ -54,7 +56,8 @@ void instructionFetchStage2()
 }
 
 /**
-    TODO: Documentation
+    Perform the second half of the Instruction Decode stage.
+    - Determine if a jump/branch needs to be performed
  */
 void instructionDecodeStage2()
 {
@@ -129,7 +132,7 @@ void instructionDecodeStage2()
 }
 
 /**
-    TODO: Documentation
+    Perform the second half of the execution stage.
  */
 void executeStage2()
 {

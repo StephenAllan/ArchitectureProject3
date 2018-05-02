@@ -13,17 +13,20 @@
 
 
 /**
-    TODO: Documentation
+    Perform the first half of the Instruction Fetch stage.
+    - Move the PC into the MAR to fetch this instruction
  */
 void instructionFetchStage1()
 {
-    // Move address into MAR
     instructionBus.IN().pullFrom(pc);
     im.MAR().latchFrom(instructionBus.OUT());
 }
 
 /**
-    TODO: Documentation
+    Perform the first half of the Instruction Decode stage.
+    - Determine the instruction type
+    - Fetch register data
+    - Sign-extend the immediate value
  */
 void instructionDecodeStage1()
 {
@@ -69,7 +72,7 @@ void instructionDecodeStage1()
 }
 
 /**
-    TODO: Documentation
+    Perform the first half of the Execution stage.
  */
 void executeStage1()
 {
@@ -156,7 +159,7 @@ void executeStage1()
                 else { compareBus.IN().pullFrom(const_0); }
 
                 exmemRegister.c.latchFrom(compareBus.OUT());     // Pass result down pipeline
-                generalRegisters[rd]->latchFrom(compareBus.OUT());
+                generalRegisters[rd]->latchFrom(compareBus.OUT()); // FIXME move to MEM
                 idexRegister.modifiedRegister = rd;
                 break;
             }
@@ -171,7 +174,7 @@ void executeStage1()
                 }
                 
                 exmemRegister.c.latchFrom(compareBus.OUT());     // Pass result down pipeline
-                generalRegisters[rd]->latchFrom(compareBus.OUT());
+                generalRegisters[rd]->latchFrom(compareBus.OUT()); // FIXME
                 idexRegister.modifiedRegister = rd;
                 break;
 
@@ -198,7 +201,7 @@ void executeStage1()
         if (opcode == 16 || opcode == 20 || opcode == 21 || opcode == 22 || opcode == 39)
         {
             exmemRegister.c.latchFrom(exFuncAlu.OUT());     // Pass result down pipeline
-            generalRegisters[rt]->latchFrom(exFuncAlu.OUT());
+            generalRegisters[rt]->latchFrom(exFuncAlu.OUT()); // FIXME
             idexRegister.modifiedRegister = rt;
 
             if (rt <= 0) { return; }
@@ -363,7 +366,7 @@ void writeBackStage1()
             displayRecord("NOP");
             break;
 
-        case 2: // JR
+        case 2: // J
             displayRecord("J"); break;
         case 3: // JAL
             displayRecord("JAL"); break;

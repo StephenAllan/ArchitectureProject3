@@ -5,6 +5,7 @@
     Container class for the MEM/WB pipeline register for the z88 architecture.
 
     @author Stephen Allan <swa9846>
+    @author Thomas Andaloro <tra5374>
  */
 
 
