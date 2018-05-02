@@ -204,8 +204,6 @@ void executeStage1()
                 exmemRegister.c.latchFrom(exFuncAlu.OUT());
                 generalRegisters[31]->latchFrom(exFuncAlu.OUT());
                 idexRegister.modifiedRegister = 31;
-
-                done = true; // Still broken in an infinite loop
                 break;
         }
     }
