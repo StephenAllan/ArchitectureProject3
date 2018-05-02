@@ -44,7 +44,7 @@ void connect()
     ifidRegister.npc.connectsTo(pcAlu.OUT());
 
     pc.connectsTo(jumpBus.OUT());
-    ifidRegister.npc.connectsTo(jumpBus.OUT());
+    ifidRegister.imm.connectsTo(jumpBus.OUT());
     
     /** Instruction Decode Connections */
     bitMask_26.connectsTo(extensionAlu.OP2());
