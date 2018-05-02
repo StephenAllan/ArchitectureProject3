@@ -42,7 +42,7 @@ void dumpGeneralRegisters()
 }
 
 /**
-    TODO: Documentation
+    Display the formatted execution record.
  */
 void displayRecord(string instructionMnemonic, bool specialOp)
 {
@@ -94,7 +94,7 @@ void displayUndefinedOpCodeError()
 }
 
 /**
-    TODO: Documentation
+    Check if value is an element within vector.
  */
 bool vectorContains(vector<int> vector, int value)
 {

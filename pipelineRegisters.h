@@ -79,5 +79,4 @@ class MemWbRegister
        StorageObject b;
        StorageObject imm;
        StorageObject c;
-       StorageObject lmd;   // LMD
 };
