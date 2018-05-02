@@ -280,9 +280,21 @@ void executeStage1()
                 break;
 
             case 60: // BEQ
+                if (idexRegister.a.value() == idexRegister.b.value())
+                {
+                    exFuncAlu.OP1().pullFrom(idexRegister.pc);
+                    exFuncAlu.perform(BusALU::op_add);
+                    pc.latchFrom(exFuncAlu.OUT());
+                }
                 break;
 
             case 61: // BNE
+                if (idexRegister.a.value() != idexRegister.b.value())
+                {
+                    exFuncAlu.OP1().pullFrom(idexRegister.pc);
+                    exFuncAlu.perform(BusALU::op_add);
+                    pc.latchFrom(exFuncAlu.OUT());
+                }
                 break;
 
             default: // In the case of unrecognized/unimplemented opcode, just don't do anything

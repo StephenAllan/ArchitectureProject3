@@ -115,7 +115,7 @@ extern Memory dm;
 extern BusALU pcAlu;
 extern BusALU exFuncAlu;
 extern BusALU extensionAlu;
-extern BusALU alu4;
+extern BusALU branchAlu;
 
 extern IfIdRegister ifidRegister;
 extern IdExRegister idexRegister;

@@ -84,6 +84,14 @@ void connect()
     const_1.connectsTo(compareBus.IN());
     exmemRegister.c.connectsTo(compareBus.OUT());
 
+    // ifidRegister.pc.connectsTo(branchAlu.OP1());
+    // idexRegister.imm.connectsTo(branchAlu.OP2());
+    // pc.connectsTo(branchAlu.OUT());
+
+    idexRegister.pc.connectsTo(exFuncAlu.OP1());
+    idexRegister.imm.connectsTo(exFuncAlu.OP2());
+    pc.connectsTo(exFuncAlu.OUT());
+
     /** Execution Stage Connections */
     idexRegister.v.connectsTo(exVBus.IN());
     idexRegister.pc.connectsTo(exPcBus.IN());
@@ -108,6 +116,8 @@ void connect()
     idexRegister.npc.connectsTo(exFuncAlu.OP1());
     exmemRegister.c.connectsTo(exFuncAlu.OUT());
 
+    // pc.connectsTo(exFuncAlu.OUT());
+    // idexRegister.pc.connectsTo(exFuncAlu.OP1());
     idexRegister.imm.connectsTo(exFuncAlu.OP1());
     idexRegister.zeroExtImm.connectsTo(exFuncAlu.OP2());
     luiShiftAmount.connectsTo(exFuncAlu.OP2());

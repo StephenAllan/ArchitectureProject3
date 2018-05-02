@@ -51,9 +51,40 @@ void instructionFetchStage2()
  */
 void instructionDecodeStage2()
 {
-    if (ifidRegister.v.value() == 0) { return; }
+    long opcode = ir(31, 26);
+    long rs = ir(25, 21);
+    long rt = ir(20, 16);
 
-    // Probably need to do some modification to PC and ID/EX.NPC here if a branch was decoded
+    // I originally had this in the execute stage
+    // It was branching correctly, but printing too many NOPs after the branch instruction
+    // I thought moving it to earlier in the pipeline would reduce the number of extra instructions executed
+    // (This is the earliest we can execute it... we need the immediate value sign extended)
+    // Unfortunatly, moving it here from execute1 actually made it execute more NOPs after the branch...
+    // Not sure why.
+    // But branching functionality works in the execute1 stage, just the displayed output isn't 100% correct.
+
+    // if (ifidRegister.v.value() == 0) { return; }
+
+    //     if (opcode == 60) // BEQ
+    // {
+    //     if (generalRegisters[rs]->value() == generalRegisters[rt]->value())
+    //     {
+    //         branchAlu.OP1().pullFrom(ifidRegister.pc);
+    //         branchAlu.OP2().pullFrom(idexRegister.imm);
+    //         branchAlu.perform(BusALU::op_add);
+    //         pc.latchFrom(branchAlu.OUT());
+    //     }
+    // }
+    // else if (opcode == 61) // BNE
+    // {
+    //     if (generalRegisters[rs]->value() != generalRegisters[rt]->value())
+    //     {
+    //         branchAlu.OP1().pullFrom(ifidRegister.pc);
+    //         branchAlu.OP2().pullFrom(idexRegister.imm);
+    //         branchAlu.perform(BusALU::op_add);
+    //         pc.latchFrom(branchAlu.OUT());
+    //     }
+    // }
 
     // Send all of the previous pipeline register data to the next stage
     idVBus.IN().pullFrom(ifidRegister.v);

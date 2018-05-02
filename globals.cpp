@@ -113,7 +113,7 @@ Memory dm("DMemory", ADDRESS_SIZE_BITS, BYTE_SIZE_BITS, 0xffff, 4);
 BusALU pcAlu("PC_ALU", ADDRESS_SIZE_BITS);
 BusALU exFuncAlu("EX_FUNC_ALU", ADDRESS_SIZE_BITS);
 BusALU extensionAlu("Extension_ALU", ADDRESS_SIZE_BITS);
-BusALU alu4("ALU4", ADDRESS_SIZE_BITS);
+BusALU branchAlu("Branch_ALU", ADDRESS_SIZE_BITS);
 
 /** Pipeline Registers */
 IfIdRegister ifidRegister;
