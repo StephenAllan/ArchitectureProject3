@@ -53,6 +53,7 @@ void instructionDecodeStage1()
 
     if (ifidRegister.instrType == J_TYPE) {
         extensionAlu.OP2().pullFrom(bitMask_26);
+        ifidRegister.incrPc = false;
     } else { // R_TYPE and I_TYPE
         extensionAlu.OP2().pullFrom(bitMask_16);
     }
