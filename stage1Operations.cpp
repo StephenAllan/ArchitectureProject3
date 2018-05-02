@@ -51,19 +51,21 @@ void instructionDecodeStage1()
         ifidRegister.instrType = I_TYPE;
     }
 
-    if (ifidRegister.instrType == J_TYPE) {
-        extensionAlu.OP2().pullFrom(bitMask_26);
+    if (opcode == 2 || opcode == 3)
+    {
+        bitBus_26.IN().pullFrom(ir);
+        idexRegister.zeroExtImm.latchFrom(bitBus_26.OUT());
         ifidRegister.incrPc = false;
-    } else { // R_TYPE and I_TYPE
-        extensionAlu.OP2().pullFrom(bitMask_16);
     }
-
+    else
+    {
+        bitBus_16.IN().pullFrom(ir);
+        idexRegister.zeroExtImm.latchFrom(bitBus_16.OUT());
+    }
     extensionAlu.OP1().pullFrom(ir);
+    extensionAlu.OP2().pullFrom(bitMask_16);
     extensionAlu.perform(BusALU::op_extendSign);
     idexRegister.imm.latchFrom(extensionAlu.OUT());
-
-    bitBus_16.IN().pullFrom(ir);
-    idexRegister.zeroExtImm.latchFrom(bitBus_16.OUT());
 }
 
 /**
@@ -131,9 +133,6 @@ void executeStage1()
 
         switch (funct)
         {
-            case 0: // HALT
-                break;
-
             case 16: // ADD
                 exFuncAlu.perform(BusALU::op_add); break;
             case 18: // SUB
@@ -188,26 +187,9 @@ void executeStage1()
                 exFuncAlu.perform(BusALU::op_rshift); break;
             case 47: // SRAV
                 exFuncAlu.perform(BusALU::op_rashift); break;
-
-            default:
-                break;
         }
     }
-    else if (idexRegister.instrType == J_TYPE)
-    {
-        switch (opcode)
-        {
-            case 3: // JAL
-                exFuncAlu.OP1().pullFrom(idexRegister.npc);
-                exFuncAlu.OP2().pullFrom(const_4); // can also do PC + 8
-                exFuncAlu.perform(BusALU::op_add);
-                exmemRegister.c.latchFrom(exFuncAlu.OUT());
-                generalRegisters[31]->latchFrom(exFuncAlu.OUT());
-                idexRegister.modifiedRegister = 31;
-                break;
-        }
-    }
-    else // I-TYPE
+    else if (idexRegister.instrType == I_TYPE)
     {
         exFuncAlu.OP1().pullFrom(idexRegister.a);
         exFuncAlu.OP2().pullFrom(idexRegister.imm);
@@ -275,24 +257,6 @@ void executeStage1()
             case 43: // SW
                 exFuncAlu.perform(BusALU::op_add);
                 dm.MAR().latchFrom(exFuncAlu.OUT());
-                break;
-
-            case 60: // BEQ
-                if (idexRegister.a.value() == idexRegister.b.value())
-                {
-                    exFuncAlu.OP1().pullFrom(idexRegister.pc);
-                    exFuncAlu.perform(BusALU::op_add);
-                    pc.latchFrom(exFuncAlu.OUT());
-                }
-                break;
-
-            case 61: // BNE
-                if (idexRegister.a.value() != idexRegister.b.value())
-                {
-                    exFuncAlu.OP1().pullFrom(idexRegister.pc);
-                    exFuncAlu.perform(BusALU::op_add);
-                    pc.latchFrom(exFuncAlu.OUT());
-                }
                 break;
 
             default: // In the case of unrecognized/unimplemented opcode, just don't do anything

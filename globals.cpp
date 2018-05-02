@@ -17,16 +17,11 @@ const unsigned int ADDRESS_SIZE_BITS(32);   // 32-bit address => 4,294,967,296 u
 const unsigned int BYTE_SIZE_BITS(8);
 
 /** Vectors */
-vector<StorageObject*> connectionObjects;
 vector<StorageObject*> generalRegisters;
 vector<StorageObject*> shiftConstants;
 vector<int> modifiedRegisters;
 
 /** Buses */
-Bus op1("Op1Bus", ADDRESS_SIZE_BITS);
-Bus op2("Op2Bus", ADDRESS_SIZE_BITS);
-Bus out("OutBus", ADDRESS_SIZE_BITS);
-
 Bus instructionBus("InstructionBus", ADDRESS_SIZE_BITS);
 Bus pcBus("PcBus", ADDRESS_SIZE_BITS);
 Bus irBus("IrBus", ADDRESS_SIZE_BITS);
@@ -51,6 +46,7 @@ Bus exIrBus("Ex_irBus", ADDRESS_SIZE_BITS);
 Bus exABus("Ex_aBus", ADDRESS_SIZE_BITS);
 Bus exBBus("Ex_bBus", ADDRESS_SIZE_BITS);
 Bus exImmBus("Ex_immBus", ADDRESS_SIZE_BITS);
+Bus exBranchBus("Ex_branchBus", ADDRESS_SIZE_BITS);
 
 Bus memVBus("Mem_vBus", 1);
 Bus memPcBus("Mem_pcBus", ADDRESS_SIZE_BITS);
@@ -59,6 +55,7 @@ Bus memIrBus("Mem_irBus", ADDRESS_SIZE_BITS);
 Bus memABus("Mem_aBus", ADDRESS_SIZE_BITS);
 Bus memBBus("Mem_bBus", ADDRESS_SIZE_BITS);
 Bus memImmBus("Mem_immBus", ADDRESS_SIZE_BITS);
+Bus memBranchBus("Mem_branchBus", ADDRESS_SIZE_BITS);
 Bus memCBus("Mem_cBus", ADDRESS_SIZE_BITS);
 
 /** Registers */
@@ -97,14 +94,6 @@ StorageObject r31("R31", ADDRESS_SIZE_BITS);
 
 StorageObject pc("PC", ADDRESS_SIZE_BITS);
 StorageObject ir("IR", ADDRESS_SIZE_BITS);
-StorageObject mar("MAR", ADDRESS_SIZE_BITS);
-StorageObject mdr("MDR", ADDRESS_SIZE_BITS);
-StorageObject iar("IAR", ADDRESS_SIZE_BITS);
-StorageObject temp("TEMP", ADDRESS_SIZE_BITS);
-
-StorageObject ra("RA", ADDRESS_SIZE_BITS);
-StorageObject rb("RB", ADDRESS_SIZE_BITS);
-StorageObject rc("RC", ADDRESS_SIZE_BITS);
 
 /** Components */
 Memory im("IMemory", ADDRESS_SIZE_BITS, BYTE_SIZE_BITS, 0xffff, 4);
@@ -162,4 +151,5 @@ StorageObject const_30("Shift_30", ADDRESS_SIZE_BITS, 30);
 StorageObject const_31("Shift_31", ADDRESS_SIZE_BITS, 31);
 
 /** Control Variables */
-bool done(false);   // is the simulation over?
+bool done(false);       // is the simulation over?
+bool jumping(false);    // Are we jumping to a new pc?

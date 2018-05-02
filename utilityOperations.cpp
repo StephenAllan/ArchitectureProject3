@@ -12,21 +12,6 @@
 
 
 /**
-    Print all register values to cout for debugging.
-    TODO: Remove
- */
-void dumpAllRegisters()
-{
-    for (int i = 0; i < connectionObjects.size(); ++i)
-    {
-        cout << "  " << (*connectionObjects[i]);
-
-        if ((i + 1) % 4 == 0) { cout << endl; }
-    }
-    cout << endl;
-}
-
-/**
     Print all the non-zero general register values to cout.
  */
 void dumpGeneralRegisters()

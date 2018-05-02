@@ -30,23 +30,10 @@ void memoryAccessStage2();
 void writeBackStage2();
 
 /** Utility Operations */
-void dumpAllRegisters();
 void dumpGeneralRegisters();
 void displayRecord(string, bool = false);
 void displayUnimplementedOpCodeError();
 void displayUndefinedOpCodeError();
 bool vectorContains(vector<int>, int);
-
-/** Component Operations */
-// void fetch(StorageObject &, StorageObject &, Bus &);
-// void write(StorageObject &, StorageObject &);
-// void registerCopy(StorageObject &, StorageObject &, Bus &);
-// void aluOperation(StorageObject &, StorageObject &, BusALU::Operation, StorageObject &);
-
-/** ALU Operations */
-// void addRegister(StorageObject &, StorageObject &, StorageObject &);
-// void subRegister(StorageObject &, StorageObject &, StorageObject &);
-// void clearRegister(StorageObject &);
-// void complementRegister(StorageObject &);
 
 #endif

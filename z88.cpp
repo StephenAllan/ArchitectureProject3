@@ -63,51 +63,6 @@ int main(int argc, char** argv)
         }
     }
 
-    // Build Connection Objects vector
-    connectionObjects.push_back(&r0);
-    connectionObjects.push_back(&r1);
-    connectionObjects.push_back(&r2);
-    connectionObjects.push_back(&r3);
-    connectionObjects.push_back(&r4);
-    connectionObjects.push_back(&r5);
-    connectionObjects.push_back(&r6);
-    connectionObjects.push_back(&r7);
-    connectionObjects.push_back(&r8);
-    connectionObjects.push_back(&r9);
-    connectionObjects.push_back(&r10);
-    connectionObjects.push_back(&r11);
-    connectionObjects.push_back(&r12);
-    connectionObjects.push_back(&r13);
-    connectionObjects.push_back(&r14);
-    connectionObjects.push_back(&r15);
-    connectionObjects.push_back(&r16);
-    connectionObjects.push_back(&r17);
-    connectionObjects.push_back(&r18);
-    connectionObjects.push_back(&r19);
-    connectionObjects.push_back(&r20);
-    connectionObjects.push_back(&r21);
-    connectionObjects.push_back(&r22);
-    connectionObjects.push_back(&r23);
-    connectionObjects.push_back(&r24);
-    connectionObjects.push_back(&r25);
-    connectionObjects.push_back(&r26);
-    connectionObjects.push_back(&r27);
-    connectionObjects.push_back(&r28);
-    connectionObjects.push_back(&r29);
-    connectionObjects.push_back(&r30);
-    connectionObjects.push_back(&r31);
-
-    connectionObjects.push_back(&pc);
-    connectionObjects.push_back(&ir);
-    connectionObjects.push_back(&mar);
-    connectionObjects.push_back(&mdr);
-    connectionObjects.push_back(&iar);
-    connectionObjects.push_back(&temp);
-
-    connectionObjects.push_back(&ra);
-    connectionObjects.push_back(&rb);
-    connectionObjects.push_back(&rc);
-
     // Build General Registers vector
     generalRegisters.push_back(&r0);
     generalRegisters.push_back(&r1);

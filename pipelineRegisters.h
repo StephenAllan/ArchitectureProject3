@@ -40,6 +40,7 @@ class IdExRegister
        StorageObject a;     // Operand A
        StorageObject b;     // Operand B
        StorageObject imm;   // Sign-extended immediate
+       StorageObject branch;
        StorageObject zeroExtImm;
 };
 
@@ -58,6 +59,7 @@ class ExMemRegister
        StorageObject a;
        StorageObject b;
        StorageObject imm;
+       StorageObject branch;
        StorageObject c;     // Execution result
 };
 
@@ -76,6 +78,7 @@ class MemWbRegister
        StorageObject a;
        StorageObject b;
        StorageObject imm;
+       StorageObject branch;
        StorageObject c;
        StorageObject lmd;   // LMD
 };

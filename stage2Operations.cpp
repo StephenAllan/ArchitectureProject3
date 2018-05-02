@@ -35,11 +35,18 @@ void instructionFetchStage2()
     pcAlu.OP2().pullFrom(pcIncr);
     pcAlu.perform(BusALU::op_add);
 
+    if (jumping)
+    {
+        ifidRegister.npc.latchFrom(pcAlu.OUT());
+        jumping = false;
+        return;
+    }
+
     if (ifidRegister.incrPc) {
         pc.latchFrom(pcAlu.OUT());
         ifidRegister.npc.latchFrom(pcAlu.OUT()); // also send incremented PC to pipeline register
     } else {
-        jumpBus.IN().pullFrom(idexRegister.imm);
+        jumpBus.IN().pullFrom(idexRegister.zeroExtImm);
         pc.latchFrom(jumpBus.OUT());
         ifidRegister.npc.latchFrom(jumpBus.OUT());
         ifidRegister.incrPc = true;
@@ -51,40 +58,62 @@ void instructionFetchStage2()
  */
 void instructionDecodeStage2()
 {
-    long opcode = ir(31, 26);
-    long rs = ir(25, 21);
-    long rt = ir(20, 16);
-
-    // I originally had this in the execute stage
-    // It was branching correctly, but printing too many NOPs after the branch instruction
-    // I thought moving it to earlier in the pipeline would reduce the number of extra instructions executed
-    // (This is the earliest we can execute it... we need the immediate value sign extended)
-    // Unfortunatly, moving it here from execute1 actually made it execute more NOPs after the branch...
-    // Not sure why.
-    // But branching functionality works in the execute1 stage, just the displayed output isn't 100% correct.
-
     if (ifidRegister.v.value() == 0) { return; }
 
-    if (opcode == 60) // BEQ
+    long opcode = ir(31, 26);
+    long rd = idexRegister.ir(15, 11);
+    long funct = ir(5, 0);
+
+    if (opcode == 0 && funct == 2) // JR
     {
-        if (generalRegisters[rs]->value() == generalRegisters[rt]->value())
+        jumping = true;
+
+        jumpBus.IN().pullFrom(idexRegister.a);
+        pc.latchFrom(jumpBus.OUT());
+    }
+    else if (opcode == 0 && funct == 3) // JALR
+    {
+        jumping = true;
+
+        jumpBus.IN().pullFrom(idexRegister.a);
+        pc.latchFrom(jumpBus.OUT());
+
+        exFuncAlu.OP1().pullFrom(idexRegister.npc);
+        exFuncAlu.OP2().pullFrom(const_8);
+        exFuncAlu.perform(BusALU::op_add);
+        exmemRegister.c.latchFrom(exFuncAlu.OUT());
+        generalRegisters[31]->latchFrom(exFuncAlu.OUT());
+        idexRegister.modifiedRegister = 31;
+    }
+    else if (opcode == 3) // JAL
+    {
+        exFuncAlu.OP1().pullFrom(idexRegister.npc);
+        exFuncAlu.OP2().pullFrom(const_8);
+        exFuncAlu.perform(BusALU::op_add);
+        exmemRegister.c.latchFrom(exFuncAlu.OUT());
+        generalRegisters[31]->latchFrom(exFuncAlu.OUT());
+        idexRegister.modifiedRegister = 31;
+    }
+    else if (opcode == 60) // BEQ
+    {
+        if (idexRegister.a.value() == idexRegister.b.value())
         {
-            branchAlu.OP1().pullFrom(ifidRegister.pc);
+            jumping = true;
+            branchAlu.OP1().pullFrom(ifidRegister.npc);
             branchAlu.OP2().pullFrom(idexRegister.imm);
             branchAlu.perform(BusALU::op_add);
             pc.latchFrom(branchAlu.OUT());
-            ifidRegister.pc.latchFrom(branchAlu.OUT());
         }
     }
     else if (opcode == 61) // BNE
     {
-        if (generalRegisters[rs]->value() != generalRegisters[rt]->value())
+        if (idexRegister.a.value() != idexRegister.b.value())
         {
-            branchAlu.OP1().pullFrom(ifidRegister.pc);
+            jumping = true;
+            branchAlu.OP1().pullFrom(ifidRegister.npc);
             branchAlu.OP2().pullFrom(idexRegister.imm);
             branchAlu.perform(BusALU::op_add);
             pc.latchFrom(branchAlu.OUT());
-            ifidRegister.pc.latchFrom(branchAlu.OUT());
         }
     }
 
@@ -132,6 +161,7 @@ void executeStage2()
     exABus.IN().pullFrom(idexRegister.a);
     exBBus.IN().pullFrom(idexRegister.b);
     exImmBus.IN().pullFrom(idexRegister.imm);
+    exBranchBus.IN().pullFrom(idexRegister.branch);
     exmemRegister.v.latchFrom(exVBus.OUT());
     exmemRegister.pc.latchFrom(exPcBus.OUT());
     exmemRegister.npc.latchFrom(exNpcBus.OUT());
@@ -139,6 +169,7 @@ void executeStage2()
     exmemRegister.a.latchFrom(exABus.OUT());
     exmemRegister.b.latchFrom(exBBus.OUT());
     exmemRegister.imm.latchFrom(exImmBus.OUT());
+    exmemRegister.branch.latchFrom(exBranchBus.OUT());
 
     exmemRegister.instrType = idexRegister.instrType;
     exmemRegister.modifiedRegister = idexRegister.modifiedRegister;
@@ -159,6 +190,7 @@ void memoryAccessStage2()
     memABus.IN().pullFrom(exmemRegister.a);
     memBBus.IN().pullFrom(exmemRegister.b);
     memImmBus.IN().pullFrom(exmemRegister.imm);
+    memBranchBus.IN().pullFrom(exmemRegister.branch);
     memCBus.IN().pullFrom(exmemRegister.c);
     memwbRegister.v.latchFrom(memVBus.OUT());
     memwbRegister.pc.latchFrom(memPcBus.OUT());
@@ -167,6 +199,7 @@ void memoryAccessStage2()
     memwbRegister.a.latchFrom(memABus.OUT());
     memwbRegister.b.latchFrom(memBBus.OUT());
     memwbRegister.imm.latchFrom(memImmBus.OUT());
+    memwbRegister.branch.latchFrom(memBranchBus.OUT());
     memwbRegister.c.latchFrom(memCBus.OUT());
 
     memwbRegister.instrType = exmemRegister.instrType;

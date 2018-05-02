@@ -21,14 +21,9 @@
 extern const unsigned int ADDRESS_SIZE_BITS;
 extern const unsigned int BYTE_SIZE_BITS;
 
-extern vector<StorageObject*> connectionObjects;
 extern vector<StorageObject*> generalRegisters;
 extern vector<StorageObject*> shiftConstants;
 extern vector<int> modifiedRegisters;
-
-extern Bus op1;
-extern Bus op2;
-extern Bus out;
 
 extern Bus instructionBus;
 extern Bus pcBus;
@@ -39,7 +34,6 @@ extern Bus bitBus_26;
 extern Bus jumpBus;
 extern Bus compareBus;
 
-// Buses to bring IF/ID data to ID/EX registers
 extern Bus idVBus;
 extern Bus idPcBus;
 extern Bus idNpcBus;
@@ -55,6 +49,7 @@ extern Bus exIrBus;
 extern Bus exABus;
 extern Bus exBBus;
 extern Bus exImmBus;
+extern Bus exBranchBus;
 
 extern Bus memVBus;
 extern Bus memPcBus;
@@ -63,6 +58,7 @@ extern Bus memIrBus;
 extern Bus memABus;
 extern Bus memBBus;
 extern Bus memImmBus;
+extern Bus memBranchBus;
 extern Bus memCBus;
 
 extern StorageObject r0;
@@ -100,14 +96,6 @@ extern StorageObject r31;
 
 extern StorageObject pc;
 extern StorageObject ir;
-extern StorageObject mar;
-extern StorageObject mdr;
-extern StorageObject iar;
-extern StorageObject temp;
-
-extern StorageObject ra;
-extern StorageObject rb;
-extern StorageObject rc;
 
 extern Memory im;
 extern Memory dm;
@@ -161,6 +149,7 @@ extern StorageObject const_29;
 extern StorageObject const_30;
 extern StorageObject const_31;
 
-extern bool done;   // is the simulation over?
+extern bool done;
+extern bool jumping;
 
 #endif
