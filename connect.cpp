@@ -28,7 +28,7 @@ void connect()
 
     /** Memory Components */
     im.MAR().connectsTo(instructionBus.OUT());
-    dm.MAR().connectsTo(loadBus.OUT());
+    dm.MAR().connectsTo(exFuncAlu.OUT());
     
     /** Instruction Fetch Connections */
     pc.connectsTo(im.READ());

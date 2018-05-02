@@ -143,7 +143,7 @@ void executeStage1()
         exFuncAlu.OP2().pullFrom(idexRegister.imm);
         exFuncAlu.perform(BusALU::op_zero); // Ignore the no operation error
 
-        if (opcode == 16 || opcode == 20 || opcode == 21 || opcode == 22 || opcode == 35 || opcode == 39)
+        if (opcode == 16 || opcode == 20 || opcode == 21 || opcode == 22 || opcode == 39)
         {
             exmemRegister.c.latchFrom(exFuncAlu.OUT());     // Pass result down pipeline
             generalRegisters[rt]->latchFrom(exFuncAlu.OUT());
@@ -175,8 +175,9 @@ void executeStage1()
                 break;
 
             case 35: // LW
-                loadBus.IN().pullFrom(idexRegister.imm);
-                dm.MAR().latchFrom(loadBus.OUT());
+                exFuncAlu.perform(BusALU::op_add);
+                dm.MAR().latchFrom(exFuncAlu.OUT());
+                idexRegister.modifiedRegister = rt;
                 break;
 
             case 39: // LUI
