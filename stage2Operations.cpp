@@ -81,7 +81,7 @@ void instructionDecodeStage2()
         exFuncAlu.OP1().pullFrom(idexRegister.npc);
         exFuncAlu.OP2().pullFrom(const_8);
         exFuncAlu.perform(BusALU::op_add);
-        exmemRegister.c.latchFrom(exFuncAlu.OUT());
+        idexRegister.c.latchFrom(exFuncAlu.OUT());
         generalRegisters[31]->latchFrom(exFuncAlu.OUT());
         idexRegister.modifiedRegister = 31;
     }
@@ -90,7 +90,7 @@ void instructionDecodeStage2()
         exFuncAlu.OP1().pullFrom(idexRegister.npc);
         exFuncAlu.OP2().pullFrom(const_8);
         exFuncAlu.perform(BusALU::op_add);
-        exmemRegister.c.latchFrom(exFuncAlu.OUT());
+        idexRegister.c.latchFrom(exFuncAlu.OUT());
         generalRegisters[31]->latchFrom(exFuncAlu.OUT());
         idexRegister.modifiedRegister = 31;
     }
@@ -135,24 +135,6 @@ void executeStage2()
 {
     if (idexRegister.v.value() == 0) { return; }
 
-    long opcode = idexRegister.ir(31, 26);
-    long rt = idexRegister.ir(20, 16);
-
-    if (rt > 0)
-    {
-        switch (opcode)
-        {
-            case 35: // LW
-                dm.read();
-                generalRegisters[rt]->latchFrom(dm.READ());
-                break;
-            case 43: // SW
-                dm.WRITE().pullFrom((*generalRegisters[rt]));
-                dm.write();
-                break;
-        }
-    }
-
     // Advance data in pipeline registers
     exVBus.IN().pullFrom(idexRegister.v);
     exPcBus.IN().pullFrom(idexRegister.pc);
@@ -161,7 +143,7 @@ void executeStage2()
     exABus.IN().pullFrom(idexRegister.a);
     exBBus.IN().pullFrom(idexRegister.b);
     exImmBus.IN().pullFrom(idexRegister.imm);
-    exBranchBus.IN().pullFrom(idexRegister.branch);
+    exCBus.IN().pullFrom(idexRegister.c);
     exmemRegister.v.latchFrom(exVBus.OUT());
     exmemRegister.pc.latchFrom(exPcBus.OUT());
     exmemRegister.npc.latchFrom(exNpcBus.OUT());
@@ -169,7 +151,7 @@ void executeStage2()
     exmemRegister.a.latchFrom(exABus.OUT());
     exmemRegister.b.latchFrom(exBBus.OUT());
     exmemRegister.imm.latchFrom(exImmBus.OUT());
-    exmemRegister.branch.latchFrom(exBranchBus.OUT());
+    exmemRegister.c.latchFrom(exCBus.OUT());
 
     exmemRegister.instrType = idexRegister.instrType;
     exmemRegister.modifiedRegister = idexRegister.modifiedRegister;
@@ -190,7 +172,6 @@ void memoryAccessStage2()
     memABus.IN().pullFrom(exmemRegister.a);
     memBBus.IN().pullFrom(exmemRegister.b);
     memImmBus.IN().pullFrom(exmemRegister.imm);
-    memBranchBus.IN().pullFrom(exmemRegister.branch);
     memCBus.IN().pullFrom(exmemRegister.c);
     memwbRegister.v.latchFrom(memVBus.OUT());
     memwbRegister.pc.latchFrom(memPcBus.OUT());
@@ -199,17 +180,8 @@ void memoryAccessStage2()
     memwbRegister.a.latchFrom(memABus.OUT());
     memwbRegister.b.latchFrom(memBBus.OUT());
     memwbRegister.imm.latchFrom(memImmBus.OUT());
-    memwbRegister.branch.latchFrom(memBranchBus.OUT());
     memwbRegister.c.latchFrom(memCBus.OUT());
 
     memwbRegister.instrType = exmemRegister.instrType;
     memwbRegister.modifiedRegister = exmemRegister.modifiedRegister;
-}
-
-/**
-    TODO: Documentation
- */
-void writeBackStage2()
-{
-    if (memwbRegister.v.value() == 0) { return; }
 }

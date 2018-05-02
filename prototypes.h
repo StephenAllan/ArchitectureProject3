@@ -27,7 +27,6 @@ void instructionFetchStage2();
 void instructionDecodeStage2();
 void executeStage2();
 void memoryAccessStage2();
-void writeBackStage2();
 
 /** Utility Operations */
 void dumpGeneralRegisters();

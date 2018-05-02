@@ -29,6 +29,7 @@ extern Bus instructionBus;
 extern Bus pcBus;
 extern Bus irBus;
 extern Bus loadBus;
+extern Bus saveBus;
 extern Bus bitBus_16;
 extern Bus bitBus_26;
 extern Bus jumpBus;
@@ -49,7 +50,7 @@ extern Bus exIrBus;
 extern Bus exABus;
 extern Bus exBBus;
 extern Bus exImmBus;
-extern Bus exBranchBus;
+extern Bus exCBus;
 
 extern Bus memVBus;
 extern Bus memPcBus;
@@ -58,7 +59,6 @@ extern Bus memIrBus;
 extern Bus memABus;
 extern Bus memBBus;
 extern Bus memImmBus;
-extern Bus memBranchBus;
 extern Bus memCBus;
 
 extern StorageObject r0;

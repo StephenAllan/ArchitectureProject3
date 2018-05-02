@@ -22,7 +22,6 @@ MemWbRegister::MemWbRegister():
     a("MemWb_A", ADDRESS_SIZE_BITS),
     b("MemWb_B", ADDRESS_SIZE_BITS),
     imm("MemWb_IMM", ADDRESS_SIZE_BITS),
-    branch("IdEx_Branch", ADDRESS_SIZE_BITS),
     c("MemWb_C", ADDRESS_SIZE_BITS),
     lmd("MemWb_LMD", ADDRESS_SIZE_BITS)
 {

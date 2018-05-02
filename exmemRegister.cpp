@@ -22,7 +22,6 @@ ExMemRegister::ExMemRegister():
     a("ExMem_A", ADDRESS_SIZE_BITS),
     b("ExMem_B", ADDRESS_SIZE_BITS),
     imm("ExMem_IMM", ADDRESS_SIZE_BITS),
-    branch("IdEx_Branch", ADDRESS_SIZE_BITS),
     c("ExMem_C", ADDRESS_SIZE_BITS)
 {
 

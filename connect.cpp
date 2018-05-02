@@ -25,6 +25,7 @@ void connect()
         generalRegisters[i]->connectsTo(exFuncAlu.OP2());
         generalRegisters[i]->connectsTo(exFuncAlu.OUT());
         generalRegisters[i]->connectsTo(compareBus.OUT());
+        generalRegisters[i]->connectsTo(saveBus.OUT());
         generalRegisters[i]->connectsTo(dm.READ());
         generalRegisters[i]->connectsTo(dm.WRITE());
     }
@@ -87,14 +88,12 @@ void connect()
 
     const_0.connectsTo(compareBus.IN());
     const_1.connectsTo(compareBus.IN());
-    exmemRegister.c.connectsTo(compareBus.OUT());
+    idexRegister.c.connectsTo(compareBus.OUT());
 
     ifidRegister.npc.connectsTo(branchAlu.OP1());
     idexRegister.imm.connectsTo(branchAlu.OP2());
     ifidRegister.pc.connectsTo(branchAlu.OUT());
-    idexRegister.branch.connectsTo(branchAlu.OUT());
     pc.connectsTo(branchAlu.OUT());
-    pc.connectsTo(exBranchBus.OUT());
 
     /** Execution Stage Connections */
     idexRegister.v.connectsTo(exVBus.IN());
@@ -104,7 +103,7 @@ void connect()
     idexRegister.a.connectsTo(exABus.IN());
     idexRegister.b.connectsTo(exBBus.IN());
     idexRegister.imm.connectsTo(exImmBus.IN());
-    idexRegister.branch.connectsTo(exBranchBus.IN());
+    idexRegister.c.connectsTo(exCBus.IN());
     exmemRegister.v.connectsTo(exVBus.OUT());
     exmemRegister.pc.connectsTo(exPcBus.OUT());
     exmemRegister.npc.connectsTo(exNpcBus.OUT());
@@ -112,7 +111,7 @@ void connect()
     exmemRegister.a.connectsTo(exABus.OUT());
     exmemRegister.b.connectsTo(exBBus.OUT());
     exmemRegister.imm.connectsTo(exImmBus.OUT());
-    exmemRegister.branch.connectsTo(exBranchBus.OUT());
+    exmemRegister.c.connectsTo(exCBus.OUT());
 
     idexRegister.a.connectsTo(exFuncAlu.OP1());
     idexRegister.a.connectsTo(exFuncAlu.OP2());
@@ -120,7 +119,7 @@ void connect()
     idexRegister.b.connectsTo(exFuncAlu.OP2());
     idexRegister.imm.connectsTo(exFuncAlu.OP2());
     idexRegister.npc.connectsTo(exFuncAlu.OP1());
-    exmemRegister.c.connectsTo(exFuncAlu.OUT());
+    idexRegister.c.connectsTo(exFuncAlu.OUT());
 
     pc.connectsTo(exFuncAlu.OUT());
     idexRegister.pc.connectsTo(exFuncAlu.OP1());
@@ -131,7 +130,7 @@ void connect()
     idexRegister.imm.connectsTo(loadBus.IN());
 
     idexRegister.pc.connectsTo(exPcBus.IN());
-    exmemRegister.c.connectsTo(exPcBus.OUT());
+    idexRegister.c.connectsTo(exPcBus.OUT());
 
     /** Memory Stage Connections */
     exmemRegister.v.connectsTo(memVBus.IN());
@@ -141,7 +140,6 @@ void connect()
     exmemRegister.a.connectsTo(memABus.IN());
     exmemRegister.b.connectsTo(memBBus.IN());
     exmemRegister.imm.connectsTo(memImmBus.IN());
-    exmemRegister.branch.connectsTo(memBranchBus.IN());
     exmemRegister.c.connectsTo(memCBus.IN());
     memwbRegister.v.connectsTo(memVBus.OUT());
     memwbRegister.pc.connectsTo(memPcBus.OUT());
@@ -150,6 +148,7 @@ void connect()
     memwbRegister.a.connectsTo(memABus.OUT());
     memwbRegister.b.connectsTo(memBBus.OUT());
     memwbRegister.imm.connectsTo(memImmBus.OUT());
-    memwbRegister.branch.connectsTo(memBranchBus.OUT());
     memwbRegister.c.connectsTo(memCBus.OUT());
+
+    exmemRegister.c.connectsTo(saveBus.IN());
 }

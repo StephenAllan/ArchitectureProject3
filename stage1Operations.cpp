@@ -75,20 +75,6 @@ void executeStage1()
 {
     if (idexRegister.v.value() == 0) { return; }
 
-    /** Instruction Format
-      opCode = ir(31, 26)
-      rs = ir(25, 21)
-      rt = ir(20, 16)
-
-      imm = ir(15, 0)
-
-      rd = ir(15, 11)
-      sh = ir(10, 6)
-      funct = ir(5, 0)
-
-      target = ir(25, 0)
-    **/
-
     long opcode = idexRegister.ir(31, 26);
     long rs = idexRegister.ir(25, 21);
     long rt = idexRegister.ir(20, 16);
@@ -106,14 +92,15 @@ void executeStage1()
         if (funct == 16 || funct == 18 || funct == 20 || funct == 21 || funct == 22 || funct == 37 ||
             funct == 38 || funct == 39 || funct == 45 || funct == 46 || funct == 47)
         {
-            exmemRegister.c.latchFrom(exFuncAlu.OUT());     // Pass result down pipeline
-            generalRegisters[rd]->latchFrom(exFuncAlu.OUT());
-            idexRegister.modifiedRegister = rd;
-
-            if (rd <= 0) { return; }
+            idexRegister.c.latchFrom(exFuncAlu.OUT());     // Pass result down pipeline
         }
 
-        if (funct == 37 || funct == 38 || funct == 39)
+        if (funct == 16 || funct == 18)
+        {
+            generalRegisters[rd]->latchFrom(exFuncAlu.OUT());
+            idexRegister.modifiedRegister = rd;
+        }
+        else if (funct == 37 || funct == 38 || funct == 39)
         {
             exFuncAlu.OP1().pullFrom(idexRegister.b);
             exFuncAlu.OP2().pullFrom((*shiftConstants[sh]));
@@ -130,6 +117,8 @@ void executeStage1()
                 exFuncAlu.OP2().pullFrom((*shiftConstants[value]));
             }
         }
+
+        if (rd <= 0) { return; }
 
         switch (funct)
         {
@@ -155,24 +144,14 @@ void executeStage1()
                 if (signedRs < signedRt) { compareBus.IN().pullFrom(const_1); }
                 else { compareBus.IN().pullFrom(const_0); }
 
-                exmemRegister.c.latchFrom(compareBus.OUT());     // Pass result down pipeline
-                generalRegisters[rd]->latchFrom(compareBus.OUT());
-                idexRegister.modifiedRegister = rd;
+                idexRegister.c.latchFrom(compareBus.OUT()); // Pass result down pipeline
                 break;
             }
             case 25: // SLTU
-                if (idexRegister.a.value() < idexRegister.b.value())
-                {
-                    compareBus.IN().pullFrom(const_1);
-                }
-                else
-                {
-                    compareBus.IN().pullFrom(const_0);
-                }
+                if (idexRegister.a.value() < idexRegister.b.value()) { compareBus.IN().pullFrom(const_1); }
+                else { compareBus.IN().pullFrom(const_0); }
                 
-                exmemRegister.c.latchFrom(compareBus.OUT());     // Pass result down pipeline
-                generalRegisters[rd]->latchFrom(compareBus.OUT());
-                idexRegister.modifiedRegister = rd;
+                idexRegister.c.latchFrom(compareBus.OUT()); // Pass result down pipeline
                 break;
 
             case 37: // SLL
@@ -197,10 +176,7 @@ void executeStage1()
 
         if (opcode == 16 || opcode == 20 || opcode == 21 || opcode == 22 || opcode == 39)
         {
-            exmemRegister.c.latchFrom(exFuncAlu.OUT());     // Pass result down pipeline
-            generalRegisters[rt]->latchFrom(exFuncAlu.OUT());
-            idexRegister.modifiedRegister = rt;
-
+            idexRegister.c.latchFrom(exFuncAlu.OUT());  // Pass result down pipeline
             if (rt <= 0) { return; }
         }
 
@@ -236,9 +212,7 @@ void executeStage1()
                 if (signedRs < signedImm) { compareBus.IN().pullFrom(const_1); }
                 else { compareBus.IN().pullFrom(const_0); }
 
-                exmemRegister.c.latchFrom(compareBus.OUT());     // Pass result down pipeline
-                generalRegisters[rt]->latchFrom(compareBus.OUT());
-                idexRegister.modifiedRegister = rt;
+                idexRegister.c.latchFrom(compareBus.OUT()); // Pass result down pipeline
                 break;
             }
 
@@ -271,6 +245,61 @@ void executeStage1()
 void memoryAccessStage1()
 {
     if (exmemRegister.v.value() == 0) { return; }
+
+    long opcode = exmemRegister.ir(31, 26);
+    long rt = exmemRegister.ir(20, 16);
+    long rd = exmemRegister.ir(15, 11);
+    long funct = exmemRegister.ir(5, 0);
+
+    if (rt <= 0) { return; }
+
+    if (exmemRegister.instrType == R_TYPE)
+    {
+        switch (funct)
+        {
+            case 20:
+            case 21:
+            case 22:
+            case 24:
+            case 25:
+            case 37:
+            case 38:
+            case 39:
+            case 45:
+            case 46:
+            case 47:
+                saveBus.IN().pullFrom(exmemRegister.c);
+                generalRegisters[rd]->latchFrom(saveBus.OUT());
+                exmemRegister.modifiedRegister = rd;
+                break;
+        }
+    }
+    else if (exmemRegister.instrType == I_TYPE)
+    {
+        switch (opcode)
+        {
+            case 16:
+            case 20:
+            case 21:
+            case 22:
+            case 24:
+            case 39:
+                saveBus.IN().pullFrom(exmemRegister.c);
+                generalRegisters[rt]->latchFrom(saveBus.OUT());
+                exmemRegister.modifiedRegister = rt;
+                break;
+
+            case 35: // LW
+                dm.read();
+                generalRegisters[rt]->latchFrom(dm.READ());
+                break;
+
+            case 43: // SW
+                dm.WRITE().pullFrom((*generalRegisters[rt]));
+                dm.write();
+                break;
+        }
+    }
 }
 
 /**

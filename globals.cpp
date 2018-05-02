@@ -26,6 +26,7 @@ Bus instructionBus("InstructionBus", ADDRESS_SIZE_BITS);
 Bus pcBus("PcBus", ADDRESS_SIZE_BITS);
 Bus irBus("IrBus", ADDRESS_SIZE_BITS);
 Bus loadBus("LoadBus", ADDRESS_SIZE_BITS);
+Bus saveBus("SaveBus", ADDRESS_SIZE_BITS);
 Bus bitBus_16("BitBus_16", 16);
 Bus bitBus_26("BitBus_26", 26);
 Bus jumpBus("jumpbus", ADDRESS_SIZE_BITS);
@@ -46,7 +47,7 @@ Bus exIrBus("Ex_irBus", ADDRESS_SIZE_BITS);
 Bus exABus("Ex_aBus", ADDRESS_SIZE_BITS);
 Bus exBBus("Ex_bBus", ADDRESS_SIZE_BITS);
 Bus exImmBus("Ex_immBus", ADDRESS_SIZE_BITS);
-Bus exBranchBus("Ex_branchBus", ADDRESS_SIZE_BITS);
+Bus exCBus("Ex_cBus", ADDRESS_SIZE_BITS);
 
 Bus memVBus("Mem_vBus", 1);
 Bus memPcBus("Mem_pcBus", ADDRESS_SIZE_BITS);
@@ -55,7 +56,6 @@ Bus memIrBus("Mem_irBus", ADDRESS_SIZE_BITS);
 Bus memABus("Mem_aBus", ADDRESS_SIZE_BITS);
 Bus memBBus("Mem_bBus", ADDRESS_SIZE_BITS);
 Bus memImmBus("Mem_immBus", ADDRESS_SIZE_BITS);
-Bus memBranchBus("Mem_branchBus", ADDRESS_SIZE_BITS);
 Bus memCBus("Mem_cBus", ADDRESS_SIZE_BITS);
 
 /** Registers */
