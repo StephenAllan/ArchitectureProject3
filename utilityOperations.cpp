@@ -63,10 +63,13 @@ void displayRecord(string instructionMnemonic, bool specialOp)
         cout << "   ";
     }
 
-    printf("%-7s ", instructionMnemonic.c_str());
+    printf("%-7s", instructionMnemonic.c_str());
 
     // If any GPR was updated, print one space and then its contents.
-    // (Remember that GPR 0 is never changed by the execution of an instruction.)
+    if (memwbRegister.modifiedRegister > 0)
+    {
+        cout << " " << (*generalRegisters[memwbRegister.modifiedRegister]);
+    }
 
     cout << endl;
 }
@@ -75,9 +78,8 @@ void displayRecord(string instructionMnemonic, bool specialOp)
     Print out the error text for an unimplemented operation code error.
     Halt the program.
  */
-void displayUnimplementedOpCodeError(bool specialOp)
+void displayUnimplementedOpCodeError()
 {
-    displayRecord("???????", specialOp);
     cout << "Machine Halted - unimplemented instruction" << endl;
     done = true;
 }
@@ -86,9 +88,8 @@ void displayUnimplementedOpCodeError(bool specialOp)
     Print out the error text for an undefined operation code error.
     Halt the program.
  */
-void displayUndefinedOpCodeError(bool specialOp)
+void displayUndefinedOpCodeError()
 {
-    displayRecord("???????", specialOp);
     cout << "Machine Halted - undefined instruction" << endl;
     done = true;
 }

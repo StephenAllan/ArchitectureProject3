@@ -33,8 +33,8 @@ void writeBackStage2();
 void dumpAllRegisters();
 void dumpGeneralRegisters();
 void displayRecord(string, bool = false);
-void displayUnimplementedOpCodeError(bool = false);
-void displayUndefinedOpCodeError(bool = false);
+void displayUnimplementedOpCodeError();
+void displayUndefinedOpCodeError();
 // string numToString(long);
 // void branchPC(bool, bool);
 

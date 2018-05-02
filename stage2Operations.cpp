@@ -96,7 +96,10 @@ void executeStage2()
     exmemRegister.a.latchFrom(exABus.OUT());
     exmemRegister.b.latchFrom(exBBus.OUT());
     exmemRegister.imm.latchFrom(exImmBus.OUT());
+
     exmemRegister.instrType = idexRegister.instrType;
+    exmemRegister.modifiedRegister = idexRegister.modifiedRegister;
+    idexRegister.modifiedRegister = 0;
 }
 
 /**
@@ -122,7 +125,9 @@ void memoryAccessStage2()
     memwbRegister.b.latchFrom(memBBus.OUT());
     memwbRegister.imm.latchFrom(memImmBus.OUT());
     memwbRegister.c.latchFrom(memCBus.OUT());
+
     memwbRegister.instrType = exmemRegister.instrType;
+    memwbRegister.modifiedRegister = exmemRegister.modifiedRegister;
 }
 
 /**

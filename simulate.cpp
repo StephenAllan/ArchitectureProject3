@@ -37,15 +37,18 @@ void simulate(char* objectFile)
 
         Clock::tick();
 
-        instructionFetchStage2();
-        instructionDecodeStage2();
-        executeStage2();
-        memoryAccessStage2();
         writeBackStage2();
+        memoryAccessStage2();
+        executeStage2();
+        instructionDecodeStage2();
+        instructionFetchStage2();
+
+        // instructionFetchStage2();
+        // instructionDecodeStage2();
+        // executeStage2();
+        // memoryAccessStage2();
+        // writeBackStage2();
         
         Clock::tick();
-
-        // Debug
-        dumpGeneralRegisters();
     }
 }

@@ -95,8 +95,12 @@ void executeStage1()
         exFuncAlu.OP2().pullFrom(idexRegister.b);
         exFuncAlu.perform(BusALU::op_zero); // Ignore the no operation error
 
-        exmemRegister.c.latchFrom(exFuncAlu.OUT());     // Pass result down pipeline
-        generalRegisters[rd]->latchFrom(exFuncAlu.OUT());
+        if (funct == 16 || funct == 18 || funct == 20 || funct == 21 || funct == 22)
+        {
+            exmemRegister.c.latchFrom(exFuncAlu.OUT());     // Pass result down pipeline
+            generalRegisters[rd]->latchFrom(exFuncAlu.OUT());
+            idexRegister.modifiedRegister = rd;
+        }
 
         switch (funct)
         {
@@ -134,8 +138,12 @@ void executeStage1()
         exFuncAlu.OP2().pullFrom(luiShiftAmount);
         exFuncAlu.perform(BusALU::op_zero); // Ignore the no operation error
 
-        exmemRegister.c.latchFrom(exFuncAlu.OUT());     // Pass result down pipeline
-        generalRegisters[rt]->latchFrom(exFuncAlu.OUT());
+        if (opcode == 35 || opcode == 39)
+        {
+            exmemRegister.c.latchFrom(exFuncAlu.OUT());     // Pass result down pipeline
+            generalRegisters[rt]->latchFrom(exFuncAlu.OUT());
+            idexRegister.modifiedRegister = rt;
+        }
 
         switch (opcode)
         {
@@ -204,7 +212,7 @@ void writeBackStage1()
             {
                 case 0: // HALT
                     displayRecord("HALT", true);
-                    cout << "Machine halted - HALT instruction executed" << endl;
+                    cout << "Machine Halted - HALT instruction executed" << endl;
                     done = true;
                     break;
 
@@ -247,15 +255,26 @@ void writeBackStage1()
                 case 47: // SRAV
                     displayRecord("SRAV", true); break;
 
-                case 6:  // Unimplemented
-                case 17:
-                case 19:
-                case 23:
-                    displayUnimplementedOpCodeError(true);
+                // Unimplemented
+                case 6:  // SYSCALL
+                    displayRecord("SYSCALL", true);
+                    displayUnimplementedOpCodeError();
+                    break;
+                case 17: // ADDU
+                    displayRecord("ADDU", true);
+                    displayUnimplementedOpCodeError();
+                    break;
+                case 19: // SUBU
+                    displayRecord("SUBU", true);
+                    displayUnimplementedOpCodeError();
+                    break;
+                case 23: // NOR
+                    displayRecord("NOR", true);
+                    displayUnimplementedOpCodeError();
                     break;
 
                 default: // Unknown
-                    displayUndefinedOpCodeError(true);
+                    displayUndefinedOpCodeError();
             }
             break;
         }
@@ -295,20 +314,61 @@ void writeBackStage1()
         case 61: // BNE
             displayRecord("BNE"); break;
 
-        case 17:  // Unimplemented
-        case 25:
-        case 32:
-        case 33:
-        case 36:
-        case 37:
-        case 40:
-        case 41:
-        case 50:
-        case 51:
-        case 58:
-        case 59:
-        case 62:
-        case 63:
+        // Unimplemented
+        case 17: // ADDIU
+            displayRecord("ADDIU", true);
+            displayUnimplementedOpCodeError();
+            break;
+        case 25: // SLTIU
+            displayRecord("SLTIU", true);
+            displayUnimplementedOpCodeError();
+            break;
+        case 32: // LB
+            displayRecord("LB", true);
+            displayUnimplementedOpCodeError();
+            break;
+        case 33: // LH
+            displayRecord("LH", true);
+            displayUnimplementedOpCodeError();
+            break;
+        case 36: // LBU
+            displayRecord("LBU", true);
+            displayUnimplementedOpCodeError();
+            break;
+        case 37: // LHU
+            displayRecord("LHU", true);
+            displayUnimplementedOpCodeError();
+            break;
+        case 40: // SB
+            displayRecord("SB", true);
+            displayUnimplementedOpCodeError();
+            break;
+        case 41: // SH
+            displayRecord("SH", true);
+            displayUnimplementedOpCodeError();
+            break;
+        case 50: // BLTZ
+            displayRecord("BLTZ", true);
+            displayUnimplementedOpCodeError();
+            break;
+        case 51: // BLTZAL
+            displayRecord("BLTZAL", true);
+            displayUnimplementedOpCodeError();
+            break;
+        case 58: // BGEZ
+            displayRecord("BGEZ", true);
+            displayUnimplementedOpCodeError();
+            break;
+        case 59: // BGEZAL
+            displayRecord("BGEZAL", true);
+            displayUnimplementedOpCodeError();
+            break;
+        case 62: // BLEZ
+            displayRecord("BLEZ", true);
+            displayUnimplementedOpCodeError();
+            break;
+        case 63: // BGTZ
+            displayRecord("BGTZ", true);
             displayUnimplementedOpCodeError();
             break;
 
