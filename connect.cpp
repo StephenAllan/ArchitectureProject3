@@ -99,6 +99,7 @@ void connect()
     idexRegister.b.connectsTo(exFuncAlu.OP1());
     idexRegister.b.connectsTo(exFuncAlu.OP2());
     idexRegister.imm.connectsTo(exFuncAlu.OP2());
+    idexRegister.npc.connectsTo(exFuncAlu.OP1());
     exmemRegister.c.connectsTo(exFuncAlu.OUT());
 
     idexRegister.imm.connectsTo(exFuncAlu.OP1());

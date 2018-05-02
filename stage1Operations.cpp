@@ -167,13 +167,16 @@ void executeStage1()
         switch (opcode)
         {
             case 3: // JAL
-                // JAL is broken and in an infinite loop.
-                // Stop execution so the rest of the tests can run.
-                done = true;
+                exFuncAlu.OP1().pullFrom(idexRegister.npc);
+                exFuncAlu.OP2().pullFrom(const_4); // can also do PC + 8
+                exFuncAlu.perform(BusALU::op_add);
+                exmemRegister.c.latchFrom(exFuncAlu.OUT());
+                generalRegisters[31]->latchFrom(exFuncAlu.OUT());
+                idexRegister.modifiedRegister = 31;
                 break;
         }
     }
-    else
+    else // I-TYPE
     {
         exFuncAlu.OP1().pullFrom(idexRegister.a);
         exFuncAlu.OP2().pullFrom(idexRegister.imm);

@@ -51,7 +51,7 @@ void instructionFetchStage2()
  */
 void instructionDecodeStage2()
 {
-    // if (ifidRegister.v.value() == 0) { return; }
+    if (ifidRegister.v.value() == 0) { return; }
 
     // Probably need to do some modification to PC and ID/EX.NPC here if a branch was decoded
 
@@ -71,7 +71,7 @@ void instructionDecodeStage2()
  */
 void executeStage2()
 {
-    // if (idexRegister.v.value() == 0) { return; }
+    if (idexRegister.v.value() == 0) { return; }
 
     long opcode = idexRegister.ir(31, 26);
     long rt = idexRegister.ir(20, 16);
@@ -113,7 +113,7 @@ void executeStage2()
  */
 void memoryAccessStage2()
 {
-    // if (exmemRegister.v.value() == 0) { return; }
+    if (exmemRegister.v.value() == 0) { return; }
     
     memVBus.IN().pullFrom(exmemRegister.v);
     memPcBus.IN().pullFrom(exmemRegister.pc);
@@ -141,5 +141,5 @@ void memoryAccessStage2()
  */
 void writeBackStage2()
 {
-    // if (memwbRegister.v.value() == 0) { return; }
+    if (memwbRegister.v.value() == 0) { return; }
 }
