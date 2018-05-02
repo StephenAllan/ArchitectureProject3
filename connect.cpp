@@ -65,6 +65,9 @@ void connect()
     bitMask_16.connectsTo(extensionAlu.OP2());
     idexRegister.imm.connectsTo(extensionAlu.OUT());
 
+    ir.connectsTo(bitBus_16.IN());
+    idexRegister.zeroExtImm.connectsTo(bitBus_16.OUT());
+
     /** Execution Stage Connections */
     idexRegister.v.connectsTo(exVBus.IN());
     idexRegister.pc.connectsTo(exPcBus.IN());
@@ -87,6 +90,7 @@ void connect()
     exmemRegister.c.connectsTo(exFuncAlu.OUT());
 
     idexRegister.imm.connectsTo(exFuncAlu.OP1());
+    idexRegister.zeroExtImm.connectsTo(exFuncAlu.OP2());
     luiShiftAmount.connectsTo(exFuncAlu.OP2());
 
     idexRegister.imm.connectsTo(loadBus.IN());

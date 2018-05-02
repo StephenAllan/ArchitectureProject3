@@ -19,6 +19,7 @@ const unsigned int BYTE_SIZE_BITS(8);
 /** Vectors */
 vector<StorageObject*> connectionObjects;
 vector<StorageObject*> generalRegisters;
+vector<int> modifiedRegisters;
 
 /** Buses */
 Bus op1("Op1Bus", ADDRESS_SIZE_BITS);
@@ -29,6 +30,8 @@ Bus instructionBus("InstructionBus", ADDRESS_SIZE_BITS);
 Bus pcBus("PcBus", ADDRESS_SIZE_BITS);
 Bus irBus("IrBus", ADDRESS_SIZE_BITS);
 Bus loadBus("LoadBus", ADDRESS_SIZE_BITS);
+Bus bitBus_16("BitBus_16", 16);
+Bus bitBus_26("BitBus_26", 26);
 
 Bus idVBus("Id_vBus", 1);
 Bus idPcBus("Id_pcBus", ADDRESS_SIZE_BITS);

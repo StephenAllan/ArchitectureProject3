@@ -23,6 +23,7 @@ extern const unsigned int BYTE_SIZE_BITS;
 
 extern vector<StorageObject*> connectionObjects;
 extern vector<StorageObject*> generalRegisters;
+extern vector<int> modifiedRegisters;
 
 extern Bus op1;
 extern Bus op2;
@@ -32,6 +33,8 @@ extern Bus instructionBus;
 extern Bus pcBus;
 extern Bus irBus;
 extern Bus loadBus;
+extern Bus bitBus_16;
+extern Bus bitBus_26;
 
 // Buses to bring IF/ID data to ID/EX registers
 extern Bus idVBus;

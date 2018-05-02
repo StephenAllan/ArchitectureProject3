@@ -60,6 +60,9 @@ void instructionDecodeStage1()
     extensionAlu.OP1().pullFrom(ir);
     extensionAlu.perform(BusALU::op_extendSign);
     idexRegister.imm.latchFrom(extensionAlu.OUT());
+
+    bitBus_16.IN().pullFrom(ir);
+    idexRegister.zeroExtImm.latchFrom(bitBus_16.OUT());
 }
 
 /**
@@ -134,11 +137,11 @@ void executeStage1()
     }
     else
     {
-        exFuncAlu.OP1().pullFrom(idexRegister.imm);
-        exFuncAlu.OP2().pullFrom(luiShiftAmount);
+        exFuncAlu.OP1().pullFrom(idexRegister.a);
+        exFuncAlu.OP2().pullFrom(idexRegister.imm);
         exFuncAlu.perform(BusALU::op_zero); // Ignore the no operation error
 
-        if (opcode == 35 || opcode == 39)
+        if (opcode == 16 || opcode == 20 || opcode == 21 || opcode == 22 || opcode == 35 || opcode == 39)
         {
             exmemRegister.c.latchFrom(exFuncAlu.OUT());     // Pass result down pipeline
             generalRegisters[rt]->latchFrom(exFuncAlu.OUT());
@@ -148,15 +151,22 @@ void executeStage1()
         switch (opcode)
         {
             case 16: // ADDI
+                exFuncAlu.perform(BusALU::op_add);
                 break;
 
             case 20: // ANDI
+                exFuncAlu.OP2().pullFrom(idexRegister.zeroExtImm);
+                exFuncAlu.perform(BusALU::op_and);
                 break;
 
             case 21: // ORI
+                exFuncAlu.OP2().pullFrom(idexRegister.zeroExtImm);
+                exFuncAlu.perform(BusALU::op_or);
                 break;
 
             case 22: // XORI
+                exFuncAlu.OP2().pullFrom(idexRegister.zeroExtImm);
+                exFuncAlu.perform(BusALU::op_xor);
                 break;
 
             case 24: // SLTI
@@ -168,6 +178,8 @@ void executeStage1()
                 break;
 
             case 39: // LUI
+                exFuncAlu.OP1().pullFrom(idexRegister.imm);
+                exFuncAlu.OP2().pullFrom(luiShiftAmount);
                 exFuncAlu.perform(BusALU::op_lshift);
                 break;
 

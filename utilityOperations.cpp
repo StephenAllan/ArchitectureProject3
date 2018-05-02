@@ -35,11 +35,20 @@ void dumpGeneralRegisters()
 
     for (int i = 0; i < generalRegisters.size(); ++i)
     {
-        if (generalRegisters[i]->value() != 0)
+        if (generalRegisters[i]->value() != 0 && vectorContains(modifiedRegisters, i))
         {
             if (displayCount > 0 && displayCount % 4 == 0) { cout << endl; }
 
-            cout << "  " << (*generalRegisters[i]);
+            if (displayCount % 4 == 0 && displayCount < 10) { cout << " "; }
+
+            if (displayCount % 4 == 0) { cout << "    " << (*generalRegisters[i]); }
+            else
+            {
+                if (displayCount < 10) { cout << "  "; }
+                else { cout << " "; }
+                cout << (*generalRegisters[i]);
+            }
+
             displayCount = displayCount + 1;
         }
     }
@@ -68,6 +77,11 @@ void displayRecord(string instructionMnemonic, bool specialOp)
     // If any GPR was updated, print one space and then its contents.
     if (memwbRegister.modifiedRegister > 0)
     {
+        if (!vectorContains(modifiedRegisters, memwbRegister.modifiedRegister))
+        {
+            modifiedRegisters.push_back(memwbRegister.modifiedRegister);
+        }
+
         cout << " " << (*generalRegisters[memwbRegister.modifiedRegister]);
     }
 
@@ -92,4 +106,13 @@ void displayUndefinedOpCodeError()
 {
     cout << "Machine Halted - undefined instruction" << endl;
     done = true;
+}
+
+/**
+    TODO: Documentation
+ */
+bool vectorContains(vector<int> vector, int value)
+{
+    if (find(vector.begin(), vector.end(), value) == vector.end()) { return false; }
+    return true;
 }

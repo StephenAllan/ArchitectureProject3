@@ -40,6 +40,7 @@ class IdExRegister
        StorageObject a;     // Operand A
        StorageObject b;     // Operand B
        StorageObject imm;   // Sign-extended immediate
+       StorageObject zeroExtImm;
 };
 
 class ExMemRegister

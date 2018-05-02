@@ -21,7 +21,8 @@ IdExRegister::IdExRegister():
     ir("IdEx_IR", ADDRESS_SIZE_BITS),
     a("IdEx_A", ADDRESS_SIZE_BITS),
     b("IdEx_B", ADDRESS_SIZE_BITS),
-    imm("IdEx_Imm", ADDRESS_SIZE_BITS)
+    imm("IdEx_Imm", ADDRESS_SIZE_BITS),
+    zeroExtImm("IdEx_ZeroExtImm", ADDRESS_SIZE_BITS)
 {
 
 }

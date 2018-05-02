@@ -35,8 +35,7 @@ void dumpGeneralRegisters();
 void displayRecord(string, bool = false);
 void displayUnimplementedOpCodeError();
 void displayUndefinedOpCodeError();
-// string numToString(long);
-// void branchPC(bool, bool);
+bool vectorContains(vector<int>, int);
 
 /** Component Operations */
 // void fetch(StorageObject &, StorageObject &, Bus &);

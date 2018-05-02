@@ -13,6 +13,7 @@
 
 
 /** System Include Files */
+#include <algorithm>
 #include <cmath>
 #include <cstdlib>
 #include <iostream>
