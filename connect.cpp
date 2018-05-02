@@ -22,6 +22,7 @@ void connect()
         generalRegisters[i]->connectsTo(idABus.IN());
         generalRegisters[i]->connectsTo(idBBus.IN());
         generalRegisters[i]->connectsTo(idImmBus.IN());
+        generalRegisters[i]->connectsTo(exFuncAlu.OP2());
         generalRegisters[i]->connectsTo(exFuncAlu.OUT());
         generalRegisters[i]->connectsTo(dm.READ());
     }
