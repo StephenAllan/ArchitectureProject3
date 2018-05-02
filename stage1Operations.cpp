@@ -130,9 +130,6 @@ void executeStage1()
     {
         switch (opcode)
         {
-            case 2: // J
-                
-                break;
             case 3: // JAL
                 break;
         }
