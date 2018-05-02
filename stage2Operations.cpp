@@ -180,7 +180,7 @@ void executeStage2()
 }
 
 /**
-    TODO: Documentation
+    Perform the second half of the Memory stage.
  */
 void memoryAccessStage2()
 {
@@ -210,7 +210,7 @@ void memoryAccessStage2()
 }
 
 /**
-    TODO: Documentation
+    Perform the second half of the Write Back stage.
  */
 void writeBackStage2()
 {

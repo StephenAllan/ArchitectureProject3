@@ -73,6 +73,8 @@ void instructionDecodeStage1()
 
 /**
     Perform the first half of the Execution stage.
+    - Perform any ALU instruction calculations
+    - Calculate the addresses of load/store operations
  */
 void executeStage1()
 {
@@ -269,7 +271,7 @@ void executeStage1()
 }
 
 /**
-    TODO: Documentation
+    Perform the first half of the Memory stage.
  */
 void memoryAccessStage1()
 {
@@ -277,7 +279,8 @@ void memoryAccessStage1()
 }
 
 /**
-    TODO: Documentation
+    Perform the first half of the Write Back stage.
+    - Print out instruction information
  */
 void writeBackStage1()
 {
