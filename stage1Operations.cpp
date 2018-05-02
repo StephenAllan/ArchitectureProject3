@@ -274,6 +274,7 @@ void writeBackStage1()
                     break;
 
                 default: // Unknown
+                    displayRecord("???????", true);
                     displayUndefinedOpCodeError();
             }
             break;
@@ -316,63 +317,64 @@ void writeBackStage1()
 
         // Unimplemented
         case 17: // ADDIU
-            displayRecord("ADDIU", true);
+            displayRecord("ADDIU");
             displayUnimplementedOpCodeError();
             break;
         case 25: // SLTIU
-            displayRecord("SLTIU", true);
+            displayRecord("SLTIU");
             displayUnimplementedOpCodeError();
             break;
         case 32: // LB
-            displayRecord("LB", true);
+            displayRecord("LB");
             displayUnimplementedOpCodeError();
             break;
         case 33: // LH
-            displayRecord("LH", true);
+            displayRecord("LH");
             displayUnimplementedOpCodeError();
             break;
         case 36: // LBU
-            displayRecord("LBU", true);
+            displayRecord("LBU");
             displayUnimplementedOpCodeError();
             break;
         case 37: // LHU
-            displayRecord("LHU", true);
+            displayRecord("LHU");
             displayUnimplementedOpCodeError();
             break;
         case 40: // SB
-            displayRecord("SB", true);
+            displayRecord("SB");
             displayUnimplementedOpCodeError();
             break;
         case 41: // SH
-            displayRecord("SH", true);
+            displayRecord("SH");
             displayUnimplementedOpCodeError();
             break;
         case 50: // BLTZ
-            displayRecord("BLTZ", true);
+            displayRecord("BLTZ");
             displayUnimplementedOpCodeError();
             break;
         case 51: // BLTZAL
-            displayRecord("BLTZAL", true);
+            displayRecord("BLTZAL");
             displayUnimplementedOpCodeError();
             break;
         case 58: // BGEZ
-            displayRecord("BGEZ", true);
+            displayRecord("BGEZ");
             displayUnimplementedOpCodeError();
             break;
         case 59: // BGEZAL
-            displayRecord("BGEZAL", true);
+            displayRecord("BGEZAL");
             displayUnimplementedOpCodeError();
             break;
         case 62: // BLEZ
-            displayRecord("BLEZ", true);
+            displayRecord("BLEZ");
             displayUnimplementedOpCodeError();
             break;
         case 63: // BGTZ
-            displayRecord("BGTZ", true);
+            displayRecord("BGTZ");
             displayUnimplementedOpCodeError();
             break;
 
         default: // Unknown
+            displayRecord("???????");
             displayUndefinedOpCodeError();
     }
 }
