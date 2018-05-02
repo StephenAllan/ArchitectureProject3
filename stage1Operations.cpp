@@ -91,7 +91,7 @@ void executeStage1()
     long rd = idexRegister.ir(15, 11);
     long funct = idexRegister.ir(5, 0);
 
-    // Handel I-, R-, and J-type instructions in separate cases
+    // Handle I-, R-, and J-type instructions in separate cases
     if (idexRegister.instrType == R_TYPE)
     {
         exFuncAlu.OP1().pullFrom(idexRegister.a);
