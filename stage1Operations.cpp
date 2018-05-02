@@ -119,7 +119,7 @@ void executeStage1()
         else if (funct == 45 || funct == 46 || funct == 47)
         {
             exFuncAlu.OP1().pullFrom(idexRegister.b);
-            exFuncAlu.OP2().pullFrom((*generalRegisters[rs]));
+            exFuncAlu.OP2().pullFrom(idexRegister.a);
 
             long value = generalRegisters[rs]->value();
             if (value >= 32)
@@ -147,11 +147,11 @@ void executeStage1()
 
             case 24: // SLT
             {
-                long signedRs = (*generalRegisters[rs])(30, 0);
-                if ((*generalRegisters[rs])(31) == 1) { signedRs = signedRs * -1; }
+                long signedRs = idexRegister.a(30, 0);
+                if (idexRegister.a(31) == 1) { signedRs = signedRs * -1; }
 
-                long signedRt = (*generalRegisters[rt])(30, 0);
-                if ((*generalRegisters[rt])(31) == 1) { signedRt = signedRt * -1; }
+                long signedRt = idexRegister.b(30, 0);
+                if (idexRegister.b(31) == 1) { signedRt = signedRt * -1; }
 
                 if (signedRs < signedRt) { compareBus.IN().pullFrom(const_1); }
                 else { compareBus.IN().pullFrom(const_0); }
@@ -162,7 +162,7 @@ void executeStage1()
                 break;
             }
             case 25: // SLTU
-                if (generalRegisters[rs]->value() < generalRegisters[rt]->value())
+                if (idexRegister.a.value() < idexRegister.b.value())
                 {
                     compareBus.IN().pullFrom(const_1);
                 }
@@ -247,8 +247,8 @@ void executeStage1()
 
             case 24: // SLTI
             {
-                long signedRs = (*generalRegisters[rs])(30, 0);
-                if ((*generalRegisters[rs])(31) == 1) { signedRs = signedRs * -1; }
+                long signedRs = idexRegister.a(30, 0);
+                if (idexRegister.a(31) == 1) { signedRs = signedRs * -1; }
 
                 long signedImm = idexRegister.imm(30, 0);
                 if (idexRegister.imm(31) == 1) { signedImm = signedImm * -1; }
