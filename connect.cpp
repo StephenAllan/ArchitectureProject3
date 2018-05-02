@@ -71,7 +71,7 @@ void connect()
     ir.connectsTo(bitBus_16.IN());
     idexRegister.zeroExtImm.connectsTo(bitBus_16.OUT());
 
-    ifidRegister.npc.connectsTo(jumpBus.IN());
+    idexRegister.imm.connectsTo(jumpBus.IN());
 
     /** Execution Stage Connections */
     idexRegister.v.connectsTo(exVBus.IN());
