@@ -63,28 +63,30 @@ void instructionDecodeStage2()
     // Not sure why.
     // But branching functionality works in the execute1 stage, just the displayed output isn't 100% correct.
 
-    // if (ifidRegister.v.value() == 0) { return; }
+    if (ifidRegister.v.value() == 0) { return; }
 
-    //     if (opcode == 60) // BEQ
-    // {
-    //     if (generalRegisters[rs]->value() == generalRegisters[rt]->value())
-    //     {
-    //         branchAlu.OP1().pullFrom(ifidRegister.pc);
-    //         branchAlu.OP2().pullFrom(idexRegister.imm);
-    //         branchAlu.perform(BusALU::op_add);
-    //         pc.latchFrom(branchAlu.OUT());
-    //     }
-    // }
-    // else if (opcode == 61) // BNE
-    // {
-    //     if (generalRegisters[rs]->value() != generalRegisters[rt]->value())
-    //     {
-    //         branchAlu.OP1().pullFrom(ifidRegister.pc);
-    //         branchAlu.OP2().pullFrom(idexRegister.imm);
-    //         branchAlu.perform(BusALU::op_add);
-    //         pc.latchFrom(branchAlu.OUT());
-    //     }
-    // }
+    if (opcode == 60) // BEQ
+    {
+        if (generalRegisters[rs]->value() == generalRegisters[rt]->value())
+        {
+            branchAlu.OP1().pullFrom(ifidRegister.pc);
+            branchAlu.OP2().pullFrom(idexRegister.imm);
+            branchAlu.perform(BusALU::op_add);
+            pc.latchFrom(branchAlu.OUT());
+            ifidRegister.pc.latchFrom(branchAlu.OUT());
+        }
+    }
+    else if (opcode == 61) // BNE
+    {
+        if (generalRegisters[rs]->value() != generalRegisters[rt]->value())
+        {
+            branchAlu.OP1().pullFrom(ifidRegister.pc);
+            branchAlu.OP2().pullFrom(idexRegister.imm);
+            branchAlu.perform(BusALU::op_add);
+            pc.latchFrom(branchAlu.OUT());
+            ifidRegister.pc.latchFrom(branchAlu.OUT());
+        }
+    }
 
     // Send all of the previous pipeline register data to the next stage
     idVBus.IN().pullFrom(ifidRegister.v);

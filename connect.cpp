@@ -84,13 +84,13 @@ void connect()
     const_1.connectsTo(compareBus.IN());
     exmemRegister.c.connectsTo(compareBus.OUT());
 
-    // ifidRegister.pc.connectsTo(branchAlu.OP1());
-    // idexRegister.imm.connectsTo(branchAlu.OP2());
-    // pc.connectsTo(branchAlu.OUT());
-
+    ifidRegister.pc.connectsTo(branchAlu.OP1());
     idexRegister.pc.connectsTo(exFuncAlu.OP1());
     idexRegister.imm.connectsTo(exFuncAlu.OP2());
     pc.connectsTo(exFuncAlu.OUT());
+    idexRegister.imm.connectsTo(branchAlu.OP2());
+    ifidRegister.pc.connectsTo(branchAlu.OUT());
+    pc.connectsTo(branchAlu.OUT());
 
     /** Execution Stage Connections */
     idexRegister.v.connectsTo(exVBus.IN());
