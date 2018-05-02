@@ -34,6 +34,7 @@ Bus loadBus("LoadBus", ADDRESS_SIZE_BITS);
 Bus bitBus_16("BitBus_16", 16);
 Bus bitBus_26("BitBus_26", 26);
 Bus jumpBus("jumpbus", ADDRESS_SIZE_BITS);
+Bus compareBus("compareBus", ADDRESS_SIZE_BITS);
 
 Bus idVBus("Id_vBus", 1);
 Bus idPcBus("Id_pcBus", ADDRESS_SIZE_BITS);

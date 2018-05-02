@@ -145,6 +145,37 @@ void executeStage1()
             case 22: // XOR
                 exFuncAlu.perform(BusALU::op_xor); break;
 
+            case 24: // SLT
+            {
+                long signedRs = (*generalRegisters[rs])(30, 0);
+                if ((*generalRegisters[rs])(31) == 1) { signedRs = signedRs * -1; }
+
+                long signedRt = (*generalRegisters[rt])(30, 0);
+                if ((*generalRegisters[rt])(31) == 1) { signedRt = signedRt * -1; }
+
+                if (signedRs < signedRt) { compareBus.IN().pullFrom(const_1); }
+                else { compareBus.IN().pullFrom(const_0); }
+
+                exmemRegister.c.latchFrom(compareBus.OUT());     // Pass result down pipeline
+                generalRegisters[rd]->latchFrom(compareBus.OUT());
+                idexRegister.modifiedRegister = rd;
+                break;
+            }
+            case 25: // SLTU
+                if (generalRegisters[rs]->value() < generalRegisters[rt]->value())
+                {
+                    compareBus.IN().pullFrom(const_1);
+                }
+                else
+                {
+                    compareBus.IN().pullFrom(const_0);
+                }
+                
+                exmemRegister.c.latchFrom(compareBus.OUT());     // Pass result down pipeline
+                generalRegisters[rd]->latchFrom(compareBus.OUT());
+                idexRegister.modifiedRegister = rd;
+                break;
+
             case 37: // SLL
                 exFuncAlu.perform(BusALU::op_lshift); break;
             case 38: // SRL
@@ -173,6 +204,8 @@ void executeStage1()
                 exmemRegister.c.latchFrom(exFuncAlu.OUT());
                 generalRegisters[31]->latchFrom(exFuncAlu.OUT());
                 idexRegister.modifiedRegister = 31;
+
+                done = true; // Still broken in an infinite loop
                 break;
         }
     }

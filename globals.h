@@ -37,6 +37,7 @@ extern Bus loadBus;
 extern Bus bitBus_16;
 extern Bus bitBus_26;
 extern Bus jumpBus;
+extern Bus compareBus;
 
 // Buses to bring IF/ID data to ID/EX registers
 extern Bus idVBus;

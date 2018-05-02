@@ -24,6 +24,7 @@ void connect()
         generalRegisters[i]->connectsTo(idImmBus.IN());
         generalRegisters[i]->connectsTo(exFuncAlu.OP2());
         generalRegisters[i]->connectsTo(exFuncAlu.OUT());
+        generalRegisters[i]->connectsTo(compareBus.OUT());
         generalRegisters[i]->connectsTo(dm.READ());
     }
 
@@ -78,6 +79,9 @@ void connect()
     idexRegister.zeroExtImm.connectsTo(bitBus_16.OUT());
 
     idexRegister.imm.connectsTo(jumpBus.IN());
+    const_0.connectsTo(compareBus.IN());
+    const_1.connectsTo(compareBus.IN());
+    exmemRegister.c.connectsTo(compareBus.OUT());
 
     /** Execution Stage Connections */
     idexRegister.v.connectsTo(exVBus.IN());
