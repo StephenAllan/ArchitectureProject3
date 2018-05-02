@@ -13,17 +13,20 @@
 
 
 /**
-    TODO: Documentation
+    Perform the first half of the Instruction Fetch stage.
+    - Move the PC into the MAR to fetch this instruction
  */
 void instructionFetchStage1()
 {
-    // Move address into MAR
     instructionBus.IN().pullFrom(pc);
     im.MAR().latchFrom(instructionBus.OUT());
 }
 
 /**
-    TODO: Documentation
+    Perform the first half of the Instruction Decode stage.
+    - Determine the instruction type
+    - Fetch register data
+    - Sign-extend the immediate value
  */
 void instructionDecodeStage1()
 {
@@ -69,7 +72,9 @@ void instructionDecodeStage1()
 }
 
 /**
-    TODO: Documentation
+    Perform the first half of the Execution stage.
+    - Perform any ALU instruction calculations
+    - Calculate the addresses of load/store operations
  */
 void executeStage1()
 {
@@ -240,7 +245,7 @@ void executeStage1()
 }
 
 /**
-    TODO: Documentation
+    Perform the first half of the Memory stage.
  */
 void memoryAccessStage1()
 {
@@ -303,7 +308,8 @@ void memoryAccessStage1()
 }
 
 /**
-    TODO: Documentation
+    Perform the first half of the Write Back stage.
+    - Print out instruction information
  */
 void writeBackStage1()
 {
@@ -392,7 +398,7 @@ void writeBackStage1()
             displayRecord("NOP");
             break;
 
-        case 2: // JR
+        case 2: // J
             displayRecord("J"); break;
         case 3: // JAL
             displayRecord("JAL"); break;
