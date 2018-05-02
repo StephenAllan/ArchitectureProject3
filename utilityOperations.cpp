@@ -39,12 +39,12 @@ void dumpGeneralRegisters()
         {
             if (displayCount > 0 && displayCount % 4 == 0) { cout << endl; }
 
-            if (displayCount % 4 == 0 && displayCount < 10) { cout << " "; }
+            if (displayCount % 4 == 0 && i < 10) { cout << " "; }
 
             if (displayCount % 4 == 0) { cout << "    " << (*generalRegisters[i]); }
             else
             {
-                if (displayCount < 10) { cout << "  "; }
+                if (i < 10) { cout << "  "; }
                 else { cout << " "; }
                 cout << (*generalRegisters[i]);
             }
@@ -75,7 +75,7 @@ void displayRecord(string instructionMnemonic, bool specialOp)
     printf("%-7s", instructionMnemonic.c_str());
 
     // If any GPR was updated, print one space and then its contents.
-    if (memwbRegister.modifiedRegister > 0)
+    if (memwbRegister.modifiedRegister > -1)
     {
         if (!vectorContains(modifiedRegisters, memwbRegister.modifiedRegister))
         {

@@ -31,7 +31,7 @@ class IdExRegister
        IdExRegister();
 
        unsigned short instrType;
-       unsigned short modifiedRegister;
+       short modifiedRegister;
 
        Clearable v;
        StorageObject pc;
@@ -49,7 +49,7 @@ class ExMemRegister
        ExMemRegister();
 
        unsigned short instrType;
-       unsigned short modifiedRegister;
+       short modifiedRegister;
 
        Clearable v;
        StorageObject pc;
@@ -67,7 +67,7 @@ class MemWbRegister
        MemWbRegister();
 
        unsigned short instrType;
-       unsigned short modifiedRegister;
+       short modifiedRegister;
 
        Clearable v;
        StorageObject pc;

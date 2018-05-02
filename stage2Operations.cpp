@@ -39,9 +39,6 @@ void instructionFetchStage2()
         pc.latchFrom(pcAlu.OUT());
         ifidRegister.npc.latchFrom(pcAlu.OUT()); // also send incremented PC to pipeline register
     } else {
-        jumpBus.IN().pullFrom(idexRegister.imm);
-        pc.latchFrom(jumpBus.OUT());
-        ifidRegister.npc.latchFrom(jumpBus.OUT());
         ifidRegister.incrPc = true;
     }
 }
@@ -76,12 +73,15 @@ void executeStage2()
     long opcode = idexRegister.ir(31, 26);
     long rt = idexRegister.ir(20, 16);
 
-    switch (opcode)
+    if (rt > 0)
     {
-        case 35: // LW
-            dm.read();
-            generalRegisters[rt]->latchFrom(dm.READ());
-            break;
+        switch (opcode)
+        {
+            case 35: // LW
+                dm.read();
+                generalRegisters[rt]->latchFrom(dm.READ());
+                break;
+        }
     }
 
     // Advance data in pipeline registers
@@ -102,7 +102,7 @@ void executeStage2()
 
     exmemRegister.instrType = idexRegister.instrType;
     exmemRegister.modifiedRegister = idexRegister.modifiedRegister;
-    idexRegister.modifiedRegister = 0;
+    idexRegister.modifiedRegister = -1;
 }
 
 /**

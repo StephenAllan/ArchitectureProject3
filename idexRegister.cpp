@@ -14,7 +14,7 @@
 IdExRegister::IdExRegister():
     // subconstructors must be used to initialize the data members
     instrType(0),
-    modifiedRegister(0),
+    modifiedRegister(-1),
     v("IdEx_V", 1),
     pc("IdEx_PC", ADDRESS_SIZE_BITS),
     npc("IdEx_NPC", ADDRESS_SIZE_BITS),

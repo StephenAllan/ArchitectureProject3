@@ -53,7 +53,6 @@ void instructionDecodeStage1()
 
     if (ifidRegister.instrType == J_TYPE) {
         extensionAlu.OP2().pullFrom(bitMask_26);
-        ifidRegister.incrPc = false;
     } else { // R_TYPE and I_TYPE
         extensionAlu.OP2().pullFrom(bitMask_16);
     }
@@ -92,7 +91,7 @@ void executeStage1()
     long rd = idexRegister.ir(15, 11);
     long funct = idexRegister.ir(5, 0);
 
-    // Handle I-, R-, and J-type instructions in separate cases
+    // Handel I-, R-, and J-type instructions in separate cases
     if (idexRegister.instrType == R_TYPE)
     {
         exFuncAlu.OP1().pullFrom(idexRegister.a);
@@ -104,6 +103,8 @@ void executeStage1()
             exmemRegister.c.latchFrom(exFuncAlu.OUT());     // Pass result down pipeline
             generalRegisters[rd]->latchFrom(exFuncAlu.OUT());
             idexRegister.modifiedRegister = rd;
+
+            if (rd <= 0) { return; }
         }
 
         switch (funct)
@@ -131,7 +132,6 @@ void executeStage1()
         switch (opcode)
         {
             case 2: // J
-                
                 break;
             case 3: // JAL
                 break;
@@ -148,6 +148,8 @@ void executeStage1()
             exmemRegister.c.latchFrom(exFuncAlu.OUT());     // Pass result down pipeline
             generalRegisters[rt]->latchFrom(exFuncAlu.OUT());
             idexRegister.modifiedRegister = rt;
+
+            if (rt <= 0) { return; }
         }
 
         switch (opcode)
