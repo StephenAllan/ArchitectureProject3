@@ -275,6 +275,8 @@ void executeStage1()
                 break;
 
             case 43: // SW
+                exFuncAlu.perform(BusALU::op_add);
+                dm.MAR().latchFrom(exFuncAlu.OUT());
                 break;
 
             case 60: // BEQ

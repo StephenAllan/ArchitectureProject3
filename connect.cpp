@@ -26,6 +26,7 @@ void connect()
         generalRegisters[i]->connectsTo(exFuncAlu.OUT());
         generalRegisters[i]->connectsTo(compareBus.OUT());
         generalRegisters[i]->connectsTo(dm.READ());
+        generalRegisters[i]->connectsTo(dm.WRITE());
     }
 
     for (int i = 0; i < shiftConstants.size(); ++i)

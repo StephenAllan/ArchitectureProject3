@@ -84,6 +84,10 @@ void executeStage2()
                 dm.read();
                 generalRegisters[rt]->latchFrom(dm.READ());
                 break;
+            case 43: // SW
+                dm.WRITE().pullFrom((*generalRegisters[rt]));
+                dm.write();
+                break;
         }
     }
 
