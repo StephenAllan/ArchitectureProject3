@@ -246,7 +246,21 @@ void executeStage1()
                 break;
 
             case 24: // SLTI
+            {
+                long signedRs = (*generalRegisters[rs])(30, 0);
+                if ((*generalRegisters[rs])(31) == 1) { signedRs = signedRs * -1; }
+
+                long signedImm = idexRegister.imm(30, 0);
+                if (idexRegister.imm(31) == 1) { signedImm = signedImm * -1; }
+
+                if (signedRs < signedImm) { compareBus.IN().pullFrom(const_1); }
+                else { compareBus.IN().pullFrom(const_0); }
+
+                exmemRegister.c.latchFrom(compareBus.OUT());     // Pass result down pipeline
+                generalRegisters[rt]->latchFrom(compareBus.OUT());
+                idexRegister.modifiedRegister = rt;
                 break;
+            }
 
             case 35: // LW
                 exFuncAlu.perform(BusALU::op_add);
